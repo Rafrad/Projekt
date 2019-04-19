@@ -1,4 +1,6 @@
-package Controller;
+package controller;
+
+import java.io.FileNotFoundException;
 
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
@@ -6,10 +8,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-
-
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 
 public class Controller {
     @FXML
@@ -24,8 +22,7 @@ public class Controller {
 
     @FXML
     public void initialize() throws FileNotFoundException{
-        Image kon = new Image(new FileInputStream("D:\\Java - projects\\Chess\\src\\images\\poprawione.png"));
-
+        Image kon = new Image(ClassLoader.getSystemClassLoader().getResourceAsStream("images/poprawione.png"));
 
 
         pane.setOnMouseClicked(mouseEvent->{

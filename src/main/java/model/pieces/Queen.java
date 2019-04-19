@@ -1,4 +1,4 @@
-package model.Pieces;
+package model.pieces;
 
 public class Queen {
 }
