@@ -26,7 +26,7 @@ public class ConnectionManager {
     }
 
     public void loadGame(AnchorPane layout) throws IOException {
-        AnchorPane pane = FXMLLoader.load(getClass().getClassLoader().getResource("Views/sample.fxml"));
+        AnchorPane pane = FXMLLoader.load(getClass().getClassLoader().getResource("Views/Game.fxml"));
         layout.getChildren().setAll(pane);
     }
 }

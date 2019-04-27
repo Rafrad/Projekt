@@ -20,7 +20,7 @@ public class Move {
     }
 
     //chyba pozinno zwracac tablice mozliwych ruchow
-    public boolean canMove(int a, int b) {
+    public List<Pair<Integer, Integer>> canMove(int a, int b) {
 
         Piece piece = board.getPiece(a, b);
         System.out.println(piece.getClass().getSimpleName());
@@ -81,6 +81,6 @@ public class Move {
                 break;
         }
 
-        return false;
+        return kappa;
     }
 }

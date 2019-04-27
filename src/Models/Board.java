@@ -8,8 +8,9 @@ import java.util.List;
 
 public class Board {
     //TODO: delete publics
-    public Piece board[][];
-    Piece boardMove[][];
+    public Piece[][] board;
+    //jak to nazwac
+    public Piece[][] boardMove;
 
     public Board() throws PlayerColorException {
         board = new Piece[8][8];
@@ -49,7 +50,6 @@ public class Board {
             }
 
         }
-//        board[2][1] = new WhiteKing();
         boardMove = board;
     }
 
@@ -57,7 +57,6 @@ public class Board {
     public void PrintBoard() {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-//                System.out.println(board[i][j].getClass().getSimpleName());
                 if(board[i][j].getClass().getSimpleName().equals("WhitePawn")) {
                     System.out.print("w ");
                 } else if(board[i][j].getClass().getSimpleName().equals("BlackPawn")) {

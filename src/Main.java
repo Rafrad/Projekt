@@ -1,6 +1,4 @@
 import Exceptions.PlayerColorException;
-import Models.Game;
-import Models.Pieces.WhitePawn;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -29,16 +27,18 @@ public class Main extends Application {
 //        primaryStage.show();
 
 
-        Parent root = FXMLLoader.load(getClass().getResource("Views/sample.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("Views/Game.fxml"));
         primaryStage.setTitle("Chess");
-        primaryStage.setScene(new Scene(root, 700, 700));
+        primaryStage.setScene(new Scene(root, 1200, 700));
         primaryStage.show();
+        primaryStage.setResizable(false);
+
     }
 
 
     public static void main(String[] args) throws PlayerColorException {
         //getIcon - Model???
-//        launch(args);
+        launch(args);
 
 //        for(int i = 7; i >= 0; i--) {
 //            for(int j = 0; j < 8; j++) {
@@ -50,10 +50,13 @@ public class Main extends Application {
 //            );
 //        }
 
-        Game game = new Game();
-        game.board.board[2][1] = new WhitePawn();
-        game.board.PrintBoard();
-        game.move.canMove(1, 0);
+//        Game game = new Game();
+//        game.boardClass.board[2][1] = new WhitePawn();
+//        game.boardClass.PrintBoard();
+//        game.moveClass.canMove(1, 0);
+//        game.move(1, 0, 2, 0);
+//
+//        game.boardClass.PrintBoard();
 
     }
 }

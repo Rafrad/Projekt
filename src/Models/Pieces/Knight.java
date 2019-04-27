@@ -1,6 +1,7 @@
 package Models.Pieces;
 
-import PlayerColorException;
+
+import Exceptions.PlayerColorException;
 
 public class Knight {
     boolean player;
