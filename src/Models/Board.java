@@ -35,7 +35,7 @@ public class Board {
                             break;
                     }
                 } else if (i == 1 || i == 6) {
-                    board[i][j] = new Pawn();
+                    board[i][j] = new WhitePawn();
                 } else {
                     board[i][j] = new EmptyTile();
                 }

@@ -64,7 +64,7 @@ public class Move {
 //        }
 
         switch (nameOfPiece) {
-            case "Pawn":
+            case "WhitePawn":
 
                 break;
         }

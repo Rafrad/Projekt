@@ -1,5 +1,4 @@
-import Models.Pieces.Pawn;
-import Models.Pieces.Piece;
+import Models.Game;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -38,7 +37,7 @@ public class Main extends Application {
 
     public static void main(String[] args) throws PlayerColorExeption {
         //getIcon - Model???
-        launch(args);
+//        launch(args);
 
 //        for(int i = 7; i >= 0; i--) {
 //            for(int j = 0; j < 8; j++) {
@@ -50,9 +49,8 @@ public class Main extends Application {
 //            );
 //        }
 
-        Piece pic = new Pawn();
-//        Game game = new Game();
-//
-//        game.move.canMove(1, 0);
+        Game game = new Game();
+        game.move.canMove(1, 0);
+
     }
 }
