@@ -1,17 +1,17 @@
 package Models.Pieces;
 
-import Exception.PlayerColorExeption;
+import PlayerColorException;
 
 public class Knight {
     boolean player;
 
     //TODO: UNIT TESTS
-    public Knight() throws PlayerColorExeption {
-        throw new PlayerColorExeption("WhitePawn must be white or black!");
+    public Knight() throws PlayerColorException {
+        throw new PlayerColorException("WhitePawn must be white or black!");
     }
 
     //TODO: UNIT TESTS
-    Knight(String playerColor) throws PlayerColorExeption {
+    Knight(String playerColor) throws PlayerColorException {
         switch (playerColor) {
             case "white":
                 player = true;
@@ -20,7 +20,7 @@ public class Knight {
                 player = false;
                 break;
             default:
-                throw new PlayerColorExeption("WhitePawn must be white or black!");
+                throw new PlayerColorException("WhitePawn must be white or black!");
         }
     }
 }

@@ -2,15 +2,15 @@ package Models;
 
 import Models.Pieces.EmptyTile;
 import Models.Pieces.Piece;
+import Models.Pieces.WhitePawn;
 import javafx.util.Pair;
 
-import java.net.InterfaceAddress;
 import java.util.*;
 
 public class Move {
-//    Move() {
-//        Board boardTmp = new Board();
-//    }
+    Move() {
+        Board boardTmp = new Board();
+    }
 
     Board board;
 
@@ -37,6 +37,7 @@ public class Move {
 
 //DODAJEMY RUCHY
 
+
             if(key <0|| value < 0) {
 
             } else {
@@ -44,8 +45,15 @@ public class Move {
                 String nameOfCheck = check.getClass().getSimpleName();
                 if(nameOfCheck.equals("EmptyTile") && b == value) {
                     kappa.add(new Pair<>(key, value));
+
                 } else if(b != value && !nameOfCheck.equals("EmptyTile")) {
-                    kappa.add(new Pair<>(key, value));
+                    boolean basicPlayer = piece.getPlayer();
+                    boolean player = check.getPlayer();
+
+                    if(basicPlayer != player) {
+                        kappa.add(new Pair<>(key, value));
+                    }
+
                 }
 
             }
@@ -58,6 +66,9 @@ public class Move {
         while (iterator.hasNext()) {
             System.out.println(iterator.next());
         }
+
+        board.AddPossibleMoves(kappa);
+        board.PrintMovableBoard();
 
 //        for(int  i = 0; i < kappa.size(); ++i) {
 //            if()

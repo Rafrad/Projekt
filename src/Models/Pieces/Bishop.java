@@ -38,4 +38,9 @@ public class Bishop implements Piece {
 
         return allowedMoves;
     }
+
+    @Override
+    public boolean getPlayer() {
+        return player;
+    }
 }

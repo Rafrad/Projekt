@@ -19,4 +19,8 @@ public class WhiteKing implements Piece {
 
         return allowedMoves;
     }
+    @Override
+    public boolean getPlayer() {
+        return false;
+    }
 }

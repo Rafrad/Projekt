@@ -1,11 +1,12 @@
 import Models.Game;
+import Models.Pieces.WhitePawn;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import Exception.PlayerColorExeption;
+import PlayerColorException;
 
 public class Main extends Application {
 
@@ -35,7 +36,7 @@ public class Main extends Application {
     }
 
 
-    public static void main(String[] args) throws PlayerColorExeption {
+    public static void main(String[] args) throws PlayerColorException {
         //getIcon - Model???
 //        launch(args);
 
@@ -50,6 +51,8 @@ public class Main extends Application {
 //        }
 
         Game game = new Game();
+        game.board.board[2][1] = new WhitePawn();
+        game.board.PrintBoard();
         game.move.canMove(1, 0);
 
     }

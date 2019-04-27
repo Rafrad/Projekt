@@ -3,6 +3,7 @@ package Models.Pieces;
 import javafx.util.Pair;
 import java.util.List;
 
+//*** move() ***
 //we  start in [0, 0] and we calculate moves
 //treating moves like vectors
 //eg. pawn can move to
@@ -11,10 +12,12 @@ import java.util.List;
 //[1, -1]
 //[1, 1]
 
+//*** getPlayer() ***
 //variable player in every piece define where piece belongs to
 //true - white player
 //false - black player
 
 public interface Piece {
     List<Pair<Integer, Integer>> move();
+    boolean getPlayer();
 }

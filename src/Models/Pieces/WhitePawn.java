@@ -8,8 +8,9 @@ import java.util.List;
 public class WhitePawn implements Piece {
     boolean player;
 
-    WhitePawn() {
+    public WhitePawn() {
         player = true;
+
     }
 
     @Override
@@ -17,11 +18,16 @@ public class WhitePawn implements Piece {
         LinkedList<Pair<Integer, Integer>> allowedMoves = new LinkedList<>();
 
         //TODO: UNIT TESTS
-        allowedMoves.add(new Pair<>(1, 0));
-        allowedMoves.add(new Pair<>(1, 1));
-        allowedMoves.add(new Pair<>(1, -1));
-        allowedMoves.add(new Pair<>(2, 0));
+        allowedMoves.add(new Pair<>(-1, 0));
+        allowedMoves.add(new Pair<>(-1, -1));
+        allowedMoves.add(new Pair<>(-1, 1));
+        allowedMoves.add(new Pair<>(-2, 0));
 
         return allowedMoves;
+    }
+
+    @Override
+    public boolean getPlayer() {
+        return player;
     }
 }

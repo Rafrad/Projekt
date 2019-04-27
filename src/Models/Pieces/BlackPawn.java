@@ -9,7 +9,7 @@ import java.util.List;
 public class BlackPawn implements Piece {
     boolean player;
 
-    BlackPawn() {
+    public BlackPawn() {
         player = false;
     }
 
@@ -18,11 +18,18 @@ public class BlackPawn implements Piece {
         LinkedList<Pair<Integer, Integer>> allowedMoves = new LinkedList<>();
 
         //TODO: UNIT TESTS
-        allowedMoves.add(new Pair<>(-1, 0));
-        allowedMoves.add(new Pair<>(-1, -1));
-        allowedMoves.add(new Pair<>(-1, 1));
-        allowedMoves.add(new Pair<>(-2, 0));
+        allowedMoves.add(new Pair<>(1, 0));
+        allowedMoves.add(new Pair<>(1, 1));
+        allowedMoves.add(new Pair<>(1, -1));
+        allowedMoves.add(new Pair<>(2, 0));
+
+
 
         return allowedMoves;
+    }
+
+    @Override
+    public boolean getPlayer() {
+        return player;
     }
 }

@@ -1,12 +1,17 @@
 package Models;
 
 import Models.Pieces.*;
-import Exception.PlayerColorExeption;
+import PlayerColorException;
+import javafx.util.Pair;
+
+import java.util.List;
 
 public class Board {
-    Piece board[][];
+    //TODO: delete publics
+    public Piece board[][];
+    Piece boardMove[][];
 
-    public Board() throws PlayerColorExeption {
+    public Board() throws PlayerColorException {
         board = new Piece[8][8];
 
         for (int i = 0; i < 8; i++) {
@@ -34,8 +39,10 @@ public class Board {
                             board[i][j] = new WhiteKing();
                             break;
                     }
-                } else if (i == 1 || i == 6) {
+                } else if (i == 6) {
                     board[i][j] = new WhitePawn();
+                } else if (i == 1) {
+                    board[i][j] = new BlackPawn();
                 } else {
                     board[i][j] = new EmptyTile();
                 }
@@ -43,24 +50,59 @@ public class Board {
 
         }
 //        board[2][1] = new WhiteKing();
+        boardMove = board;
     }
 
 
     public void PrintBoard() {
-        for (int i = 7; i >= 0; i--) {
+        for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                System.out.print("[" + i + ", " + j + "]");
-                System.out.print(" ");
-//                System.out.print(boardTmp[i][j]);
-//                System.out.print(" ");
+//                System.out.println(board[i][j].getClass().getSimpleName());
+                if(board[i][j].getClass().getSimpleName().equals("WhitePawn")) {
+                    System.out.print("w ");
+                } else if(board[i][j].getClass().getSimpleName().equals("BlackPawn")) {
+                    System.out.print("b ");
+                } else {
+                    System.out.print("x ");
+                }
             }
             System.out.println();
         }
     }
 
 
-    public Piece getPiece(int a, int b) {
-        return board[a][b];
+    public Piece getPiece(int row, int column) {
+        return board[row][column];
+    }
+
+    public void AddPossibleMoves(List<Pair<Integer, Integer>> list) {
+        int row = 0;
+        int column = 0;
+        for(int i = 0; i < list.size(); i++) {
+            row = list.get(i).getKey();
+            column = list.get(i).getValue();
+
+            boardMove[row][column] = new Mark_MovableTile();
+        }
+    }
+
+    public void PrintMovableBoard() {
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+//                System.out.println(board[i][j].getClass().getSimpleName());
+                if(board[i][j].getClass().getSimpleName().equals("WhitePawn")) {
+                    System.out.print("w ");
+                } else if(board[i][j].getClass().getSimpleName().equals("BlackPawn")) {
+                    System.out.print("b ");
+                } else if(board[i][j].getClass().getSimpleName().equals("Mark_MovableTile")) {
+                    System.out.print("m ");
+                }
+                else {
+                    System.out.print("x ");
+                }
+            }
+            System.out.println();
+        }
     }
 
 //    public String getPiece(int a, int b) {
