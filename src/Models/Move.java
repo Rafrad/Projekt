@@ -1,5 +1,6 @@
 package Models;
 
+import Exceptions.PlayerColorException;
 import Models.Pieces.EmptyTile;
 import Models.Pieces.Piece;
 import Models.Pieces.WhitePawn;
@@ -8,7 +9,7 @@ import javafx.util.Pair;
 import java.util.*;
 
 public class Move {
-    Move() {
+    Move() throws PlayerColorException {
         Board boardTmp = new Board();
     }
 

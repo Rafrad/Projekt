@@ -1,9 +1,9 @@
 package Models;
 
+import Exceptions.PlayerColorException;
 import Models.Pieces.*;
-import PlayerColorException;
-import javafx.util.Pair;
 
+import javafx.util.Pair;
 import java.util.List;
 
 public class Board {

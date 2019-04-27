@@ -1,5 +1,6 @@
 package Models;
-import PlayerColorException;
+import Exceptions.PlayerColorException;
+
 public class Game {
     //jaki gracz ma ruch
     //czy koniec
