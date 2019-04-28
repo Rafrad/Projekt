@@ -10,7 +10,6 @@ import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 import javafx.event.ActionEvent;
-//import java.awt.event.ActionEvent;
 import java.io.IOException;
 
 
@@ -39,9 +38,13 @@ public class MainMenuController {
 
         //This line gets the Stage information
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-
+        window.setWidth(1400);
+        window.setHeight(800);
         window.setScene(tableViewScene);
+//        window.setResizable(false);
+
         window.show();
+
     }
 
 

@@ -32,11 +32,6 @@
           <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="70.0" vgrow="SOMETIMES" />
           <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="70.0" vgrow="SOMETIMES" />
         </rowConstraints>
-         <children>
-            <Pane fx:id="pane" prefHeight="200.0" prefWidth="200.0" />
-            <Pane fx:id="kurwa" onMouseClicked="#clicked" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" />
-            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="7" />
-         </children>
       </GridPane>
       <HBox prefHeight="99.0" prefWidth="667.0">
          <children>
