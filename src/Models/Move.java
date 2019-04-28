@@ -1,9 +1,8 @@
 package Models;
 
+
 import Exceptions.PlayerColorException;
-import Models.Pieces.EmptyTile;
 import Models.Pieces.Piece;
-import Models.Pieces.WhitePawn;
 import javafx.util.Pair;
 
 import java.util.*;

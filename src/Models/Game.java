@@ -1,7 +1,8 @@
 package Models;
+
 import Exceptions.PlayerColorException;
 import Models.Pieces.EmptyTile;
-import Models.Pieces.Piece;
+
 
 public class Game {
     //which player has move, white starts; white = true
@@ -44,6 +45,10 @@ public class Game {
 
             }
         }
+    }
+
+    public boolean getCurrentPlayer() {
+        return currentlyPlayer;
     }
 
 

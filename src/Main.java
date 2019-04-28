@@ -3,8 +3,23 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
+/*
+ * Currently I don't know how to make separate
+ * folder for Controllers
+ *
+ * At the moment Views & Controllers are in the same folder
+ */
 
 public class Main extends Application {
 
@@ -26,17 +41,19 @@ public class Main extends Application {
 //        primaryStage.setScene(s);
 //        primaryStage.show();
 
-
         Parent root = FXMLLoader.load(getClass().getResource("Views/Game.fxml"));
         primaryStage.setTitle("Chess");
-        primaryStage.setScene(new Scene(root, 1200, 700));
+        primaryStage.setScene(new Scene(root, 1000, 800));
         primaryStage.show();
         primaryStage.setResizable(false);
 
     }
 
 
-    public static void main(String[] args) throws PlayerColorException {
+    public static void main(String[] args) throws PlayerColorException, FileNotFoundException, IOException {
+//        Image BlackPawn = new Image(new FileInputStream("black_pawn.png"));
+//        Image BlackPawn = new Image("Images/black_pawn.png");
+
         //getIcon - Model???
         launch(args);
 
