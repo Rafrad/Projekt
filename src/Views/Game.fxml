@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
@@ -7,7 +9,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 
-<AnchorPane fx:id="anchor" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.GameController">
+<AnchorPane fx:id="anchor" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Views.GameController">
    <children>
       <GridPane fx:id="gridPane" alignment="TOP_CENTER" gridLinesVisible="true" layoutY="260.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="562.0" prefWidth="564.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="530.0" AnchorPane.topAnchor="100.0">
         <columnConstraints>
@@ -36,5 +38,11 @@
             <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="7" />
          </children>
       </GridPane>
+      <HBox prefHeight="99.0" prefWidth="667.0">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="WRÓG OPONENT" wrappingWidth="240.5400390625" />
+            <Label fx:id="time" prefHeight="67.0" prefWidth="151.0" />
+         </children>
+      </HBox>
    </children>
 </AnchorPane>

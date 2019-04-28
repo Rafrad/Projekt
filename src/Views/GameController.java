@@ -1,27 +1,37 @@
-package Controllers;
+package Views;
+
 
 import Exceptions.PlayerColorException;
 import Models.Game;
 import Models.Pieces.BlackPawn;
-import Models.Pieces.Piece;
-import Models.Pieces.WhitePawn;
+
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.util.Duration;
 import javafx.util.Pair;
 
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 import java.util.List;
 
 public class GameController {
-    //he
+    @FXML
+    Label time;
+
     @FXML
     Pane pane;
     @FXML
@@ -33,6 +43,8 @@ public class GameController {
 
     @FXML
     Pane[][] Tile;
+    int kappa = 1;
+
 
     public Node getNodeByRowColumnIndex(final int row, final int column) {
         Node result = null;
@@ -60,6 +72,7 @@ public class GameController {
         pane.setOnMouseClicked(mouseEvent -> {
             pane.setStyle("-fx-background-color: red");
         });
+//xd
 
 //        System.out.println(anchor.getHeight());
 //
@@ -121,13 +134,52 @@ public class GameController {
 
                 Tile[row][column].getChildren().add(haha[i]);
             }
-//            for(int i = 0; i< 8; i++) {
-//                for(int j = 0; j < 8; j++) {
-//
-//                }
-//            }
+
         });
+
+        //gowno zegarek
+        long endTime = 10;
+//        Label timeLabel;
+        Label timeLabel = new Label();
+        DateFormat timeFormat = new SimpleDateFormat( "HH:mm:ss" );
+        final Timeline timeline = new Timeline(
+                new KeyFrame(
+                        Duration.millis( 500 ),
+                        event -> {
+                            final long diff = endTime - System.currentTimeMillis();
+                            if ( diff < 0 ) {
+                                //  timeLabel.setText( "00:00:00" );
+                                timeLabel.setText( timeFormat.format( 0 ) );
+                            } else {
+                                timeLabel.setText( timeFormat.format( diff ) );
+                            }
+                        }
+                )
+        );
+        timeline.setCycleCount( Animation.INDEFINITE );
+        timeline.play();
+
+
+        //gowno zegarek
+
+        int lol = 1;
+        Timeline clock = new Timeline(new KeyFrame(Duration.ZERO, e -> {
+            int second = 00;
+            int minute = 10;
+//            int second = LocalDateTime.now().getSecond();
+//            int minute = LocalDateTime.now().getMinute();
+//            int hour = LocalDateTime.now().getHour();
+//            time.setText(hour + ":" + (minute) + ":" + second);
+            time.setText(minute + ":" + second);
+        }),
+                new KeyFrame(Duration.seconds(1))
+        );
+        clock.setCycleCount(Animation.INDEFINITE);
+        clock.play();
+
+
     }
+
 
     boolean isEven(int a, int b) {
         return (a + b) % 2 == 0;
