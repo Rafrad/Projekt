@@ -2,23 +2,21 @@ package Models;
 
 
 import Exceptions.PlayerColorException;
+import Exceptions.WrongBoardException;
 import Models.Pieces.Piece;
 import javafx.util.Pair;
 
 import java.util.*;
 
 public class Move {
-    Move() throws PlayerColorException {
-        Board boardTmp = new Board();
-    }
-
     Board board;
+
+    Move() throws WrongBoardException { }
 
     Move(Board boardTmp) {
         this.board = boardTmp;
     }
 
-    //chyba pozinno zwracac tablice mozliwych ruchow
     public List<Pair<Integer, Integer>> canMove(int a, int b) {
 
         Piece piece = board.getPiece(a, b);
@@ -26,7 +24,6 @@ public class Move {
         String nameOfPiece = piece.getClass().getSimpleName();
 
         List<Pair<Integer, Integer>> allowedMoves = piece.move();
-//        Iterator iterator = allowedMoves.iterator();
 
         List<Pair<Integer, Integer>> kappa = new LinkedList<>();
         System.out.println("allowed moves: " + allowedMoves.size());
@@ -38,7 +35,7 @@ public class Move {
 //DODAJEMY RUCHY
 
 
-            if(key <0|| value < 0) {
+            if(key <0|| value < 0 || key > 7 || value > 7) {
 
             } else {
                 Piece check = board.getPiece(key, value);

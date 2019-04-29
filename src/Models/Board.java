@@ -1,7 +1,5 @@
 package Models;
 
-
-
 import Exceptions.PlayerColorException;
 import Models.Pieces.*;
 import javafx.util.Pair;
@@ -10,8 +8,7 @@ import java.util.List;
 public class Board {
     //TODO: delete publics
     public Piece[][] board;
-    //jak to nazwac
-    public Piece[][] boardMove;
+    public Piece[][] boardOfPossibleMoves;
 
     public Board() throws PlayerColorException {
         board = new Piece[8][8];
@@ -51,7 +48,7 @@ public class Board {
             }
 
         }
-        boardMove = board;
+        boardOfPossibleMoves = board;
     }
 
 
@@ -82,14 +79,14 @@ public class Board {
             row = list.get(i).getKey();
             column = list.get(i).getValue();
 
-            boardMove[row][column] = new Mark_MovableTile();
+            boardOfPossibleMoves[row][column] = new Mark_MovableTile();
         }
     }
 
     public void PrintMovableBoard() {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-//                System.out.println(board[i][j].getClass().getSimpleName());
+
                 if(board[i][j].getClass().getSimpleName().equals("WhitePawn")) {
                     System.out.print("w ");
                 } else if(board[i][j].getClass().getSimpleName().equals("BlackPawn")) {
@@ -104,10 +101,6 @@ public class Board {
             System.out.println();
         }
     }
-
-//    public String getPiece(int a, int b) {
-//        return boardTmp[a][b];
-//    }
 
     //return Board??
 

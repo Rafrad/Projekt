@@ -19,13 +19,15 @@ public class Game {
     public Game() throws PlayerColorException {
         boardClass = new Board();
         moveClass = new Move(boardClass);
-        currentlyPlayer = true;
+        boardClass.PrintBoard();
+        //TODO: CHANGE
+        currentlyPlayer = false;
         isOver = false;
     }
 
     public void move(int row, int column, int rowDestination, int columnDestination) {
         System.out.println();
-        if(boardClass.boardMove[rowDestination][columnDestination].getClass().getSimpleName().equals("Mark_MovableTile")) {
+        if(boardClass.boardOfPossibleMoves[rowDestination][columnDestination].getClass().getSimpleName().equals("Mark_MovableTile")) {
             System.out.println("mozna");
             UpdateBoard(row, column, rowDestination, columnDestination);
         } else {
@@ -42,7 +44,9 @@ public class Game {
     public void ClearBoardWithPossibleMoves() {
         for(int i = 0; i < 8; i++) {
             for(int j = 0; j < 8; j++) {
-
+                if(boardClass.boardOfPossibleMoves[i][j].getClass().getSimpleName().equals("Mark_MovableTile")) {
+                    boardClass.boardOfPossibleMoves[i][j] = new EmptyTile();
+                }
             }
         }
     }

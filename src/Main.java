@@ -50,30 +50,7 @@ public class Main extends Application {
     }
 
 
-    public static void main(String[] args) throws PlayerColorException, FileNotFoundException, IOException {
-//        Image BlackPawn = new Image(new FileInputStream("black_pawn.png"));
-//        Image BlackPawn = new Image("Images/black_pawn.png");
-
-        //getIcon - Model???
+    public static void main(String[] args){
         launch(args);
-
-//        for(int i = 7; i >= 0; i--) {
-//            for(int j = 0; j < 8; j++) {
-//                System.out.print(i);
-//                System.out.print(j + " ");
-//            }
-//            System.out.println(
-//
-//            );
-//        }
-
-//        Game game = new Game();
-//        game.boardClass.board[2][1] = new WhitePawn();
-//        game.boardClass.PrintBoard();
-//        game.moveClass.canMove(1, 0);
-//        game.move(1, 0, 2, 0);
-//
-//        game.boardClass.PrintBoard();
-
     }
 }
