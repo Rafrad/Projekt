@@ -4,10 +4,16 @@ package Models.Pieces;
 import javafx.util.Pair;
 import java.util.List;
 
+
+/*
+ *  Probably will be deleted
+ *  Could've done more interfaces - too lazy
+ */
+
 //*** move() ***
-//we  start in [0, 0] and we calculate moves
+//we  start in [0, 0] and then moves are calculated
 //treating moves like vectors
-//eg. pawn can move to
+//eg. black pawn can move to
 //[1, 0]
 //[2, 0]
 //[1, -1]
@@ -18,9 +24,23 @@ import java.util.List;
 //true - white player
 //false - black player
 
+//*** getFirstMove() ***
+//checks if a piece made its first move
+
+//*** setFirstMove() ***
+//sets first move to true
+
+//*** getCheck() ***
+//returns true if king is checked, false otherwise
+
+//*** enPassant() ***
+//return true if pawn is vulnerable to enPassant, false otherwise
+
 public interface Piece {
     List<Pair<Integer, Integer>> move();
     boolean getPlayer();
     boolean getFirstMove();
     void setFirstMove(boolean move);
+    boolean getCheck();
+    boolean enPassant();
 }
