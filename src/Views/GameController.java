@@ -3,7 +3,6 @@ package Views;
 
 import Exceptions.PlayerColorException;
 import Models.Game;
-import Models.Pieces.BlackPawn;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -65,58 +64,86 @@ public class GameController {
         /*
          * sprawdzamy czy to puste pole, czy figura
          * jezeli puste pole - nic nie robimy, jezeli figura
-         * czyscimy zaznaczona figure i mozliwe ruchy
-         * 
+         * czyscimy zaznaczona figure i wyswietlamy mozliwe ruchy
+         *
+         * sprawdzamy czy Mark_MovableTile
+         *
          */
 
-        for (int k = 0; k < 8; k++) {
-            final int xd = k;
-            Tile[1][k].setOnMouseClicked(mouseEvent -> {
-                PaintBoard();
-                ClearPossibleMoves();
-
-                //                Tile[1][0].getChildren().
-//                    if (game.boardClass.board[2][0].getClass().getSimpleName().equals("Mark_MovableTile")) {
-//                        ImageView lol = new ImageView(BlackPawn);
-//                        Tile[2][1].getChildren().remove(0);
-//                        Tile[2][1].getChildren().add(lol);
-//                        Tile[1][1].getChildren().remove(0);
-//                    }
 
 
-                if (!game.boardClass.board[1][xd].getClass().getSimpleName().equals("EmptyTile")
-//                            && game.getCurrentPlayer() == game.boardClass.board[1][1].getPlayer()
-                ) {
 
-                    Tile[1][xd].setStyle("-fx-background-color: #fbfb5b");
+        for (int r = 0; r < 8; r++) {
+            for (int c = 0; c < 8; c++) {
+                final int row = r;
+                final int column = c;
+
+                Tile[row][column].setOnMouseClicked(mouseEvent-> {
+                    switch (game.boardClass.board[row][column].getClass().getSimpleName()) {
+                        case "EmptyTile":
+                            System.out.println("emptyTile");
+                            break;
+                        case "Mark_MovableTile":
+                            Pair<Integer, Integer> selectedPiece = getSelectedPiece();
+
+                            int selectedPieceRow = selectedPiece.getKey();
+                            int selectedPieceColumn = selectedPiece.getValue();
+
+                            game.move(selectedPieceRow, selectedPieceColumn, row, column);
+                            ClearPossibleMoves();
+                            PaintBoard();
+
+
+                            Tile[row][column].getChildren().remove(0);
+                            Tile[selectedPieceRow][selectedPieceColumn].getChildren().remove(0);
+                            ImageView tmp = new ImageView(BlackPawn);
+                            Tile[row][column].getChildren().add(tmp);
+
+
+                            break;
+                        default:
+                            PaintBoard();
+                            ClearPossibleMoves();
+
+                            System.out.println("figura");
+
+
+                            Tile[row][column].setStyle("-fx-background-color: #fbfb5b");
 //                    game.boardClass.board[1][xd] = new BlackPawn();
-                    System.out.println(xd);
-                    List<Pair<Integer, Integer>> moves = game.moveClass.canMove(1, xd);
-                    ImageView[] haha = new ImageView[moves.size()];
+                            List<Pair<Integer, Integer>> moves = game.moveClass.CalculateMoves(row, column);
+                            ImageView[] xd = new ImageView[moves.size()];
 
-                    for (int i = 0; i < moves.size(); i++) {
-                        haha[i] = new ImageView(dot);
-                        int row = moves.get(i).getKey();
-                        int column = moves.get(i).getValue();
+                            for (int i = 0; i < moves.size(); i++) {
+                                xd[i] = new ImageView(dot);
+                                int rowMove = moves.get(i).getKey();
+                                int columnMove = moves.get(i).getValue();
 
 
-                        Tile[row][column].getChildren().add(haha[i]);
+                                Tile[rowMove][columnMove].getChildren().add(xd[i]);
+                            }
+                            break;
                     }
 
-                }
-            });
+                });
+            }
         }
 
-        Tile[2][1].setOnMouseClicked(mouseEvent -> {
-            if (game.boardClass.board[2][1].getClass().getSimpleName().equals("Mark_MovableTile")) {
-                ImageView lol = new ImageView(BlackPawn);
-                Tile[2][1].getChildren().remove(0);
-                Tile[2][1].getChildren().add(lol);
-                Tile[1][1].getChildren().remove(0);
-                //jakis
-                //kolejny update
-            }
-        });
+
+
+
+
+
+
+//        Tile[2][1].setOnMouseClicked(mouseEvent -> {
+//            if (game.boardClass.board[2][1].getClass().getSimpleName().equals("Mark_MovableTile")) {
+//                ImageView lol = new ImageView(BlackPawn);
+//                Tile[2][1].getChildren().remove(0);
+//                Tile[2][1].getChildren().add(lol);
+//                Tile[1][1].getChildren().remove(0);
+//                //jakis
+//                //kolejny update
+//            }
+//        });
 
 //new EventHandler
 
@@ -168,6 +195,18 @@ public class GameController {
         System.out.println("kuppa");
     }
 
+    public Pair<Integer, Integer> getSelectedPiece() {
+        for(int row = 0; row < 8; row++) {
+            for(int column = 0; column < 8; column++) {
+                if(Tile[row][column].styleProperty().getValue().subSequence(22,29).equals("#fbfb5b")) {
+                    Pair<Integer, Integer> pair = new Pair<Integer, Integer>(row, column);
+                    return pair;
+                }
+            }
+        }
+        return null;
+    }
+
 
     public void UpdateBoard(int row, int column, int rowDestination, int columnDestination) {
 //        boardClass.board[rowDestination][columnDestination] = boardClass.board[row][column];
@@ -187,6 +226,7 @@ public class GameController {
             }
         }
     }
+
 
     public void PaintBoard() {
         for (int i = 0; i < 8; i++) {

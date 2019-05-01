@@ -26,9 +26,15 @@ public class Game {
     }
 
     public void move(int row, int column, int rowDestination, int columnDestination) {
-        System.out.println();
-        if(boardClass.boardOfPossibleMoves[rowDestination][columnDestination].getClass().getSimpleName().equals("Mark_MovableTile")) {
-            System.out.println("mozna");
+        if (boardClass.boardOfPossibleMoves[rowDestination][columnDestination].getClass().getSimpleName().equals("Mark_MovableTile")) {
+            switch (boardClass.board[row][column].getClass().getSimpleName()) {
+                case "BlackPawn":
+                    if (boardClass.board[row][column].getFirstMove()) {
+                        boardClass.board[row][column].setFirstMove(false);
+                    }
+                    break;
+            }
+
             UpdateBoard(row, column, rowDestination, columnDestination);
         } else {
             System.out.println("nie mozna");
@@ -42,9 +48,9 @@ public class Game {
     }
 
     public void ClearBoardWithPossibleMoves() {
-        for(int i = 0; i < 8; i++) {
-            for(int j = 0; j < 8; j++) {
-                if(boardClass.boardOfPossibleMoves[i][j].getClass().getSimpleName().equals("Mark_MovableTile")) {
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                if (boardClass.boardOfPossibleMoves[i][j].getClass().getSimpleName().equals("Mark_MovableTile")) {
                     boardClass.boardOfPossibleMoves[i][j] = new EmptyTile();
                 }
             }

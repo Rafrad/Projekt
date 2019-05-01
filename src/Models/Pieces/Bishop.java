@@ -6,7 +6,7 @@ import javafx.util.Pair;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Bishop implements Piece {
+public abstract class Bishop implements Piece {
     private boolean player;
     //true - white
     //false - black

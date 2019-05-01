@@ -6,7 +6,7 @@ import javafx.util.Pair;
 import java.util.LinkedList;
 import java.util.List;
 
-public class WhitePawn implements Piece {
+public abstract class WhitePawn implements Piece {
     boolean player;
 
     public WhitePawn() {

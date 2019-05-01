@@ -9,9 +9,11 @@ import java.util.List;
 
 public class BlackPawn implements Piece {
     boolean player;
+    boolean firstMove;
 
     public BlackPawn() {
         player = false;
+        firstMove = true;
     }
 
     @Override
@@ -32,5 +34,15 @@ public class BlackPawn implements Piece {
     @Override
     public boolean getPlayer() {
         return player;
+    }
+
+    @Override
+    public boolean getFirstMove() {
+        return firstMove;
+    }
+
+    @Override
+    public void setFirstMove(boolean move) {
+        firstMove = move;
     }
 }

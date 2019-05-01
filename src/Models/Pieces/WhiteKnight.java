@@ -7,7 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 //skoczek
-public class WhiteKnight implements Piece{
+public abstract class WhiteKnight implements Piece{
     @Override
     public List<Pair<Integer, Integer>> move() {
         List<Pair<Integer, Integer>> allowedMoves = new LinkedList<>();

@@ -6,7 +6,7 @@ import javafx.util.Pair;
 import java.util.LinkedList;
 import java.util.List;
 
-public class BlackBishop implements Piece {
+public abstract class BlackBishop implements Piece {
     @Override
     public List<Pair<Integer, Integer>> move() {
         List<Pair<Integer, Integer>> allowedMoves = new LinkedList<>();

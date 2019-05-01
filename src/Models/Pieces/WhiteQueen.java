@@ -5,7 +5,7 @@ import javafx.util.Pair;
 import java.util.LinkedList;
 import java.util.List;
 
-public class WhiteQueen implements Piece{
+public abstract class WhiteQueen implements Piece{
     //rook & bishop
     @Override
     public List<Pair<Integer, Integer>> move() {

@@ -17,39 +17,56 @@ public class Move {
         this.board = boardTmp;
     }
 
-    public List<Pair<Integer, Integer>> canMove(int a, int b) {
+    public List<Pair<Integer, Integer>> CalculateMoves(int a, int b) {
 
         Piece piece = board.getPiece(a, b);
+        //
         System.out.println(piece.getClass().getSimpleName());
+        //
         String nameOfPiece = piece.getClass().getSimpleName();
-
         List<Pair<Integer, Integer>> allowedMoves = piece.move();
 
-        List<Pair<Integer, Integer>> kappa = new LinkedList<>();
+        List<Pair<Integer, Integer>> availableMoves = new LinkedList<>();
         System.out.println("allowed moves: " + allowedMoves.size());
         for (int i = 0; i < allowedMoves.size(); i++) {
             int key = allowedMoves.get(i).getKey() + a;
             int value = allowedMoves.get(i).getValue() + b;
-//            System.out.println(allowedMoves.get(i).getKey());
-
 //DODAJEMY RUCHY
-
-
             if(key <0|| value < 0 || key > 7 || value > 7) {
 
             } else {
                 Piece check = board.getPiece(key, value);
                 String nameOfCheck = check.getClass().getSimpleName();
                 if(nameOfCheck.equals("EmptyTile") && b == value) {
-                    kappa.add(new Pair<>(key, value));
+//                    availableMoves.add(new Pair<>(key, value));
+//                    System.out.println("?????????????????????????????");
+
+
+                    switch (nameOfPiece) {
+                        case "BlackPawn" :
+                            //TODO :promotion, bicie z przelotem
+                                if (board.board[a][b].getFirstMove()) {
+                                    availableMoves.add(new Pair<>(key, value));
+                                } else {
+                                    if(!(a == key - 2)) {
+                                        availableMoves.add(new Pair<>(key, value));
+                                    }
+
+                                }
+                            break;
+                        default:
+                            break;
+                    }
+
 
                 } else if(b != value && !nameOfCheck.equals("EmptyTile")) {
                     boolean basicPlayer = piece.getPlayer();
                     boolean player = check.getPlayer();
 
-                    if(basicPlayer != player) {
-                        kappa.add(new Pair<>(key, value));
-                    }
+//                    if(basicPlayer != player) { // ogolne warunki dla kazdej figury
+
+
+//                    }
 
                 }
 
@@ -58,25 +75,17 @@ public class Move {
 //            System.out.println(allowedMoves.get(i));
         }
 
-        Iterator iterator = kappa.iterator();
+        Iterator iterator = availableMoves.iterator();
 
         while (iterator.hasNext()) {
             System.out.println(iterator.next());
         }
 
-        board.AddPossibleMoves(kappa);
+        board.AddPossibleMoves(availableMoves);
         board.PrintMovableBoard();
 
-//        for(int  i = 0; i < kappa.size(); ++i) {
-//            if()
-//        }
 
-        switch (nameOfPiece) {
-            case "WhitePawn":
-
-                break;
-        }
-
-        return kappa;
+        return availableMoves;
     }
+    
 }

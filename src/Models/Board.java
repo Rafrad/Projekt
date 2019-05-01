@@ -19,31 +19,39 @@ public class Board {
                     switch (j) {
                         case 0:
                         case 7:
-                            board[i][j] = new WhiteRook();
+//                            board[i][j] = new WhiteRook();
+                            board[i][j] = new EmptyTile();
                             break;
                         case 1:
                         case 6:
-                            board[i][j] = new WhiteKnight();
+                            board[i][j] = new EmptyTile();
+//                            board[i][j] = new WhiteKnight();
                             break;
                         case 2:
-                            board[i][j] = new Bishop("black");
+                            board[i][j] = new EmptyTile();
+//                            board[i][j] = new Bishop("black");
                         case 5:
-                            board[i][j] = new Bishop("white");
+                            board[i][j] = new EmptyTile();
+//                            board[i][j] = new Bishop("white");
 
                             break;
                         case 3:
-                            board[i][j] = new WhiteQueen();
+                            board[i][j] = new EmptyTile();
+//                            board[i][j] = new WhiteQueen();
                             break;
                         case 4:
-                            board[i][j] = new WhiteKing();
+                            board[i][j] = new EmptyTile();
+//                            board[i][j] = new WhiteKing();
                             break;
                     }
                 } else if (i == 6) {
-                    board[i][j] = new WhitePawn();
+                    board[i][j] = new EmptyTile();
+//                    board[i][j] = new WhitePawn();
                 } else if (i == 1) {
                     board[i][j] = new BlackPawn();
                 } else {
                     board[i][j] = new EmptyTile();
+//                    board[i][j] = new EmptyTile();
                 }
             }
 

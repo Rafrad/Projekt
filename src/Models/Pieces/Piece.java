@@ -21,4 +21,6 @@ import java.util.List;
 public interface Piece {
     List<Pair<Integer, Integer>> move();
     boolean getPlayer();
+    boolean getFirstMove();
+    void setFirstMove(boolean move);
 }
