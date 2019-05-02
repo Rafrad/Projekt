@@ -5,6 +5,7 @@ import Exceptions.PlayerColorException;
 import Models.Game;
 
 import Models.Pieces.Piece;
+import Models.Pieces.Rook;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -28,7 +29,11 @@ public class GameController {
     Game game;
 
     Image blackPawn;
+    Image blackRook;
+
     Image whitePawn;
+    Image whiteRook;
+
     Image dot;
 
     @FXML
@@ -40,7 +45,12 @@ public class GameController {
          */
 
         blackPawn = new Image("Images/black_pawn.png");
+        blackRook = new Image("Images/black_rook.png");
+
         whitePawn = new Image("Images/white_pawn.png");
+        whiteRook = new Image("Images/white_rook.png");
+
+
         dot = new Image("Images/dot.png");
 
 
@@ -84,7 +94,7 @@ public class GameController {
 
                             break;
                         default:
-                            if(game.getCurrentPlayer() == game.boardClass.board[row][column].getPlayer()) {
+                            if (game.getCurrentPlayer() == game.boardClass.board[row][column].getPlayer()) {
                                 PaintBoard();
                                 ClearPossibleMoves();
                                 EmulateBoard();
@@ -109,7 +119,6 @@ public class GameController {
                 });
             }
         }
-
 
 
     }
@@ -159,7 +168,7 @@ public class GameController {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 if (game.boardClass.boardOfPossibleMoves[i][j].getClass().getSimpleName().equals("Mark_MovableTile")) {
-                    for(int s = 0; s < Tile[i][j].getChildren().size(); s++) {
+                    for (int s = 0; s < Tile[i][j].getChildren().size(); s++) {
                         Tile[i][j].getChildren().remove(s);
                     }
 
@@ -175,7 +184,7 @@ public class GameController {
             for (int column = 0; column < 8; column++) {
                 ImageView tmp = null;
 
-                while(!Tile[row][column].getChildren().isEmpty()) {
+                while (!Tile[row][column].getChildren().isEmpty()) {
                     Tile[row][column].getChildren().remove(0);
                 }
 
@@ -186,10 +195,16 @@ public class GameController {
                     case "WhitePawn":
                         tmp = new ImageView(whitePawn);
                         break;
+                    case "Rook":
+                        if (((Rook) game.boardClass.board[row][column]).getPlayer()) {
+                            tmp = new ImageView(whiteRook);
+                        } else {
+                            tmp = new ImageView(blackRook);
+                        }
                 }
 
 
-                if(tmp != null) {
+                if (tmp != null) {
                     Tile[row][column].getChildren().add(tmp);
                 }
 

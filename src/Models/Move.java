@@ -1,6 +1,5 @@
 package Models;
 
-
 import Exceptions.PlayerColorException;
 import Exceptions.WrongBoardException;
 import Models.Pieces.BlackPawn;
@@ -32,6 +31,12 @@ public class Move {
         //
         System.out.println("allowed moves: " + allowedMoves.size());
         //
+
+        //no idea
+
+
+
+
         for (int i = 0; i < allowedMoves.size(); i++) {
             int allowedMovesRow = 0;
             int allowedMovesColumn = 0;
@@ -40,66 +45,81 @@ public class Move {
             allowedMovesColumn = allowedMoves.get(i).getValue() + PieceColumn;
 
 //DODAJEMY RUCHY
-            if (allowedMovesRow < 0 || allowedMovesColumn < 0 || allowedMovesRow > 7 || allowedMovesColumn > 7) {
 
-            } else {
+            if (allowedMovesRow >= 0
+                    && allowedMovesColumn >= 0
+                    && allowedMovesRow <= 7
+                    && allowedMovesColumn <= 7) {
+
                 Piece check = board.getPiece(allowedMovesRow, allowedMovesColumn);
                 String nameOfCheck = check.getClass().getSimpleName();
 
-                if (nameOfCheck.equals("EmptyTile") && PieceColumn == allowedMovesColumn) {
 
-                    switch (nameOfPiece) {
-                        case "BlackPawn":
-                            //TODO :promotion, bicie z przelotem
-                            if (((BlackPawn) board.board[PieceRow][PieceColumn]).getFirstMove()) {
-                                availableMoves.add(new Pair<>(allowedMovesRow, allowedMovesColumn));
-                            } else {
-                                if (!(PieceRow == allowedMovesRow - 2)) {
-                                    availableMoves.add(new Pair<>(allowedMovesRow, allowedMovesColumn));
+
+                if(nameOfPiece.equals("Rook")) {
+
+                }
+
+
+
+
+
+                if (nameOfPiece.equals("BlackPawn") || nameOfPiece.equals("WhitePawn")) {
+
+
+                    if (nameOfCheck.equals("EmptyTile")
+                            && PieceColumn == allowedMovesColumn) {
+
+                        switch (nameOfPiece) {
+                            case "BlackPawn":
+                                //TODO :promotion, bicie z przelotem
+                                if (((BlackPawn) board.board[PieceRow][PieceColumn]).getFirstMove()) {
+                                    if (board.board[PieceRow + 1][PieceColumn].getClass().getSimpleName().equals("EmptyTile")) {
+                                        availableMoves.add(new Pair<>(allowedMovesRow, allowedMovesColumn));
+                                    }
+
+                                } else {
+                                    if (!(PieceRow == allowedMovesRow - 2)) {
+                                        availableMoves.add(new Pair<>(allowedMovesRow, allowedMovesColumn));
+                                    }
+
                                 }
 
-                            }
-
-                            break;
-
-                        case "WhitePawn":
-                            System.out.println("xd");
-                            if (((WhitePawn) board.board[PieceRow][PieceColumn]).getFirstMove()) {
-                                availableMoves.add(new Pair<>(allowedMovesRow, allowedMovesColumn));
-                            } else {
-                                if (!(PieceRow == allowedMovesRow + 2)) {
-                                    availableMoves.add(new Pair<>(allowedMovesRow, allowedMovesColumn));
-                                }
-
-                            }
-
-//                            if (board.board[PieceRow][PieceColumn - 1].getClass().getSimpleName().equals("BlackPawn")
-//                                    && ((BlackPawn)board.board[PieceRow][PieceColumn -1]).getEnPassant()
-//                            ) {
-//                                if(PieceColumn != 0) {
-//                                    availableMoves.add(new Pair<>(PieceRow-1, PieceColumn-1));
-//                                }
-//
-//                            }
                                 break;
-                        default:
-                            break;
-                    }
+
+                            case "WhitePawn":
+                                System.out.println("xd");
+                                if (((WhitePawn) board.board[PieceRow][PieceColumn]).getFirstMove()) {
+                                    if (board.board[PieceRow - 1][PieceColumn].getClass().getSimpleName().equals("EmptyTile")) {
+                                        availableMoves.add(new Pair<>(allowedMovesRow, allowedMovesColumn));
+                                    }
+                                } else {
+                                    if (!(PieceRow == allowedMovesRow + 2)) {
+                                        availableMoves.add(new Pair<>(allowedMovesRow, allowedMovesColumn));
+                                    }
+
+                                }
+
+                                break;
+                            default:
+                                break;
+                        }
 
 
-                } else if (PieceColumn != allowedMovesColumn && !nameOfCheck.equals("EmptyTile")) {
-                    boolean basicPlayer = piece.getPlayer();
-                    boolean player = check.getPlayer();
+                    } else if (PieceColumn != allowedMovesColumn && !nameOfCheck.equals("EmptyTile")) {
+                        boolean basicPlayer = piece.getPlayer();
+                        boolean player = check.getPlayer();
 
-                    if (basicPlayer != player) { // ogolne warunki dla kazdej figury
-                        availableMoves.add(new Pair<>(allowedMovesRow, allowedMovesColumn));
+                        if (basicPlayer != player) {
+                            availableMoves.add(new Pair<>(allowedMovesRow, allowedMovesColumn));
+                        }
+
                     }
 
                 }
 
             }
 
-//            System.out.println(allowedMoves.get(i));
         }
 
         Iterator iterator = availableMoves.iterator();
@@ -117,4 +137,12 @@ public class Move {
     }
 
 
+    public List<Pair<Integer, Integer>> RookHelper(int PieceRow, int PieceColumn) {
+        List<Pair<Integer, Integer>> pair = new LinkedList<>();
+
+        if(PieceRow > 0) {
+
+        }
+        return pair;
+    }
 }
