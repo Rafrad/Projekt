@@ -18,13 +18,4 @@ public class EmptyTile implements Piece {
         return false;
     }
 
-    @Override
-    public boolean getFirstMove() {
-        return false;
-    }
-
-    @Override
-    public void setFirstMove(boolean move) {
-
-    }
 }

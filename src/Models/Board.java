@@ -10,8 +10,14 @@ public class Board {
     public Piece[][] board;
     public Piece[][] boardOfPossibleMoves;
 
-    public Board() throws PlayerColorException {
+    public Board() throws PlayerColorException  {
         board = new Piece[8][8];
+        boardOfPossibleMoves = new Piece[8][8];
+
+
+        /*
+         * board init
+         */
 
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
@@ -45,18 +51,63 @@ public class Board {
                             break;
                     }
                 } else if (i == 6) {
-                    board[i][j] = new EmptyTile();
-//                    board[i][j] = new WhitePawn();
+                    board[i][j] = new WhitePawn();
                 } else if (i == 1) {
                     board[i][j] = new BlackPawn();
                 } else {
                     board[i][j] = new EmptyTile();
-//                    board[i][j] = new EmptyTile();
                 }
             }
 
         }
-        boardOfPossibleMoves = board;
+
+
+
+        /*
+         * movable board init
+         */
+
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                if (i == 0 || i == 7) {
+                    switch (j) {
+                        case 0:
+                        case 7:
+//                            board[i][j] = new WhiteRook();
+                            boardOfPossibleMoves[i][j] = new EmptyTile();
+                            break;
+                        case 1:
+                        case 6:
+                            boardOfPossibleMoves[i][j] = new EmptyTile();
+//                            board[i][j] = new WhiteKnight();
+                            break;
+                        case 2:
+                            boardOfPossibleMoves[i][j] = new EmptyTile();
+//                            board[i][j] = new Bishop("black");
+                        case 5:
+                            boardOfPossibleMoves[i][j] = new EmptyTile();
+//                            board[i][j] = new Bishop("white");
+
+                            break;
+                        case 3:
+                            boardOfPossibleMoves[i][j] = new EmptyTile();
+//                            board[i][j] = new WhiteQueen();
+                            break;
+                        case 4:
+                            boardOfPossibleMoves[i][j] = new EmptyTile();
+//                            board[i][j] = new WhiteKing();
+                            break;
+                    }
+                } else if (i == 6) {
+                    boardOfPossibleMoves[i][j] = new WhitePawn();
+                } else if (i == 1) {
+                    boardOfPossibleMoves[i][j] = new BlackPawn();
+                } else {
+                    boardOfPossibleMoves[i][j] = new EmptyTile();
+                }
+            }
+
+        }
     }
 
 
@@ -70,6 +121,7 @@ public class Board {
                 } else {
                     System.out.print("x ");
                 }
+
             }
             System.out.println();
         }
@@ -95,11 +147,11 @@ public class Board {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
 
-                if(board[i][j].getClass().getSimpleName().equals("WhitePawn")) {
+                if(boardOfPossibleMoves[i][j].getClass().getSimpleName().equals("WhitePawn")) {
                     System.out.print("w ");
-                } else if(board[i][j].getClass().getSimpleName().equals("BlackPawn")) {
+                } else if(boardOfPossibleMoves[i][j].getClass().getSimpleName().equals("BlackPawn")) {
                     System.out.print("b ");
-                } else if(board[i][j].getClass().getSimpleName().equals("Mark_MovableTile")) {
+                } else if(boardOfPossibleMoves[i][j].getClass().getSimpleName().equals("Mark_MovableTile")) {
                     System.out.print("m ");
                 }
                 else {
@@ -110,7 +162,13 @@ public class Board {
         }
     }
 
-    //return Board??
+    public void ClearPossibleMoves() {
+        for(int row = 0; row <8; row ++) {
+            for(int column = 0; column < 8; column++) {
+                boardOfPossibleMoves[row][column] = board[row][column];
+            }
+        }
+    }
 
-    //usuwanie i dodawanie lub move
+
 }

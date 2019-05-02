@@ -4,12 +4,6 @@ package Models.Pieces;
 import javafx.util.Pair;
 import java.util.List;
 
-
-/*
- *  Probably will be deleted
- *  Could've done more interfaces - too lazy
- */
-
 //*** move() ***
 //we  start in [0, 0] and then moves are calculated
 //treating moves like vectors
@@ -39,8 +33,4 @@ import java.util.List;
 public interface Piece {
     List<Pair<Integer, Integer>> move();
     boolean getPlayer();
-    boolean getFirstMove();
-    void setFirstMove(boolean move);
-    boolean getCheck();
-    boolean enPassant();
 }

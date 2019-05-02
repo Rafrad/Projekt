@@ -14,14 +14,4 @@ public class Mark_MovableTile implements Piece{
     public boolean getPlayer() {
         return false;
     }
-
-    @Override
-    public boolean getFirstMove() {
-        return false;
-    }
-
-    @Override
-    public void setFirstMove(boolean move) {
-
-    }
 }

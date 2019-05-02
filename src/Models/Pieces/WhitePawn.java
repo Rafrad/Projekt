@@ -6,12 +6,16 @@ import javafx.util.Pair;
 import java.util.LinkedList;
 import java.util.List;
 
-public abstract class WhitePawn implements Piece {
-    boolean player;
+
+public class WhitePawn implements Piece  {
+    private boolean player;
+    private boolean firstMove;
+    private boolean enPassant;
 
     public WhitePawn() {
         player = true;
-
+        firstMove = true;
+        enPassant = false;
     }
 
     @Override
@@ -24,6 +28,8 @@ public abstract class WhitePawn implements Piece {
         allowedMoves.add(new Pair<>(-1, 1));
         allowedMoves.add(new Pair<>(-2, 0));
 
+
+
         return allowedMoves;
     }
 
@@ -31,4 +37,24 @@ public abstract class WhitePawn implements Piece {
     public boolean getPlayer() {
         return player;
     }
+
+
+    public boolean getFirstMove() {
+        return firstMove;
+    }
+
+
+    public void setFirstMove(boolean move) {
+        firstMove = move;
+    }
+
+    public boolean getEnPassant() {
+        return enPassant;
+    }
+
+    public void setEnPassant(boolean bool) {
+        enPassant = bool;
+    }
+
+
 }
