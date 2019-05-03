@@ -28,8 +28,6 @@ public class WhitePawn implements Piece  {
         allowedMoves.add(new Pair<>(-1, 1));
         allowedMoves.add(new Pair<>(-2, 0));
 
-
-
         return allowedMoves;
     }
 
@@ -38,11 +36,9 @@ public class WhitePawn implements Piece  {
         return player;
     }
 
-
     public boolean getFirstMove() {
         return firstMove;
     }
-
 
     public void setFirstMove(boolean move) {
         firstMove = move;
