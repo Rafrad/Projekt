@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane fx:id="rootLayout" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Views.MainMenuController">
+   <children>
+      <Button fx:id="start" layoutX="180.0" layoutY="56.0" mnemonicParsing="false" onAction="#startGame" prefHeight="95.0" prefWidth="221.0" text="Start Game!">
+         <contextMenu>
+            <ContextMenu>
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Unspecified Action" />
+               </items>
+            </ContextMenu>
+         </contextMenu>
+         <tooltip>
+            <Tooltip text="Empty Tooltip" />
+         </tooltip></Button>
+      <Button fx:id="options" layoutX="185.0" layoutY="200.0" mnemonicParsing="false" prefHeight="101.0" prefWidth="212.0" text="Options" />
+   </children>
+</AnchorPane>
