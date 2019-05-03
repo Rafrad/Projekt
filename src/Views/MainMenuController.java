@@ -20,7 +20,6 @@ public class MainMenuController {
     @FXML
     private AnchorPane rootLayout;
 
-
     @FXML
     public void loadSecond() throws IOException {
         AnchorPane pane = FXMLLoader.load(getClass().getClassLoader().getResource("Views/Game.fxml"));
@@ -46,7 +45,6 @@ public class MainMenuController {
         window.show();
 
     }
-
 
     @FXML
     public void initialize() {

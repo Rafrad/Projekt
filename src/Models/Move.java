@@ -32,11 +32,6 @@ public class Move {
         System.out.println("allowed moves: " + allowedMoves.size());
         //
 
-        //no idea
-
-
-
-
         for (int i = 0; i < allowedMoves.size(); i++) {
             int allowedMovesRow = 0;
             int allowedMovesColumn = 0;
@@ -44,7 +39,7 @@ public class Move {
             allowedMovesRow = allowedMoves.get(i).getKey() + PieceRow;
             allowedMovesColumn = allowedMoves.get(i).getValue() + PieceColumn;
 
-//DODAJEMY RUCHY
+            // dodajemy ruchy dozwolone
 
             if (allowedMovesRow >= 0
                     && allowedMovesColumn >= 0
@@ -60,16 +55,10 @@ public class Move {
 
                 }
 
-
-
-
-
                 if (nameOfPiece.equals("BlackPawn") || nameOfPiece.equals("WhitePawn")) {
-
 
                     if (nameOfCheck.equals("EmptyTile")
                             && PieceColumn == allowedMovesColumn) {
-
                         switch (nameOfPiece) {
                             case "BlackPawn":
                                 //TODO :promotion, bicie z przelotem
@@ -77,16 +66,13 @@ public class Move {
                                     if (board.board[PieceRow + 1][PieceColumn].getClass().getSimpleName().equals("EmptyTile")) {
                                         availableMoves.add(new Pair<>(allowedMovesRow, allowedMovesColumn));
                                     }
-
                                 } else {
                                     if (!(PieceRow == allowedMovesRow - 2)) {
                                         availableMoves.add(new Pair<>(allowedMovesRow, allowedMovesColumn));
                                     }
 
                                 }
-
                                 break;
-
                             case "WhitePawn":
                                 System.out.println("xd");
                                 if (((WhitePawn) board.board[PieceRow][PieceColumn]).getFirstMove()) {
@@ -99,7 +85,6 @@ public class Move {
                                     }
 
                                 }
-
                                 break;
                             default:
                                 break;
@@ -122,20 +107,16 @@ public class Move {
 
         }
 
-        Iterator iterator = availableMoves.iterator();
-
-        while (iterator.hasNext()) {
-            System.out.println(iterator.next());
+        for (Object availableMove : availableMoves) {
+            System.out.println(availableMove);
         }
 
         board.AddPossibleMoves(availableMoves);
         System.out.println("movable board: ");
         board.PrintMovableBoard();
 
-
         return availableMoves;
     }
-
 
     public List<Pair<Integer, Integer>> RookHelper(int PieceRow, int PieceColumn) {
         List<Pair<Integer, Integer>> pair = new LinkedList<>();

@@ -14,7 +14,6 @@ public class Board {
         board = new Piece[8][8];
         boardOfPossibleMoves = new Piece[8][8];
 
-
         /*
          * board init
          */
@@ -169,7 +168,6 @@ public class Board {
         }
     }
 
-
     public Piece getPiece(int row, int column) {
         return board[row][column];
     }
@@ -213,9 +211,7 @@ public class Board {
 
     public void ClearPossibleMoves() {
         for(int row = 0; row <8; row ++) {
-            for(int column = 0; column < 8; column++) {
-                boardOfPossibleMoves[row][column] = board[row][column];
-            }
+            System.arraycopy(board[row], 0, boardOfPossibleMoves[row], 0, 8);
         }
     }
 

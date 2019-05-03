@@ -25,16 +25,16 @@ public class GameController {
     @FXML
     AnchorPane anchor;
     @FXML
-    Pane[][] Tile;
-    Game game;
+    private Pane[][] Tile;
+    private Game game;
 
-    Image blackPawn;
-    Image blackRook;
+    private Image blackPawn;
+    private Image blackRook;
 
-    Image whitePawn;
-    Image whiteRook;
+    private Image whitePawn;
+    private Image whiteRook;
 
-    Image dot;
+    private Image dot;
 
     @FXML
     public void initialize() throws PlayerColorException {
@@ -202,7 +202,6 @@ public class GameController {
                             tmp = new ImageView(blackRook);
                         }
                 }
-
 
                 if (tmp != null) {
                     Tile[row][column].getChildren().add(tmp);
