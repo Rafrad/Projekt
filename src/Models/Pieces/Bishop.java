@@ -1,28 +1,23 @@
 package Models.Pieces;
 
+import Exceptions.PlayerColorException;
 import javafx.util.Pair;
 
 
 import java.util.LinkedList;
 import java.util.List;
 
-public abstract class Bishop implements Piece {
+public class Bishop implements Piece {
     private boolean player;
     //true - white
     //false - black
 
-    public Bishop(String playerColor) {
-        switch (playerColor) {
-            case "white":
-                player = Boolean.TRUE;
-                break;
-            case "black":
-                player = Boolean.FALSE;
-                break;
-            default:
-                System.out.println("xdddddddddddddddddddddddddd");
-                break;
-        }
+    public Bishop() throws PlayerColorException{
+        throw new PlayerColorException("Bishop must have a color!");
+    }
+
+    public Bishop(boolean playerColor) throws PlayerColorException {
+        this.player = playerColor;
     }
 
     @Override

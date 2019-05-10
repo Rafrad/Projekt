@@ -1,12 +1,25 @@
 package Models.Pieces;
 
+import Exceptions.PlayerColorException;
 import javafx.util.Pair;
 
 import java.util.LinkedList;
 import java.util.List;
 
-public abstract class WhiteQueen implements Piece{
+public  class Queen implements Piece{
     //rook & bishop
+    boolean player;
+
+    public Queen () throws PlayerColorException {
+        throw new PlayerColorException("Queen must be white or black!");
+    }
+
+    public Queen(boolean playerColor) {
+        player = playerColor;
+    }
+
+
+
     @Override
     public List<Pair<Integer, Integer>> move() {
         List<Pair<Integer, Integer>> allowedMoves = new LinkedList<>();
@@ -28,6 +41,6 @@ public abstract class WhiteQueen implements Piece{
 
     @Override
     public boolean getPlayer() {
-        return false;
+        return player;
     }
 }

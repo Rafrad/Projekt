@@ -5,7 +5,7 @@ import javafx.util.Pair;
 import java.util.LinkedList;
 import java.util.List;
 
-public abstract class WhiteKing implements Piece {
+public class WhiteKing implements Piece {
     @Override
     public List<Pair<Integer, Integer>> move() {
         List<Pair<Integer, Integer>> allowedMoves = new LinkedList<>();
@@ -21,6 +21,6 @@ public abstract class WhiteKing implements Piece {
     }
     @Override
     public boolean getPlayer() {
-        return false;
+        return true;
     }
 }
