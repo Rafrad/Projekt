@@ -15,7 +15,8 @@ public class WhiteKing implements Piece {
         allowedMoves.add(new Pair<>(-1, 0));
         allowedMoves.add(new Pair<>(-1, -1));
         allowedMoves.add(new Pair<>(0, -1));
-
+        allowedMoves.add(new Pair<>(1, -1));
+        allowedMoves.add(new Pair<>(-1, 1));
 
         return allowedMoves;
     }
