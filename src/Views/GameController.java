@@ -4,8 +4,8 @@ package Views;
 import Exceptions.PlayerColorException;
 import Models.Game;
 
-import Models.Pieces.Piece;
-import Models.Pieces.Rook;
+import Models.Pieces.*;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -30,9 +30,18 @@ public class GameController {
 
     private Image blackPawn;
     private Image blackRook;
+    private Image blackKnight;
+    private Image blackBishop;
+    private Image blackQueen;
+    private Image blackKing;
 
     private Image whitePawn;
     private Image whiteRook;
+    private Image whiteKnight;
+    private Image whiteBishop;
+    private Image whiteQueen;
+    private Image whiteKing;
+
 
     private Image dot;
 
@@ -46,9 +55,17 @@ public class GameController {
 
         blackPawn = new Image("Images/black_pawn.png");
         blackRook = new Image("Images/black_rook.png");
+        blackKnight = new Image("Images/black_knight.png");
+        blackBishop = new Image("Images/black_bishop.png");
+        blackQueen = new Image("Images/black_queen.png");
+        blackKing = new Image("Images/black_king.png");
 
         whitePawn = new Image("Images/white_pawn.png");
         whiteRook = new Image("Images/white_rook.png");
+        whiteKnight = new Image("Images/white_knight.png");
+        whiteBishop = new Image("Images/white_bishop.png");
+        whiteQueen = new Image("Images/white_queen.png");
+        whiteKing = new Image("Images/white_king.png");
 
 
         dot = new Image("Images/dot.png");
@@ -81,7 +98,7 @@ public class GameController {
                             System.out.println("emptyTile");
                             break;
                         case "Mark_MovableTile":
-                            ImageView tmp = new ImageView();
+//                            ImageView tmp = new ImageView();
                             Pair<Integer, Integer> selectedPiece = getSelectedPiece();
 
                             int selectedPieceRow = selectedPiece.getKey();
@@ -94,7 +111,7 @@ public class GameController {
 
                             break;
                         default:
-                            if (game.getCurrentPlayer() == game.boardClass.board[row][column].getPlayer()) {
+//                            if (game.getCurrentPlayer() == game.boardClass.board[row][column].getPlayer()) {
                                 PaintBoard();
                                 ClearPossibleMoves();
                                 EmulateBoard();
@@ -103,16 +120,15 @@ public class GameController {
                                 List<Pair<Integer, Integer>> moves = game.moveClass.CalculateMoves(row, column);
 
                                 ImageView[] dotMoves = new ImageView[moves.size()];
-                                System.out.println(moves.size());
+//                                System.out.println(moves.size());
                                 for (int i = 0; i < moves.size(); i++) {
                                     dotMoves[i] = new ImageView(dot);
                                     int rowMove = moves.get(i).getKey();
                                     int columnMove = moves.get(i).getValue();
 
-
                                     Tile[rowMove][columnMove].getChildren().add(dotMoves[i]);
                                 }
-                            }
+//                            }
                             break;
                     }
 
@@ -201,6 +217,34 @@ public class GameController {
                         } else {
                             tmp = new ImageView(blackRook);
                         }
+                        break;
+                    case "Knight":
+                        if (((Knight) game.boardClass.board[row][column]).getPlayer()) {
+                            tmp = new ImageView(whiteKnight);
+                        } else {
+                            tmp = new ImageView(blackKnight);
+                        }
+                        break;
+                    case "Bishop":
+                        if (((Bishop) game.boardClass.board[row][column]).getPlayer()) {
+                            tmp = new ImageView(whiteBishop);
+                        } else {
+                            tmp = new ImageView(blackBishop);
+                        }
+                        break;
+                    case "Queen":
+                        if (((Queen) game.boardClass.board[row][column]).getPlayer()) {
+                            tmp = new ImageView(whiteQueen);
+                        } else {
+                            tmp = new ImageView(blackQueen);
+                        }
+                        break;
+                    case "BlackKing":
+                        tmp = new ImageView(blackKing);
+                        break;
+                    case "WhiteKing":
+                        tmp = new ImageView(whiteKing);
+                        break;
                 }
 
                 if (tmp != null) {
