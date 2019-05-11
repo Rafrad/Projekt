@@ -98,7 +98,6 @@ public class GameController {
                             System.out.println("emptyTile");
                             break;
                         case "Mark_MovableTile":
-//                            ImageView tmp = new ImageView();
                             Pair<Integer, Integer> selectedPiece = getSelectedPiece();
 
                             int selectedPieceRow = selectedPiece.getKey();

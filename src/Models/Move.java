@@ -372,8 +372,8 @@ public class Move {
 
         board.AddPossibleMoves(availableMoves);
         System.out.println("movable board: ");
-        board.PrintMovableBoard();
-
+//        board.PrintMovableBoard();
+        board.PrintBoard(false);
         return availableMoves;
     }
 

@@ -86,65 +86,6 @@ public class Board {
 
     }
 
-
-    public void PrintBoard() {
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                boolean player;
-                switch (board[i][j].getClass().getSimpleName()) {
-                    case "WhitePawn":
-                        System.out.print("w ");
-                        break;
-                    case "BlackPawn":
-                        System.out.print("b ");
-                        break;
-                    case "Rook":
-                        player = ((Rook) board[i][j]).getPlayer();
-                        if (player) {
-                            System.out.print("R ");
-                        } else {
-                            System.out.print("r ");
-                        }
-                        break;
-                    case "Knight":
-                        player = ((Knight) board[i][j]).getPlayer();
-                        if (player) {
-                            System.out.print("K ");
-                        } else {
-                            System.out.print("k ");
-                        }
-                        break;
-                    case "Bishop":
-                        player = ((Bishop) board[i][j]).getPlayer();
-                        if (player) {
-                            System.out.print("B ");
-                        } else {
-                            System.out.print("b ");
-                        }
-                        break;
-                    case "Queen":
-                        player = ((Queen) board[i][j]).getPlayer();
-                        if (player) {
-                            System.out.print("Q ");
-                        } else {
-                            System.out.print("q ");
-                        }
-                        break;
-                    case "WhiteKing":
-                        System.out.print("Y ");
-                        break;
-                    case "BlackKing":
-                        System.out.print("y ");
-                        break;
-                    default:
-                        System.out.print("x ");
-                        break;
-                }
-            }
-            System.out.println();
-        }
-    }
-
     public Piece getPiece(int row, int column) {
         return board[row][column];
     }
@@ -160,47 +101,74 @@ public class Board {
         }
     }
 
-    public void PrintMovableBoard() {
+
+    /*
+     * TRUE - BOARD
+     * FALSE - MOVABLE BOARD
+     */
+
+    public void PrintBoard(boolean boardChoosen) {
+        Piece[][] boardToPrint;
+        if(boardChoosen) {
+            boardToPrint = board;
+        } else {
+            boardToPrint = boardOfPossibleMoves;
+        }
+
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-//chyba swich h3h3h
-                if (boardOfPossibleMoves[i][j].getClass().getSimpleName().equals("WhitePawn")) {
-                    System.out.print("w ");
-                } else if (boardOfPossibleMoves[i][j].getClass().getSimpleName().equals("BlackPawn")) {
-                    System.out.print("b ");
-                } else if (boardOfPossibleMoves[i][j].getClass().getSimpleName().equals("Rook")) {
-                    if (((Rook) boardOfPossibleMoves[i][j]).getPlayer()) {
-                        System.out.print("R ");
-                    } else {
-                        System.out.print("r ");
-                    }
-                } else if (boardOfPossibleMoves[i][j].getClass().getSimpleName().equals("Knight")) {
-                    if (((Knight) boardOfPossibleMoves[i][j]).getPlayer()) {
-                        System.out.print("K ");
-                    } else {
-                        System.out.print("k ");
-                    }
-                } else if (boardOfPossibleMoves[i][j].getClass().getSimpleName().equals("Bishop")) {
-                    if (((Bishop) boardOfPossibleMoves[i][j]).getPlayer()) {
-                        System.out.print("B ");
-                    } else {
+                boolean player;
+                switch (boardToPrint[i][j].getClass().getSimpleName()) {
+                    case "WhitePawn":
+                        System.out.print("w ");
+                        break;
+                    case "BlackPawn":
                         System.out.print("b ");
-                    }
-                }else if (boardOfPossibleMoves[i][j].getClass().getSimpleName().equals("BlackKing")) {
+                        break;
+                    case "Rook":
+                        player = ((Rook) boardToPrint[i][j]).getPlayer();
+                        if (player) {
+                            System.out.print("R ");
+                        } else {
+                            System.out.print("r ");
+                        }
+                        break;
+                    case "Knight":
+                        player = ((Knight) boardToPrint[i][j]).getPlayer();
+                        if (player) {
+                            System.out.print("K ");
+                        } else {
+                            System.out.print("k ");
+                        }
+                        break;
+                    case "Bishop":
+                        player = ((Bishop) boardToPrint[i][j]).getPlayer();
+                        if (player) {
+                            System.out.print("B ");
+                        } else {
+                            System.out.print("b ");
+                        }
+                        break;
+                    case "Queen":
+                        player = ((Queen) boardToPrint[i][j]).getPlayer();
+                        if (player) {
+                            System.out.print("Q ");
+                        } else {
+                            System.out.print("q ");
+                        }
+                        break;
+                    case "WhiteKing":
+                        System.out.print("Y ");
+                        break;
+                    case "BlackKing":
                         System.out.print("y ");
-                }else if (boardOfPossibleMoves[i][j].getClass().getSimpleName().equals("WhiteKing")) {
-                    System.out.print("Y ");
-                } else if (boardOfPossibleMoves[i][j].getClass().getSimpleName().equals("Queen")) {
-                    if (((Queen) boardOfPossibleMoves[i][j]).getPlayer()) {
-                        System.out.print("Q ");
-                    } else {
-                        System.out.print("q ");
-                    }
-                }
-                else if (boardOfPossibleMoves[i][j].getClass().getSimpleName().equals("Mark_MovableTile")) {
-                    System.out.print("m ");
-                } else {
-                    System.out.print("x ");
+                        break;
+                    case "Mark_MovableTile":
+                        System.out.print("m ");
+                        break;
+                    default:
+                        System.out.print("x ");
+                        break;
                 }
             }
             System.out.println();
@@ -212,6 +180,5 @@ public class Board {
             System.arraycopy(board[row], 0, boardOfPossibleMoves[row], 0, 8);
         }
     }
-
 
 }
