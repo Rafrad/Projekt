@@ -22,7 +22,7 @@ public class Game {
 
         boardClass = new Board();
         moveClass = new Move(boardClass);
-        boardClass.PrintBoard();
+        boardClass.PrintBoard(true);
         currentlyPlayer = true;
         isOver = false;
     }
