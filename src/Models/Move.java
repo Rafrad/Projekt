@@ -314,6 +314,47 @@ public class Move {
 
                     if (nameOfPiece.equals("BlackPawn") || nameOfPiece.equals("WhitePawn")) {
 
+                        //tutaj bez petli (en passant)
+                        if(nameOfPiece.equals("WhitePawn")) {
+                            if(PieceColumn - 1 > 0) {
+                                if(board.getPiece(PieceRow, PieceColumn - 1).getClass().getSimpleName().equals("BlackPawn")) {
+                                    if(((BlackPawn)board.board[PieceRow][PieceColumn-1]).getEnPassant()) {
+                                        availableMoves.add(new Pair<>(PieceRow - 1, PieceColumn -1));
+                                    }
+                                }
+                            }
+
+                            if(PieceColumn + 1 < 8
+                                && board.getPiece(PieceRow, PieceColumn + 1).getClass().getSimpleName().equals("BlackPawn")
+                                && ((BlackPawn)board.board[PieceRow][PieceColumn+1]).getEnPassant()) {
+                                availableMoves.add(new Pair<>(PieceRow - 1, PieceColumn +1));
+                            }
+                        }
+
+
+
+                        //tutaj bez petli (en passant)
+                        if(nameOfPiece.equals("BlackPawn")) {
+                            if(PieceColumn - 1 > 0) {
+                                if(board.getPiece(PieceRow, PieceColumn - 1).getClass().getSimpleName().equals("WhitePawn")) {
+                                    if(((WhitePawn)board.board[PieceRow][PieceColumn-1]).getEnPassant()) {
+                                        availableMoves.add(new Pair<>(PieceRow + 1, PieceColumn -1));
+                                    }
+                                }
+                            }
+
+                            if(PieceColumn + 1 < 8
+                                    && board.getPiece(PieceRow, PieceColumn + 1).getClass().getSimpleName().equals("WhitePawn")
+                                    && ((WhitePawn)board.board[PieceRow][PieceColumn+1]).getEnPassant()) {
+                                availableMoves.add(new Pair<>(PieceRow + 1, PieceColumn +1));
+                            }
+                        }
+
+
+
+
+
+
                         if (nameOfCheck.equals("EmptyTile")
                                 && PieceColumn == allowedMovesColumn) {
                             switch (nameOfPiece) {
@@ -327,8 +368,11 @@ public class Move {
                                         if (!(PieceRow == allowedMovesRow - 2)) {
                                             availableMoves.add(new Pair<>(allowedMovesRow, allowedMovesColumn));
                                         }
-
                                     }
+
+
+
+
                                     break;
                                 case "WhitePawn":
                                     System.out.println("xd");

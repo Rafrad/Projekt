@@ -15,7 +15,7 @@ import javafx.stage.Stage;
 public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("Views/MainMenu.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("Views/Game.fxml"));
         primaryStage.setTitle("Chess");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();

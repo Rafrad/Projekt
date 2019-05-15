@@ -3,6 +3,7 @@ package Models;
 import Exceptions.PlayerColorException;
 import Models.Pieces.BlackPawn;
 import Models.Pieces.EmptyTile;
+import Models.Pieces.Mark_MovableTile;
 import Models.Pieces.WhitePawn;
 
 
@@ -14,12 +15,10 @@ public class Game {
 
     //TODO: clock
 
-    //TODO: delete publics
     public Board boardClass;
     public Move moveClass;
 
     public Game() throws PlayerColorException {
-
         boardClass = new Board();
         moveClass = new Move(boardClass);
         boardClass.PrintBoard(true);
@@ -38,6 +37,15 @@ public class Game {
                             ((BlackPawn) boardClass.board[row][column]).setEnPassant(true);
                         }
                     }
+
+                    if(row + 1 == rowDestination && column - 1 == columnDestination) {
+                        boardClass.board[row][column - 1] = new EmptyTile();
+                    } else if (row + 1 == rowDestination && column + 1 == columnDestination) {
+                        boardClass.board[row][column + 1] = new EmptyTile();
+                    }
+
+
+
                     break;
                 case "WhitePawn":
                     if (((WhitePawn) boardClass.board[row][column]).getFirstMove()) {
@@ -46,15 +54,17 @@ public class Game {
                             ((WhitePawn) boardClass.board[row][column]).setEnPassant(true);
                         }
                     }
+
+                    if(row - 1 == rowDestination && column - 1 == columnDestination) {
+                        boardClass.board[row][column - 1] = new EmptyTile();
+                    } else if (row - 1 == rowDestination && column + 1 == columnDestination) {
+                        boardClass.board[row][column + 1] = new EmptyTile();
+                    }
                     break;
             }
 
             UpdateBoard(row, column, rowDestination, columnDestination);
-            if (currentlyPlayer) {
-                currentlyPlayer = false;
-            } else {
-                currentlyPlayer = true;
-            }
+            currentlyPlayer = !currentlyPlayer;
 
         } else { //delete
             System.out.println("nie mozna");
@@ -73,15 +83,17 @@ public class Game {
     }
 
     public void deleteEnPassant() {
+
         for (int row = 0; row < 8; row++) {
             for (int column = 0; column < 8; column++) {
                 switch (boardClass.board[row][column].getClass().getSimpleName()) {
-                    case "Black Pawn":
+                    case "BlackPawn":
+                        System.out.println(((BlackPawn)boardClass.board[row][column]).getEnPassant());
                         if(((BlackPawn)boardClass.board[row][column]).getEnPassant()) {
                             ((BlackPawn)boardClass.board[row][column]).setEnPassant(false);
                         }
                         break;
-                    case "White Pawn":
+                    case "WhitePawn":
                         if(((WhitePawn)boardClass.board[row][column]).getEnPassant()) {
                             ((WhitePawn)boardClass.board[row][column]).setEnPassant(false);
                         }
