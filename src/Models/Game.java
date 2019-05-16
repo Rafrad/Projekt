@@ -5,6 +5,10 @@ import Models.Pieces.BlackPawn;
 import Models.Pieces.EmptyTile;
 import Models.Pieces.Mark_MovableTile;
 import Models.Pieces.WhitePawn;
+import javafx.util.Pair;
+
+import java.util.LinkedList;
+import java.util.List;
 
 
 public class Game {
@@ -110,12 +114,30 @@ public class Game {
             for (int column = 0; column < 8; column++) {
                 switch (boardClass.getPiece(row, column).getClass().getSimpleName()) {
                     case "WhiteKing":
-                        
+
                         break;
                 }
             }
         }
     }
+
+    public List<Pair<Integer, Integer>> showAttackedTiles(boolean player) {
+        List<Pair<Integer, Integer>> attackList = new LinkedList<>();
+        for(int row = 0; row < 8; row++) {
+            for(int column = 0; column < 8; column++) {
+                if(!boardClass.getPiece(row, column).getClass().getSimpleName().equals("EmptyTile")
+                && boardClass.getPiece(row, column).getPlayer() == player) {
+                    attackList = moveClass.CalculateMoves(row, column);
+                }
+
+            }
+        }
+
+
+        return attackList;
+    }
+
+
 }
 
 

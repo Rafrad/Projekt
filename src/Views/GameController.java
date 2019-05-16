@@ -18,14 +18,11 @@ import javafx.util.Pair;
 import java.util.List;
 
 public class GameController {
-    @FXML
-    Label time;
-    @FXML
-    GridPane gridPane;
-    @FXML
-    AnchorPane anchor;
-    @FXML
-    private Pane[][] Tile;
+    @FXML private Label time;
+    @FXML private GridPane gridPane;
+    @FXML private AnchorPane anchor;
+    @FXML private Pane[][] Tile;
+
     private Game game;
 
     private Image blackPawn;
@@ -77,15 +74,6 @@ public class GameController {
         PaintBoard();
         EmulateBoard();
 
-        /*
-         * sprawdzamy czy to puste pole, czy figura
-         * jezeli puste pole - nic nie robimy, jezeli figura
-         * czyscimy zaznaczona figure i wyswietlamy mozliwe ruchy
-         *
-         * sprawdzamy czy Mark_MovableTile
-         *
-         */
-
 
         for (int r = 0; r < 8; r++) {
             for (int c = 0; c < 8; c++) {
@@ -95,7 +83,7 @@ public class GameController {
                 Tile[row][column].setOnMouseClicked(mouseEvent -> {
                     switch (game.boardClass.boardOfPossibleMoves[row][column].getClass().getSimpleName()) {
                         case "EmptyTile":
-                            System.out.println("emptyTile");
+                            System.out.println("empty tile");
                             break;
                         case "Mark_MovableTile":
                             Pair<Integer, Integer> selectedPiece = getSelectedPiece();
@@ -107,7 +95,6 @@ public class GameController {
                             ClearPossibleMoves();
                             PaintBoard();
                             EmulateBoard();
-
                             break;
                         default:
 //                            if (game.getCurrentPlayer() == game.boardClass.board[row][column].getPlayer()) {
@@ -119,7 +106,7 @@ public class GameController {
                                 List<Pair<Integer, Integer>> moves = game.moveClass.CalculateMoves(row, column);
 
                                 ImageView[] dotMoves = new ImageView[moves.size()];
-//                                System.out.println(moves.size());
+                                System.out.println(moves.size());
                                 for (int i = 0; i < moves.size(); i++) {
                                     dotMoves[i] = new ImageView(dot);
                                     int rowMove = moves.get(i).getKey();
@@ -127,6 +114,11 @@ public class GameController {
 
                                     Tile[rowMove][columnMove].getChildren().add(dotMoves[i]);
                                 }
+
+
+
+
+
 //                            }
                             break;
                     }
@@ -142,7 +134,7 @@ public class GameController {
     public Pair<Integer, Integer> getSelectedPiece() {
         for (int row = 0; row < 8; row++) {
             for (int column = 0; column < 8; column++) {
-                if (Tile[row][column].styleProperty().getValue().subSequence(22, 29).equals("#fbfb5b")) {
+                if (Tile[row][column].styleProperty().getValueSafe().subSequence(22, 29).equals("#fbfb5b")) {
                     Pair<Integer, Integer> pair = new Pair<Integer, Integer>(row, column);
                     return pair;
                 }

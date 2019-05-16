@@ -414,7 +414,6 @@ public class Move {
         System.out.println("allowed moves: " + allowedPieceMovesFromVector.size());
         boardClass.AddPossibleMoves(availableMoves);
         System.out.println("movable boardClass: ");
-//        boardClass.PrintMovableBoard();
         boardClass.PrintBoard(false);
         return availableMoves;
     }
