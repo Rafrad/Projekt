@@ -1,4 +1,4 @@
-package Models.Pieces;
+package main.Models.Pieces;
 
 
 import javafx.util.Pair;

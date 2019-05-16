@@ -1,10 +1,9 @@
-package Models;
+package main.Models;
 
-import Exceptions.PlayerColorException;
-import Models.Pieces.BlackPawn;
-import Models.Pieces.EmptyTile;
-import Models.Pieces.Mark_MovableTile;
-import Models.Pieces.WhitePawn;
+import main.Exceptions.PlayerColorException;
+import main.Models.Pieces.BlackPawn;
+import main.Models.Pieces.EmptyTile;
+import main.Models.Pieces.WhitePawn;
 import javafx.util.Pair;
 
 import java.util.LinkedList;

@@ -1,10 +1,10 @@
-package Views;
+package main.Views;
 
 
-import Exceptions.PlayerColorException;
-import Models.Game;
+import main.Exceptions.PlayerColorException;
+import main.Models.Game;
 
-import Models.Pieces.*;
+import main.Models.Pieces.*;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -50,22 +50,22 @@ public class GameController {
          * and for dot
          */
 
-        blackPawn = new Image("Images/black_pawn.png");
-        blackRook = new Image("Images/black_rook.png");
-        blackKnight = new Image("Images/black_knight.png");
-        blackBishop = new Image("Images/black_bishop.png");
-        blackQueen = new Image("Images/black_queen.png");
-        blackKing = new Image("Images/black_king.png");
+        blackPawn = new Image("main/Images/black_pawn.png");
+        blackRook = new Image("main/Images/black_rook.png");
+        blackKnight = new Image("main/Images/black_knight.png");
+        blackBishop = new Image("main/Images/black_bishop.png");
+        blackQueen = new Image("main/Images/black_queen.png");
+        blackKing = new Image("main/Images/black_king.png");
 
-        whitePawn = new Image("Images/white_pawn.png");
-        whiteRook = new Image("Images/white_rook.png");
-        whiteKnight = new Image("Images/white_knight.png");
-        whiteBishop = new Image("Images/white_bishop.png");
-        whiteQueen = new Image("Images/white_queen.png");
-        whiteKing = new Image("Images/white_king.png");
+        whitePawn = new Image("main/Images/white_pawn.png");
+        whiteRook = new Image("main/Images/white_rook.png");
+        whiteKnight = new Image("main/Images/white_knight.png");
+        whiteBishop = new Image("main/Images/white_bishop.png");
+        whiteQueen = new Image("main/Images/white_queen.png");
+        whiteKing = new Image("main/Images/white_king.png");
 
 
-        dot = new Image("Images/dot.png");
+        dot = new Image("main/Images/dot.png");
 
 
         Tile = new Pane[8][8];

@@ -1,7 +1,7 @@
-package Models;
+package main.Models;
 
-import Exceptions.PlayerColorException;
-import Models.Pieces.*;
+import main.Exceptions.PlayerColorException;
+import main.Models.Pieces.*;
 import javafx.util.Pair;
 
 import java.util.List;

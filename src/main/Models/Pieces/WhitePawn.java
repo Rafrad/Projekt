@@ -1,4 +1,4 @@
-package Models.Pieces;
+package main.Models.Pieces;
 
 
 import javafx.util.Pair;
@@ -7,13 +7,13 @@ import java.util.LinkedList;
 import java.util.List;
 
 
-public class BlackPawn implements Piece {
+public class WhitePawn implements Piece  {
     private boolean player;
     private boolean firstMove;
     private boolean enPassant;
 
-    public BlackPawn() {
-        player = false;
+    public WhitePawn() {
+        player = true;
         firstMove = true;
         enPassant = false;
     }
@@ -23,11 +23,10 @@ public class BlackPawn implements Piece {
         LinkedList<Pair<Integer, Integer>> allowedMoves = new LinkedList<>();
 
         //TODO: UNIT TESTS
-        allowedMoves.add(new Pair<>(1, 0));
-        allowedMoves.add(new Pair<>(1, 1));
-        allowedMoves.add(new Pair<>(1, -1));
-        allowedMoves.add(new Pair<>(2, 0));
-
+        allowedMoves.add(new Pair<>(-1, 0));
+        allowedMoves.add(new Pair<>(-1, -1));
+        allowedMoves.add(new Pair<>(-1, 1));
+        allowedMoves.add(new Pair<>(-2, 0));
 
         return allowedMoves;
     }

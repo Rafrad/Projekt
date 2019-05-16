@@ -1,9 +1,9 @@
-package Models;
+package main.Models;
 
-import Exceptions.WrongBoardException;
-import Models.Pieces.BlackPawn;
-import Models.Pieces.Piece;
-import Models.Pieces.WhitePawn;
+import main.Exceptions.WrongBoardException;
+import main.Models.Pieces.BlackPawn;
+import main.Models.Pieces.Piece;
+import main.Models.Pieces.WhitePawn;
 import javafx.util.Pair;
 
 import java.util.*;

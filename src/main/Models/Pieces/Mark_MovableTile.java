@@ -1,13 +1,10 @@
-package Models.Pieces;
-
+package main.Models.Pieces;
 
 import javafx.util.Pair;
 
-import java.util.LinkedList;
 import java.util.List;
 
-public class EmptyTile implements Piece {
-
+public class Mark_MovableTile implements Piece{
     @Override
     public List<Pair<Integer, Integer>> move() {
         return null;
@@ -17,5 +14,4 @@ public class EmptyTile implements Piece {
     public boolean getPlayer() {
         return false;
     }
-
 }

@@ -1,4 +1,4 @@
-package Views;
+package main.Views;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,7 +21,7 @@ public class MainMenuController {
      */
 
     public void startGame(ActionEvent event) throws IOException {
-        Parent tableViewParent = FXMLLoader.load(getClass().getResource("/Views/Game.fxml"));
+        Parent tableViewParent = FXMLLoader.load(getClass().getResource("/main/Views/Game.fxml"));
         Scene tableViewScene = new Scene(tableViewParent);
 
 

@@ -1,11 +1,13 @@
-package Models.Pieces;
+package main.Models.Pieces;
 
 import javafx.util.Pair;
 
 import java.util.LinkedList;
 import java.util.List;
 
-public class BlackKing implements Piece {
+public class WhiteKing implements Piece {
+    private boolean check;
+
     @Override
     public List<Pair<Integer, Integer>> move() {
         List<Pair<Integer, Integer>> allowedMoves = new LinkedList<>();
@@ -18,11 +20,18 @@ public class BlackKing implements Piece {
         allowedMoves.add(new Pair<>(1, -1));
         allowedMoves.add(new Pair<>(-1, 1));
 
-
         return allowedMoves;
     }
     @Override
     public boolean getPlayer() {
-        return false;
+        return true;
+    }
+
+    public boolean getCheck() {
+        return check;
+    }
+
+    public void setCheck(boolean checkTmp) {
+        check = checkTmp;
     }
 }
