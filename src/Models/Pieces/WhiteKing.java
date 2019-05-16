@@ -6,6 +6,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class WhiteKing implements Piece {
+    private boolean check;
+
     @Override
     public List<Pair<Integer, Integer>> move() {
         List<Pair<Integer, Integer>> allowedMoves = new LinkedList<>();
@@ -23,5 +25,13 @@ public class WhiteKing implements Piece {
     @Override
     public boolean getPlayer() {
         return true;
+    }
+
+    public boolean getCheck() {
+        return check;
+    }
+
+    public void setCheck(boolean checkTmp) {
+        check = checkTmp;
     }
 }

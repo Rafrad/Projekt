@@ -28,6 +28,8 @@ public class Game {
 
     public void move(int row, int column, int rowDestination, int columnDestination) {
         deleteEnPassant();
+
+
         if (boardClass.boardOfPossibleMoves[rowDestination][columnDestination].getClass().getSimpleName().equals("Mark_MovableTile")) {
             switch (boardClass.board[row][column].getClass().getSimpleName()) {
                 case "BlackPawn":
@@ -38,12 +40,11 @@ public class Game {
                         }
                     }
 
-                    if(row + 1 == rowDestination && column - 1 == columnDestination) {
+                    if (row + 1 == rowDestination && column - 1 == columnDestination) {
                         boardClass.board[row][column - 1] = new EmptyTile();
                     } else if (row + 1 == rowDestination && column + 1 == columnDestination) {
                         boardClass.board[row][column + 1] = new EmptyTile();
                     }
-
 
 
                     break;
@@ -55,7 +56,7 @@ public class Game {
                         }
                     }
 
-                    if(row - 1 == rowDestination && column - 1 == columnDestination) {
+                    if (row - 1 == rowDestination && column - 1 == columnDestination) {
                         boardClass.board[row][column - 1] = new EmptyTile();
                     } else if (row - 1 == rowDestination && column + 1 == columnDestination) {
                         boardClass.board[row][column + 1] = new EmptyTile();
@@ -88,15 +89,28 @@ public class Game {
             for (int column = 0; column < 8; column++) {
                 switch (boardClass.board[row][column].getClass().getSimpleName()) {
                     case "BlackPawn":
-                        System.out.println(((BlackPawn)boardClass.board[row][column]).getEnPassant());
-                        if(((BlackPawn)boardClass.board[row][column]).getEnPassant()) {
-                            ((BlackPawn)boardClass.board[row][column]).setEnPassant(false);
+                        System.out.println(((BlackPawn) boardClass.board[row][column]).getEnPassant());
+                        if (((BlackPawn) boardClass.board[row][column]).getEnPassant()) {
+                            ((BlackPawn) boardClass.board[row][column]).setEnPassant(false);
                         }
                         break;
                     case "WhitePawn":
-                        if(((WhitePawn)boardClass.board[row][column]).getEnPassant()) {
-                            ((WhitePawn)boardClass.board[row][column]).setEnPassant(false);
+                        if (((WhitePawn) boardClass.board[row][column]).getEnPassant()) {
+                            ((WhitePawn) boardClass.board[row][column]).setEnPassant(false);
                         }
+                        break;
+                }
+            }
+        }
+    }
+
+
+    public void UpdateCheck() {
+        for (int row = 0; row < 8; row++) {
+            for (int column = 0; column < 8; column++) {
+                switch (boardClass.getPiece(row, column).getClass().getSimpleName()) {
+                    case "WhiteKing":
+                        
                         break;
                 }
             }

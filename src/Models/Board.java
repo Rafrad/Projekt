@@ -15,7 +15,7 @@ public class Board {
         boardOfPossibleMoves = new Piece[8][8];
 
         /*
-         * board init
+         * boardClass init
          */
 
         for (int i = 0; i < 8; i++) {
@@ -76,7 +76,7 @@ public class Board {
 
 
         /*
-         * movable board init
+         * movable boardClass init
          */
 
         for (int row = 0; row < 8; row++) {

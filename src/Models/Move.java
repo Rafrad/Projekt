@@ -1,6 +1,5 @@
 package Models;
 
-import Exceptions.PlayerColorException;
 import Exceptions.WrongBoardException;
 import Models.Pieces.BlackPawn;
 import Models.Pieces.Piece;
@@ -10,34 +9,31 @@ import javafx.util.Pair;
 import java.util.*;
 
 public class Move {
-    Board board;
+    Board boardClass;
 
     Move() throws WrongBoardException {
     }
 
     Move(Board boardTmp) {
-        this.board = boardTmp;
+        this.boardClass = boardTmp;
     }
+
 
     public List<Pair<Integer, Integer>> CalculateMoves(int PieceRow, int PieceColumn) {
 
-        Piece piece = board.getPiece(PieceRow, PieceColumn);
-        //
-        System.out.println(piece.getClass().getSimpleName());
-        //
-        String nameOfPiece = piece.getClass().getSimpleName();
-        List<Pair<Integer, Integer>> allowedMoves = piece.move();
+        Piece pieceChosen = boardClass.getPiece(PieceRow, PieceColumn);
+        String nameOfChoosedPiece = pieceChosen.getClass().getSimpleName();
+        List<Pair<Integer, Integer>> allowedPieceMovesFromVector = pieceChosen.move();
         List<Pair<Integer, Integer>> availableMoves = new LinkedList<>();
-        //
-        System.out.println("allowed moves: " + allowedMoves.size());
-        //
 
-        switch (nameOfPiece) {
+
+
+        switch (nameOfChoosedPiece) {
             case "Rook":
                 for (int i = PieceRow + 1; i < 8; i++) {
-                    if (board.board[i][PieceColumn].getClass().getSimpleName().equals("EmptyTile")) {
+                    if (boardClass.board[i][PieceColumn].getClass().getSimpleName().equals("EmptyTile")) {
                         availableMoves.add(new Pair<>(i, PieceColumn));
-                    } else if (board.board[i][PieceColumn].getPlayer() == piece.getPlayer()) {
+                    } else if (boardClass.board[i][PieceColumn].getPlayer() == pieceChosen.getPlayer()) {
                         break;
                     } else {
                         availableMoves.add(new Pair<>(i, PieceColumn));
@@ -46,9 +42,9 @@ public class Move {
                 }
 
                 for (int i = PieceRow - 1; i >= 0; i--) {
-                    if (board.board[i][PieceColumn].getClass().getSimpleName().equals("EmptyTile")) {
+                    if (boardClass.board[i][PieceColumn].getClass().getSimpleName().equals("EmptyTile")) {
                         availableMoves.add(new Pair<>(i, PieceColumn));
-                    } else if (board.board[i][PieceColumn].getPlayer() == piece.getPlayer()) {
+                    } else if (boardClass.board[i][PieceColumn].getPlayer() == pieceChosen.getPlayer()) {
                         break;
                     } else {
                         availableMoves.add(new Pair<>(i, PieceColumn));
@@ -58,9 +54,9 @@ public class Move {
 
 
                 for (int i = PieceColumn - 1; i >= 0; i--) {
-                    if (board.board[PieceRow][i].getClass().getSimpleName().equals("EmptyTile")) {
+                    if (boardClass.board[PieceRow][i].getClass().getSimpleName().equals("EmptyTile")) {
                         availableMoves.add(new Pair<>(PieceRow, i));
-                    } else if (board.board[PieceRow][i].getPlayer() == piece.getPlayer()) {
+                    } else if (boardClass.board[PieceRow][i].getPlayer() == pieceChosen.getPlayer()) {
                         break;
                     } else {
                         availableMoves.add(new Pair<>(PieceRow, i));
@@ -70,9 +66,9 @@ public class Move {
 
 
                 for (int i = PieceColumn + 1; i < 8; i++) {
-                    if (board.board[PieceRow][i].getClass().getSimpleName().equals("EmptyTile")) {
+                    if (boardClass.board[PieceRow][i].getClass().getSimpleName().equals("EmptyTile")) {
                         availableMoves.add(new Pair<>(PieceRow, i));
-                    } else if (board.board[PieceRow][i].getPlayer() == piece.getPlayer()) {
+                    } else if (boardClass.board[PieceRow][i].getPlayer() == pieceChosen.getPlayer()) {
                         break;
                     } else {
                         availableMoves.add(new Pair<>(PieceRow, i));
@@ -83,9 +79,9 @@ public class Move {
 
 
             case "Knight":
-                for (int i = 0; i < allowedMoves.size(); i++) {
-                    int allowedMovesRow = allowedMoves.get(i).getKey() + PieceRow;
-                    int allowedMovesColumn = allowedMoves.get(i).getValue() + PieceColumn;
+                for (int i = 0; i < allowedPieceMovesFromVector.size(); i++) {
+                    int allowedMovesRow = allowedPieceMovesFromVector.get(i).getKey() + PieceRow;
+                    int allowedMovesColumn = allowedPieceMovesFromVector.get(i).getValue() + PieceColumn;
 
 
                     if (allowedMovesRow >= 0
@@ -93,12 +89,12 @@ public class Move {
                             && allowedMovesRow <= 7
                             && allowedMovesColumn <= 7) {
 
-                        Piece check = board.getPiece(allowedMovesRow, allowedMovesColumn);
+                        Piece check = boardClass.getPiece(allowedMovesRow, allowedMovesColumn);
                         String nameOfCheck = check.getClass().getSimpleName();
 
                         if(nameOfCheck.equals("EmptyTile")) {
                             availableMoves.add(new Pair<>(allowedMovesRow, allowedMovesColumn));
-                        } else if (check.getPlayer() != piece.getPlayer()){
+                        } else if (check.getPlayer() != pieceChosen.getPlayer()){
                             availableMoves.add(new Pair<>(allowedMovesRow, allowedMovesColumn));
                         }
 
@@ -110,9 +106,9 @@ public class Move {
 
             case "Bishop":
                 for (int i = PieceRow + 1, j = PieceColumn + 1; i < 8 && j < 8; i++, j++) {
-                    if (board.board[i][j].getClass().getSimpleName().equals("EmptyTile")) {
+                    if (boardClass.board[i][j].getClass().getSimpleName().equals("EmptyTile")) {
                         availableMoves.add(new Pair<>(i, j));
-                    } else if (board.board[i][j].getPlayer() == piece.getPlayer()) {
+                    } else if (boardClass.board[i][j].getPlayer() == pieceChosen.getPlayer()) {
                         break;
                     } else {
                         availableMoves.add(new Pair<>(i, j));
@@ -123,9 +119,9 @@ public class Move {
 
 
                 for (int i = PieceRow - 1, j = PieceColumn - 1; i >= 0 && j >= 0; i--, j--) {
-                    if (board.board[i][j].getClass().getSimpleName().equals("EmptyTile")) {
+                    if (boardClass.board[i][j].getClass().getSimpleName().equals("EmptyTile")) {
                         availableMoves.add(new Pair<>(i, j));
-                    } else if (board.board[i][j].getPlayer() == piece.getPlayer()) {
+                    } else if (boardClass.board[i][j].getPlayer() == pieceChosen.getPlayer()) {
                         break;
                     } else {
                         availableMoves.add(new Pair<>(i, j));
@@ -135,9 +131,9 @@ public class Move {
 
 
                 for (int i = PieceRow + 1, j = PieceColumn - 1; i < 8 && j >= 0; i++, j--) {
-                    if (board.board[i][j].getClass().getSimpleName().equals("EmptyTile")) {
+                    if (boardClass.board[i][j].getClass().getSimpleName().equals("EmptyTile")) {
                         availableMoves.add(new Pair<>(i, j));
-                    } else if (board.board[i][j].getPlayer() == piece.getPlayer()) {
+                    } else if (boardClass.board[i][j].getPlayer() == pieceChosen.getPlayer()) {
                         break;
                     } else {
                         availableMoves.add(new Pair<>(i, j));
@@ -146,9 +142,9 @@ public class Move {
                 }
 
                 for (int i = PieceRow - 1, j = PieceColumn + 1; i >= 0 && j < 8; i--, j++) {
-                    if (board.board[i][j].getClass().getSimpleName().equals("EmptyTile")) {
+                    if (boardClass.board[i][j].getClass().getSimpleName().equals("EmptyTile")) {
                         availableMoves.add(new Pair<>(i, j));
-                    } else if (board.board[i][j].getPlayer() == piece.getPlayer()) {
+                    } else if (boardClass.board[i][j].getPlayer() == pieceChosen.getPlayer()) {
                         break;
                     } else {
                         availableMoves.add(new Pair<>(i, j));
@@ -164,9 +160,9 @@ public class Move {
 
 
                 for (int i = PieceRow + 1; i < 8; i++) {
-                    if (board.board[i][PieceColumn].getClass().getSimpleName().equals("EmptyTile")) {
+                    if (boardClass.board[i][PieceColumn].getClass().getSimpleName().equals("EmptyTile")) {
                         availableMoves.add(new Pair<>(i, PieceColumn));
-                    } else if (board.board[i][PieceColumn].getPlayer() == piece.getPlayer()) {
+                    } else if (boardClass.board[i][PieceColumn].getPlayer() == pieceChosen.getPlayer()) {
                         break;
                     } else {
                         availableMoves.add(new Pair<>(i, PieceColumn));
@@ -175,9 +171,9 @@ public class Move {
                 }
 
                 for (int i = PieceRow - 1; i >= 0; i--) {
-                    if (board.board[i][PieceColumn].getClass().getSimpleName().equals("EmptyTile")) {
+                    if (boardClass.board[i][PieceColumn].getClass().getSimpleName().equals("EmptyTile")) {
                         availableMoves.add(new Pair<>(i, PieceColumn));
-                    } else if (board.board[i][PieceColumn].getPlayer() == piece.getPlayer()) {
+                    } else if (boardClass.board[i][PieceColumn].getPlayer() == pieceChosen.getPlayer()) {
                         break;
                     } else {
                         availableMoves.add(new Pair<>(i, PieceColumn));
@@ -187,9 +183,9 @@ public class Move {
 
 
                 for (int i = PieceColumn - 1; i >= 0; i--) {
-                    if (board.board[PieceRow][i].getClass().getSimpleName().equals("EmptyTile")) {
+                    if (boardClass.board[PieceRow][i].getClass().getSimpleName().equals("EmptyTile")) {
                         availableMoves.add(new Pair<>(PieceRow, i));
-                    } else if (board.board[PieceRow][i].getPlayer() == piece.getPlayer()) {
+                    } else if (boardClass.board[PieceRow][i].getPlayer() == pieceChosen.getPlayer()) {
                         break;
                     } else {
                         availableMoves.add(new Pair<>(PieceRow, i));
@@ -199,9 +195,9 @@ public class Move {
 
 
                 for (int i = PieceColumn + 1; i < 8; i++) {
-                    if (board.board[PieceRow][i].getClass().getSimpleName().equals("EmptyTile")) {
+                    if (boardClass.board[PieceRow][i].getClass().getSimpleName().equals("EmptyTile")) {
                         availableMoves.add(new Pair<>(PieceRow, i));
-                    } else if (board.board[PieceRow][i].getPlayer() == piece.getPlayer()) {
+                    } else if (boardClass.board[PieceRow][i].getPlayer() == pieceChosen.getPlayer()) {
                         break;
                     } else {
                         availableMoves.add(new Pair<>(PieceRow, i));
@@ -211,9 +207,9 @@ public class Move {
 
 
                 for (int i = PieceRow + 1, j = PieceColumn + 1; i < 8 && j < 8; i++, j++) {
-                    if (board.board[i][j].getClass().getSimpleName().equals("EmptyTile")) {
+                    if (boardClass.board[i][j].getClass().getSimpleName().equals("EmptyTile")) {
                         availableMoves.add(new Pair<>(i, j));
-                    } else if (board.board[i][j].getPlayer() == piece.getPlayer()) {
+                    } else if (boardClass.board[i][j].getPlayer() == pieceChosen.getPlayer()) {
                         break;
                     } else {
                         availableMoves.add(new Pair<>(i, j));
@@ -224,9 +220,9 @@ public class Move {
 
 
                 for (int i = PieceRow - 1, j = PieceColumn - 1; i >= 0 && j >= 0; i--, j--) {
-                    if (board.board[i][j].getClass().getSimpleName().equals("EmptyTile")) {
+                    if (boardClass.board[i][j].getClass().getSimpleName().equals("EmptyTile")) {
                         availableMoves.add(new Pair<>(i, j));
-                    } else if (board.board[i][j].getPlayer() == piece.getPlayer()) {
+                    } else if (boardClass.board[i][j].getPlayer() == pieceChosen.getPlayer()) {
                         break;
                     } else {
                         availableMoves.add(new Pair<>(i, j));
@@ -236,9 +232,9 @@ public class Move {
 
 
                 for (int i = PieceRow + 1, j = PieceColumn - 1; i < 8 && j >= 0; i++, j--) {
-                    if (board.board[i][j].getClass().getSimpleName().equals("EmptyTile")) {
+                    if (boardClass.board[i][j].getClass().getSimpleName().equals("EmptyTile")) {
                         availableMoves.add(new Pair<>(i, j));
-                    } else if (board.board[i][j].getPlayer() == piece.getPlayer()) {
+                    } else if (boardClass.board[i][j].getPlayer() == pieceChosen.getPlayer()) {
                         break;
                     } else {
                         availableMoves.add(new Pair<>(i, j));
@@ -247,9 +243,9 @@ public class Move {
                 }
 
                 for (int i = PieceRow - 1, j = PieceColumn + 1; i >= 0 && j < 8; i--, j++) {
-                    if (board.board[i][j].getClass().getSimpleName().equals("EmptyTile")) {
+                    if (boardClass.board[i][j].getClass().getSimpleName().equals("EmptyTile")) {
                         availableMoves.add(new Pair<>(i, j));
-                    } else if (board.board[i][j].getPlayer() == piece.getPlayer()) {
+                    } else if (boardClass.board[i][j].getPlayer() == pieceChosen.getPlayer()) {
                         break;
                     } else {
                         availableMoves.add(new Pair<>(i, j));
@@ -263,25 +259,25 @@ public class Move {
                 //dopracowac
             case "WhiteKing":
             case "BlackKing":
-                for (int i = 0; i < allowedMoves.size(); i++) {
+                for (int i = 0; i < allowedPieceMovesFromVector.size(); i++) {
                     int allowedMovesRow = 0;
                     int allowedMovesColumn = 0;
 
-                    allowedMovesRow = allowedMoves.get(i).getKey() + PieceRow;
-                    allowedMovesColumn = allowedMoves.get(i).getValue() + PieceColumn;
+                    allowedMovesRow = allowedPieceMovesFromVector.get(i).getKey() + PieceRow;
+                    allowedMovesColumn = allowedPieceMovesFromVector.get(i).getValue() + PieceColumn;
 
                     if (allowedMovesRow >= 0
                             && allowedMovesColumn >= 0
                             && allowedMovesRow <= 7
                             && allowedMovesColumn <= 7) {
 
-                        Piece check = board.getPiece(allowedMovesRow, allowedMovesColumn);
+                        Piece check = boardClass.getPiece(allowedMovesRow, allowedMovesColumn);
                         String nameOfCheck = check.getClass().getSimpleName();
 
 
                         if (nameOfCheck.equals("EmptyTile")) {
                             availableMoves.add(new Pair<>(allowedMovesRow, allowedMovesColumn));
-                        } else if(check.getPlayer() != piece.getPlayer()) {
+                        } else if(check.getPlayer() != pieceChosen.getPlayer()) {
                             availableMoves.add(new Pair<>(allowedMovesRow, allowedMovesColumn));
                         }
                     }
@@ -291,15 +287,15 @@ public class Move {
         }
 
 
-        if (nameOfPiece.equals("BlackPawn") || nameOfPiece.equals("WhitePawn")) {
+        if (nameOfChoosedPiece.equals("BlackPawn") || nameOfChoosedPiece.equals("WhitePawn")) {
 
 
-            for (int i = 0; i < allowedMoves.size(); i++) {
+            for (int i = 0; i < allowedPieceMovesFromVector.size(); i++) {
                 int allowedMovesRow = 0;
                 int allowedMovesColumn = 0;
 
-                allowedMovesRow = allowedMoves.get(i).getKey() + PieceRow;
-                allowedMovesColumn = allowedMoves.get(i).getValue() + PieceColumn;
+                allowedMovesRow = allowedPieceMovesFromVector.get(i).getKey() + PieceRow;
+                allowedMovesColumn = allowedPieceMovesFromVector.get(i).getValue() + PieceColumn;
 
                 // dodajemy ruchy dozwolone
 
@@ -308,25 +304,25 @@ public class Move {
                         && allowedMovesRow <= 7
                         && allowedMovesColumn <= 7) {
 
-                    Piece check = board.getPiece(allowedMovesRow, allowedMovesColumn);
+                    Piece check = boardClass.getPiece(allowedMovesRow, allowedMovesColumn);
                     String nameOfCheck = check.getClass().getSimpleName();
 
 
-                    if (nameOfPiece.equals("BlackPawn") || nameOfPiece.equals("WhitePawn")) {
+                    if (nameOfChoosedPiece.equals("BlackPawn") || nameOfChoosedPiece.equals("WhitePawn")) {
 
                         //tutaj bez petli (en passant)
-                        if(nameOfPiece.equals("WhitePawn")) {
+                        if(nameOfChoosedPiece.equals("WhitePawn")) {
                             if(PieceColumn - 1 > 0) {
-                                if(board.getPiece(PieceRow, PieceColumn - 1).getClass().getSimpleName().equals("BlackPawn")) {
-                                    if(((BlackPawn)board.board[PieceRow][PieceColumn-1]).getEnPassant()) {
+                                if(boardClass.getPiece(PieceRow, PieceColumn - 1).getClass().getSimpleName().equals("BlackPawn")) {
+                                    if(((BlackPawn) boardClass.board[PieceRow][PieceColumn-1]).getEnPassant()) {
                                         availableMoves.add(new Pair<>(PieceRow - 1, PieceColumn -1));
                                     }
                                 }
                             }
 
                             if(PieceColumn + 1 < 8
-                                && board.getPiece(PieceRow, PieceColumn + 1).getClass().getSimpleName().equals("BlackPawn")
-                                && ((BlackPawn)board.board[PieceRow][PieceColumn+1]).getEnPassant()) {
+                                && boardClass.getPiece(PieceRow, PieceColumn + 1).getClass().getSimpleName().equals("BlackPawn")
+                                && ((BlackPawn) boardClass.board[PieceRow][PieceColumn+1]).getEnPassant()) {
                                 availableMoves.add(new Pair<>(PieceRow - 1, PieceColumn +1));
                             }
                         }
@@ -334,18 +330,18 @@ public class Move {
 
 
                         //tutaj bez petli (en passant)
-                        if(nameOfPiece.equals("BlackPawn")) {
+                        if(nameOfChoosedPiece.equals("BlackPawn")) {
                             if(PieceColumn - 1 > 0) {
-                                if(board.getPiece(PieceRow, PieceColumn - 1).getClass().getSimpleName().equals("WhitePawn")) {
-                                    if(((WhitePawn)board.board[PieceRow][PieceColumn-1]).getEnPassant()) {
+                                if(boardClass.getPiece(PieceRow, PieceColumn - 1).getClass().getSimpleName().equals("WhitePawn")) {
+                                    if(((WhitePawn) boardClass.board[PieceRow][PieceColumn-1]).getEnPassant()) {
                                         availableMoves.add(new Pair<>(PieceRow + 1, PieceColumn -1));
                                     }
                                 }
                             }
 
                             if(PieceColumn + 1 < 8
-                                    && board.getPiece(PieceRow, PieceColumn + 1).getClass().getSimpleName().equals("WhitePawn")
-                                    && ((WhitePawn)board.board[PieceRow][PieceColumn+1]).getEnPassant()) {
+                                    && boardClass.getPiece(PieceRow, PieceColumn + 1).getClass().getSimpleName().equals("WhitePawn")
+                                    && ((WhitePawn) boardClass.board[PieceRow][PieceColumn+1]).getEnPassant()) {
                                 availableMoves.add(new Pair<>(PieceRow + 1, PieceColumn +1));
                             }
                         }
@@ -357,11 +353,11 @@ public class Move {
 
                         if (nameOfCheck.equals("EmptyTile")
                                 && PieceColumn == allowedMovesColumn) {
-                            switch (nameOfPiece) {
+                            switch (nameOfChoosedPiece) {
                                 case "BlackPawn":
                                     //TODO :promotion, bicie z przelotem
-                                    if (((BlackPawn) board.board[PieceRow][PieceColumn]).getFirstMove()) {
-                                        if (board.board[PieceRow + 1][PieceColumn].getClass().getSimpleName().equals("EmptyTile")) {
+                                    if (((BlackPawn) boardClass.board[PieceRow][PieceColumn]).getFirstMove()) {
+                                        if (boardClass.board[PieceRow + 1][PieceColumn].getClass().getSimpleName().equals("EmptyTile")) {
                                             availableMoves.add(new Pair<>(allowedMovesRow, allowedMovesColumn));
                                         }
                                     } else {
@@ -376,8 +372,8 @@ public class Move {
                                     break;
                                 case "WhitePawn":
                                     System.out.println("xd");
-                                    if (((WhitePawn) board.board[PieceRow][PieceColumn]).getFirstMove()) {
-                                        if (board.board[PieceRow - 1][PieceColumn].getClass().getSimpleName().equals("EmptyTile")) {
+                                    if (((WhitePawn) boardClass.board[PieceRow][PieceColumn]).getFirstMove()) {
+                                        if (boardClass.board[PieceRow - 1][PieceColumn].getClass().getSimpleName().equals("EmptyTile")) {
                                             availableMoves.add(new Pair<>(allowedMovesRow, allowedMovesColumn));
                                         }
                                     } else {
@@ -393,7 +389,7 @@ public class Move {
 
 
                         } else if (PieceColumn != allowedMovesColumn && !nameOfCheck.equals("EmptyTile")) {
-                            boolean basicPlayer = piece.getPlayer();
+                            boolean basicPlayer = pieceChosen.getPlayer();
                             boolean player = check.getPlayer();
 
                             if (basicPlayer != player) {
@@ -414,10 +410,12 @@ public class Move {
             System.out.println(availableMove);
         }
 
-        board.AddPossibleMoves(availableMoves);
-        System.out.println("movable board: ");
-//        board.PrintMovableBoard();
-        board.PrintBoard(false);
+        System.out.println(pieceChosen.getClass().getSimpleName());
+        System.out.println("allowed moves: " + allowedPieceMovesFromVector.size());
+        boardClass.AddPossibleMoves(availableMoves);
+        System.out.println("movable boardClass: ");
+//        boardClass.PrintMovableBoard();
+        boardClass.PrintBoard(false);
         return availableMoves;
     }
 
