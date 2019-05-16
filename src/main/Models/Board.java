@@ -83,7 +83,6 @@ public class Board {
             System.arraycopy(board[row], 0, boardOfPossibleMoves[row], 0, 8);
         }
 
-
     }
 
     public Piece getPiece(int row, int column) {

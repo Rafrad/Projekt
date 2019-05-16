@@ -371,7 +371,6 @@ public class Move {
 
                                     break;
                                 case "WhitePawn":
-                                    System.out.println("xd");
                                     if (((WhitePawn) boardClass.board[PieceRow][PieceColumn]).getFirstMove()) {
                                         if (boardClass.board[PieceRow - 1][PieceColumn].getClass().getSimpleName().equals("EmptyTile")) {
                                             availableMoves.add(new Pair<>(allowedMovesRow, allowedMovesColumn));
