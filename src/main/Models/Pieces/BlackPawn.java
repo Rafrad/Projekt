@@ -22,7 +22,6 @@ public class BlackPawn implements Piece {
     public List<Pair<Integer, Integer>> move() {
         LinkedList<Pair<Integer, Integer>> allowedMoves = new LinkedList<>();
 
-        //TODO: UNIT TESTS
         allowedMoves.add(new Pair<>(1, 0));
         allowedMoves.add(new Pair<>(1, 1));
         allowedMoves.add(new Pair<>(1, -1));
