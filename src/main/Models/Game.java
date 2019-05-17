@@ -3,6 +3,7 @@ package main.Models;
 import main.Exceptions.PlayerColorException;
 import main.Models.Pieces.BlackPawn;
 import main.Models.Pieces.EmptyTile;
+import main.Models.Pieces.Knight;
 import main.Models.Pieces.WhitePawn;
 import javafx.util.Pair;
 
@@ -29,8 +30,13 @@ public class Game {
         isOver = false;
     }
 
-    public void move(int row, int column, int rowDestination, int columnDestination) {
+    public void move(int row, int column, int rowDestination, int columnDestination) throws PlayerColorException {
         deleteEnPassant();
+
+        if(rowDestination == 0 && boardClass.getPiece(row, column).getClass().getSimpleName().equals("WhitePawn")) {
+            ((WhitePawn)boardClass.getPiece(row, column)).setPromotion(true);
+//            boardClass.board[row][column] = new Knight(true);
+        }
 
 
         if (boardClass.boardOfPossibleMoves[rowDestination][columnDestination].getClass().getSimpleName().equals("Mark_MovableTile")) {
@@ -126,7 +132,7 @@ public class Game {
             for(int column = 0; column < 8; column++) {
                 if(!boardClass.getPiece(row, column).getClass().getSimpleName().equals("EmptyTile")
                 && boardClass.getPiece(row, column).getPlayer() == player) {
-                    attackList = moveClass.CalculateMoves(row, column);
+                    attackList = moveClass.CalculateMoves(row, column, true);
                 }
 
             }

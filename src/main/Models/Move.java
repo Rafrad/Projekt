@@ -19,7 +19,7 @@ public class Move {
     }
 
 
-    public List<Pair<Integer, Integer>> CalculateMoves(int PieceRow, int PieceColumn) {
+    public List<Pair<Integer, Integer>> CalculateMoves(int PieceRow, int PieceColumn, boolean attack) {
 
         Piece pieceChosen = boardClass.getPiece(PieceRow, PieceColumn);
         String nameOfChoosedPiece = pieceChosen.getClass().getSimpleName();
@@ -409,11 +409,16 @@ public class Move {
             System.out.println(availableMove);
         }
 
-        System.out.println(pieceChosen.getClass().getSimpleName());
-        System.out.println("allowed moves: " + allowedPieceMovesFromVector.size());
-        boardClass.AddPossibleMoves(availableMoves);
-        System.out.println("movable boardClass: ");
-        boardClass.PrintBoard(false);
+        if(attack) {
+
+        } else {
+            System.out.println(pieceChosen.getClass().getSimpleName());
+            System.out.println("allowed moves: " + allowedPieceMovesFromVector.size());
+            boardClass.AddPossibleMoves(availableMoves);
+            System.out.println("movable boardClass: ");
+            boardClass.PrintBoard(false);
+        }
+
         return availableMoves;
     }
 

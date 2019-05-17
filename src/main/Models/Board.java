@@ -9,10 +9,12 @@ import java.util.List;
 public class Board {
     public Piece[][] board;
     public Piece[][] boardOfPossibleMoves;
+    public Piece[][] attackBoard;
 
     public Board() throws PlayerColorException {
         board = new Piece[8][8];
         boardOfPossibleMoves = new Piece[8][8];
+        attackBoard = new Piece[8][8];
 
         /*
          * boardClass init
@@ -83,6 +85,14 @@ public class Board {
             System.arraycopy(board[row], 0, boardOfPossibleMoves[row], 0, 8);
         }
 
+        /**
+         * attack boardClass init
+         */
+
+        for(int row = 0; row < 8; row++) {
+            System.arraycopy(board[row], 0, attackBoard[row], 0, 0);
+        }
+
     }
 
     public Piece getPiece(int row, int column) {
@@ -97,6 +107,17 @@ public class Board {
             column = list.get(i).getValue();
 
             boardOfPossibleMoves[row][column] = new Mark_MovableTile();
+        }
+    }
+
+    public void AddAttacks(List<Pair<Integer, Integer>> list) {
+        int row = 0;
+        int column = 0;
+        for (int i = 0; i < list.size(); i++) {
+            row = list.get(i).getKey();
+            column = list.get(i).getValue();
+
+            attackBoard[row][column] = new Mark_MovableTile();
         }
     }
 
@@ -177,6 +198,12 @@ public class Board {
     public void ClearPossibleMoves() {
         for (int row = 0; row < 8; row++) {
             System.arraycopy(board[row], 0, boardOfPossibleMoves[row], 0, 8);
+        }
+    }
+
+    public void ClearAttackBoard() {
+        for (int row = 0; row < 8; row++) {
+            System.arraycopy(board[row], 0, attackBoard[row], 0, 8);
         }
     }
 

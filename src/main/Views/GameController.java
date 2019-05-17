@@ -1,6 +1,8 @@
 package main.Views;
 
 
+import javafx.scene.control.Button;
+import javafx.scene.layout.HBox;
 import main.Exceptions.PlayerColorException;
 import main.Models.Game;
 
@@ -22,6 +24,9 @@ public class GameController {
     @FXML private GridPane gridPane;
     @FXML private AnchorPane anchor;
     @FXML private Pane[][] Tile;
+
+    @FXML private HBox test;
+    @FXML private Button TRANSFORMACJA;
 
     private Game game;
 
@@ -91,7 +96,11 @@ public class GameController {
                             int selectedPieceRow = selectedPiece.getKey();
                             int selectedPieceColumn = selectedPiece.getValue();
 
-                            game.move(selectedPieceRow, selectedPieceColumn, row, column);
+                            try {
+                                game.move(selectedPieceRow, selectedPieceColumn, row, column);
+                            } catch (PlayerColorException e) {
+                                e.printStackTrace();
+                            }
                             ClearPossibleMoves();
                             PaintBoard();
                             EmulateBoard();
@@ -103,7 +112,7 @@ public class GameController {
                                 EmulateBoard();
 
                                 Tile[row][column].setStyle("-fx-background-color: #fbfb5b");
-                                List<Pair<Integer, Integer>> moves = game.moveClass.CalculateMoves(row, column);
+                                List<Pair<Integer, Integer>> moves = game.moveClass.CalculateMoves(row, column, false);
 
                                 ImageView[] dotMoves = new ImageView[moves.size()];
                                 System.out.println(moves.size());
@@ -244,6 +253,28 @@ public class GameController {
 
             }
         }
+    }
+
+    public void checkPromotions() throws PlayerColorException {
+        for(int row = 0; row < 8; row++) {
+            for(int column = 0; column < 8; column++) {
+                switch (game.boardClass.getPiece(row, column).getClass().getSimpleName()) {
+                    case "WhitePawn":
+                        if(((WhitePawn)game.boardClass.getPiece(row, column)).getPromotion()) {
+                            kon(row, column);
+                            EmulateBoard();
+                        }
+                        break;
+                    case "BlackPawn":
+
+                        break;
+                }
+            }
+        }
+    }
+
+    public void kon(int row, int column) throws PlayerColorException {
+        game.boardClass.board[row][column] = new Knight(true);
     }
 
 }
