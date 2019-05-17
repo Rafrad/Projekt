@@ -1,10 +1,7 @@
 package main.Models;
 
 import main.Exceptions.PlayerColorException;
-import main.Models.Pieces.BlackPawn;
-import main.Models.Pieces.EmptyTile;
-import main.Models.Pieces.Knight;
-import main.Models.Pieces.WhitePawn;
+import main.Models.Pieces.*;
 import javafx.util.Pair;
 
 import java.util.LinkedList;
@@ -37,6 +34,15 @@ public class Game {
             ((WhitePawn)boardClass.getPiece(row, column)).setPromotion(true);
         } else if (rowDestination == 7 && boardClass.getPiece(row, column).getClass().getSimpleName().equals("BlackPawn")) {
             ((BlackPawn)boardClass.getPiece(row, column)).setPromotion(true);
+        }
+
+        switch (boardClass.board[row][column].getClass().getSimpleName()) {
+            case "WhiteKing":
+                ((WhiteKing)boardClass.getPiece(row, column)).setCastling(false);
+                break;
+            case "Rook":
+                ((Rook)boardClass.getPiece(row, column)).setCastling(false);
+                break;
         }
 
 

@@ -1,9 +1,7 @@
 package main.Models;
 
 import main.Exceptions.WrongBoardException;
-import main.Models.Pieces.BlackPawn;
-import main.Models.Pieces.Piece;
-import main.Models.Pieces.WhitePawn;
+import main.Models.Pieces.*;
 import javafx.util.Pair;
 
 import java.util.*;
@@ -280,6 +278,16 @@ public class Move {
                         } else if(check.getPlayer() != pieceChosen.getPlayer()) {
                             availableMoves.add(new Pair<>(allowedMovesRow, allowedMovesColumn));
                         }
+                    }
+                }
+
+                if(nameOfChoosedPiece.equals("WhiteKing")) {
+                    if(boardClass.getPiece(7, 7).getClass().getSimpleName().equals("Rook")
+                    && boardClass.getPiece(7, 6).getClass().getSimpleName().equals("EmptyTile")
+                    && ((Rook)boardClass.getPiece(7, 7)).getCastling()
+                    && ((WhiteKing)pieceChosen).getCastling() {
+                        availableMoves.add();
+
                     }
                 }
 

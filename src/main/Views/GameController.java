@@ -29,10 +29,6 @@ public class GameController {
     @FXML
     private Pane[][] Tile;
 
-    @FXML
-    private HBox test;
-    @FXML
-    private Button TRANSFORMACJA;
 
     @FXML
     private Button promoteToRookButton;
@@ -300,27 +296,6 @@ public class GameController {
             }
         }
     }
-
-
-    public void checkPromotions() throws PlayerColorException {
-        for (int row = 0; row < 8; row++) {
-            for (int column = 0; column < 8; column++) {
-                switch (game.boardClass.getPiece(row, column).getClass().getSimpleName()) {
-                    case "WhitePawn":
-                        if (((WhitePawn) game.boardClass.getPiece(row, column)).getPromotion()) {
-//                            showPromotionButtons(true);
-//                            kon(row, column);
-//                            EmulateBoard();
-                        }
-                        break;
-                    case "BlackPawn":
-
-                        break;
-                }
-            }
-        }
-    }
-
 
 
     public void promoteToQueen() throws PlayerColorException {

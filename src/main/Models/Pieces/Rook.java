@@ -9,6 +9,7 @@ import java.util.List;
 
 public class Rook implements Piece{
     boolean player;
+    boolean castling;
 
     public Rook() throws PlayerColorException {
         throw new PlayerColorException("Rook must have a color (white or black)!");
@@ -16,6 +17,7 @@ public class Rook implements Piece{
 
     public Rook(boolean color) {
         player = color;
+        castling = true;
     }
 
     @Override
@@ -35,5 +37,13 @@ public class Rook implements Piece{
     @Override
     public boolean getPlayer() {
         return player;
+    }
+
+    public boolean getCastling() {
+        return castling;
+    }
+
+    public void setCastling(boolean bool) {
+        castling = bool;
     }
 }
