@@ -6,7 +6,8 @@
   ii) szachowanie + zasady ruchu z szachem<br />
   iii) matowanie<br />
 4. Zegar
-5. Komputer
+5. Zwyciestwo/Porazka
+6. Komputer
 
 # Wrazliwe na testy w danym momencie
 - En Passant
