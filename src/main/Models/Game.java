@@ -35,7 +35,8 @@ public class Game {
 
         if(rowDestination == 0 && boardClass.getPiece(row, column).getClass().getSimpleName().equals("WhitePawn")) {
             ((WhitePawn)boardClass.getPiece(row, column)).setPromotion(true);
-//            boardClass.board[row][column] = new Knight(true);
+        } else if (rowDestination == 7 && boardClass.getPiece(row, column).getClass().getSimpleName().equals("BlackPawn")) {
+            ((BlackPawn)boardClass.getPiece(row, column)).setPromotion(true);
         }
 
 

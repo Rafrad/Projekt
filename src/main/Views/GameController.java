@@ -20,13 +20,28 @@ import javafx.util.Pair;
 import java.util.List;
 
 public class GameController {
-    @FXML private Label time;
-    @FXML private GridPane gridPane;
-    @FXML private AnchorPane anchor;
-    @FXML private Pane[][] Tile;
+    @FXML
+    private Label time;
+    @FXML
+    private GridPane gridPane;
+    @FXML
+    private AnchorPane anchor;
+    @FXML
+    private Pane[][] Tile;
 
-    @FXML private HBox test;
-    @FXML private Button TRANSFORMACJA;
+    @FXML
+    private HBox test;
+    @FXML
+    private Button TRANSFORMACJA;
+
+    @FXML
+    private Button promoteToRookButton;
+    @FXML
+    private Button promoteToKnightButton;
+    @FXML
+    private Button promoteToBishopButton;
+    @FXML
+    private Button promoteToQueenButton;
 
     private Game game;
 
@@ -47,9 +62,13 @@ public class GameController {
 
     private Image dot;
 
+
+    private boolean promotionFlagBlockingMove;
     @FXML
     public void initialize() throws PlayerColorException {
-        TRANSFORMACJA.setVisible(false);
+        promotionFlagBlockingMove = false;
+        hidePromotionButtons();
+
         /*
          * Set image for every piece
          * and for dot
@@ -111,15 +130,16 @@ public class GameController {
                             break;
                         default:
 //                            if (game.getCurrentPlayer() == game.boardClass.board[row][column].getPlayer()) {
+                            if(!promotionFlagBlockingMove) {
                                 PaintBoard();
                                 ClearPossibleMoves();
-                            try {
-                                EmulateBoard();
-                            } catch (PlayerColorException e) {
-                                e.printStackTrace();
-                            }
+                                try {
+                                    EmulateBoard();
+                                } catch (PlayerColorException e) {
+                                    e.printStackTrace();
+                                }
 
-                            Tile[row][column].setStyle("-fx-background-color: #fbfb5b");
+                                Tile[row][column].setStyle("-fx-background-color: #fbfb5b");
                                 List<Pair<Integer, Integer>> moves = game.moveClass.CalculateMoves(row, column, false);
 
                                 ImageView[] dotMoves = new ImageView[moves.size()];
@@ -131,12 +151,9 @@ public class GameController {
 
                                     Tile[rowMove][columnMove].getChildren().add(dotMoves[i]);
                                 }
-
-
-
-
-
+                            }
 //                            }
+
                             break;
                     }
 
@@ -262,32 +279,38 @@ public class GameController {
             }
         }
 
+        /**
+         * promotion box
+         */
 
-        for(int row = 0; row < 8; row++) {
-            for(int column = 0; column < 8; column++) {
+        for (int row = 0; row < 8; row++) {
+            for (int column = 0; column < 8; column++) {
                 switch (game.boardClass.getPiece(row, column).getClass().getSimpleName()) {
                     case "WhitePawn":
-                        if(((WhitePawn)game.boardClass.getPiece(row, column)).getPromotion()) {
-                            TRANSFORMACJA.setVisible(true);
+                        if (((WhitePawn) game.boardClass.getPiece(row, column)).getPromotion()) {
+                            showPromotionButtons(true);
                         }
                         break;
                     case "BlackPawn":
-
+                        if(((BlackPawn)game.boardClass.getPiece(row, column)).getPromotion()) {
+                            showPromotionButtons(false);
+                        }
                         break;
                 }
             }
         }
     }
+
 
     public void checkPromotions() throws PlayerColorException {
-        for(int row = 0; row < 8; row++) {
-            for(int column = 0; column < 8; column++) {
+        for (int row = 0; row < 8; row++) {
+            for (int column = 0; column < 8; column++) {
                 switch (game.boardClass.getPiece(row, column).getClass().getSimpleName()) {
                     case "WhitePawn":
-                        if(((WhitePawn)game.boardClass.getPiece(row, column)).getPromotion()) {
-
-                            kon(row, column);
-                            EmulateBoard();
+                        if (((WhitePawn) game.boardClass.getPiece(row, column)).getPromotion()) {
+//                            showPromotionButtons(true);
+//                            kon(row, column);
+//                            EmulateBoard();
                         }
                         break;
                     case "BlackPawn":
@@ -298,9 +321,134 @@ public class GameController {
         }
     }
 
-    public void kon(int row, int column) throws PlayerColorException {
-        game.boardClass.board[row][column] = new Knight(true);
-        TRANSFORMACJA.setVisible(false);
+
+
+    public void promoteToQueen() throws PlayerColorException {
+        for (int row = 0; row < 8; row++) {
+            for (int column = 0; column < 8; column++) {
+                switch (game.boardClass.getPiece(row, column).getClass().getSimpleName()) {
+                    case "WhitePawn":
+                        if (((WhitePawn) game.boardClass.getPiece(row, column)).getPromotion()) {
+                            boolean player = game.boardClass.getPiece(row, column).getPlayer();
+                            game.boardClass.board[row][column] = new Queen(player);
+                        }
+                        break;
+                    case "BlackPawn":
+                        if (((BlackPawn) game.boardClass.getPiece(row, column)).getPromotion()) {
+                            boolean player = game.boardClass.getPiece(row, column).getPlayer();
+                            game.boardClass.board[row][column] = new Queen(player);
+                        }
+                        break;
+                }
+            }
+        }
+        hidePromotionButtons();
+        EmulateBoard();
+    }
+
+
+
+    public void promoteToRook() throws PlayerColorException {
+        for (int row = 0; row < 8; row++) {
+            for (int column = 0; column < 8; column++) {
+                switch (game.boardClass.getPiece(row, column).getClass().getSimpleName()) {
+                    case "WhitePawn":
+                        if (((WhitePawn) game.boardClass.getPiece(row, column)).getPromotion()) {
+                            boolean player = game.boardClass.getPiece(row, column).getPlayer();
+                            game.boardClass.board[row][column] = new Rook(player);
+                        }
+                        break;
+                    case "BlackPawn":
+                        if (((BlackPawn) game.boardClass.getPiece(row, column)).getPromotion()) {
+                            boolean player = game.boardClass.getPiece(row, column).getPlayer();
+                            game.boardClass.board[row][column] = new Rook(player);
+                        }
+                        break;
+                }
+            }
+        }
+        hidePromotionButtons();
+        EmulateBoard();
+    }
+
+
+    public void promoteToBishop() throws PlayerColorException {
+        for (int row = 0; row < 8; row++) {
+            for (int column = 0; column < 8; column++) {
+                switch (game.boardClass.getPiece(row, column).getClass().getSimpleName()) {
+                    case "WhitePawn":
+                        if (((WhitePawn) game.boardClass.getPiece(row, column)).getPromotion()) {
+                            boolean player = game.boardClass.getPiece(row, column).getPlayer();
+                            game.boardClass.board[row][column] = new Bishop(player);
+                        }
+                        break;
+                    case "BlackPawn":
+                        if (((BlackPawn) game.boardClass.getPiece(row, column)).getPromotion()) {
+                            boolean player = game.boardClass.getPiece(row, column).getPlayer();
+                            game.boardClass.board[row][column] = new Bishop(player);
+                        }
+                        break;
+                }
+            }
+        }
+        hidePromotionButtons();
+        EmulateBoard();
+    }
+
+
+
+    public void promoteToKnight() throws PlayerColorException {
+        for (int row = 0; row < 8; row++) {
+            for (int column = 0; column < 8; column++) {
+                switch (game.boardClass.getPiece(row, column).getClass().getSimpleName()) {
+                    case "WhitePawn":
+                        if (((WhitePawn) game.boardClass.getPiece(row, column)).getPromotion()) {
+                            boolean player = game.boardClass.getPiece(row, column).getPlayer();
+                            game.boardClass.board[row][column] = new Knight(player);
+                        }
+                        break;
+                    case "BlackPawn":
+                        if (((BlackPawn) game.boardClass.getPiece(row, column)).getPromotion()) {
+                            boolean player = game.boardClass.getPiece(row, column).getPlayer();
+                            game.boardClass.board[row][column] = new Knight(player);
+                        }
+                        break;
+                }
+            }
+        }
+        hidePromotionButtons();
+        EmulateBoard();
+    }
+
+
+    public void hidePromotionButtons() {
+        promoteToBishopButton.setVisible(false);
+        promoteToRookButton.setVisible(false);
+        promoteToKnightButton.setVisible(false);
+        promoteToQueenButton.setVisible(false);
+
+        promotionFlagBlockingMove = false;
+    }
+
+    public void showPromotionButtons(boolean player) {
+        promotionFlagBlockingMove = true;
+        if (player) {
+            promoteToQueenButton.setGraphic(new ImageView(whiteQueen));
+            promoteToKnightButton.setGraphic(new ImageView(whiteKnight));
+            promoteToBishopButton.setGraphic(new ImageView(whiteBishop));
+            promoteToRookButton.setGraphic(new ImageView(whiteRook));
+        } else {
+            promoteToQueenButton.setGraphic(new ImageView(blackQueen));
+            promoteToKnightButton.setGraphic(new ImageView(blackKnight));
+            promoteToBishopButton.setGraphic(new ImageView(blackBishop));
+            promoteToRookButton.setGraphic(new ImageView(blackRook));
+        }
+
+
+        promoteToBishopButton.setVisible(true);
+        promoteToRookButton.setVisible(true);
+        promoteToKnightButton.setVisible(true);
+        promoteToQueenButton.setVisible(true);
     }
 
 }

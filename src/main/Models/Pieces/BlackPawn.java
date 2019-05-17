@@ -11,11 +11,13 @@ public class BlackPawn implements Piece {
     private boolean player;
     private boolean firstMove;
     private boolean enPassant;
+    private boolean promotion;
 
     public BlackPawn() {
         player = false;
         firstMove = true;
         enPassant = false;
+        promotion = false;
     }
 
     @Override
@@ -50,6 +52,14 @@ public class BlackPawn implements Piece {
 
     public void setEnPassant(boolean bool) {
         enPassant = bool;
+    }
+
+    public boolean getPromotion() {
+        return promotion;
+    }
+
+    public void setPromotion(boolean promoted) {
+        promotion = promoted;
     }
 
 
