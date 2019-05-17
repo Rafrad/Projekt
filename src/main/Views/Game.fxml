@@ -39,9 +39,9 @@
             <Label fx:id="time" prefHeight="67.0" prefWidth="151.0" />
          </children>
       </HBox>
-      <HBox fx:id="test" layoutX="741.0" layoutY="165.0" prefHeight="100.0" prefWidth="200.0">
+      <HBox fx:id="test" layoutY="100.0" prefHeight="90.0" prefWidth="102.0">
          <children>
-            <Button fx:id="TRANSFORMACJA" mnemonicParsing="false" onAction="#checkPromotions" prefHeight="55.0" prefWidth="112.0" text="Button" />
+            <Button fx:id="TRANSFORMACJA" mnemonicParsing="false" onAction="#checkPromotions" prefHeight="39.0" prefWidth="52.0" text="kon" />
          </children>
       </HBox>
    </children>

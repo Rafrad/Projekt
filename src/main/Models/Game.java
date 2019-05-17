@@ -49,9 +49,11 @@ public class Game {
                         }
                     }
 
-                    if (row + 1 == rowDestination && column - 1 == columnDestination) {
+                    if (row + 1 == rowDestination && column - 1 == columnDestination
+                    &&  boardClass.board[row+1][column-1].getClass().getSimpleName().equals("EmptyTile")) {
                         boardClass.board[row][column - 1] = new EmptyTile();
-                    } else if (row + 1 == rowDestination && column + 1 == columnDestination) {
+                    } else if (row + 1 == rowDestination && column + 1 == columnDestination
+                            &&  boardClass.board[row+1][column+1].getClass().getSimpleName().equals("EmptyTile")) {
                         boardClass.board[row][column + 1] = new EmptyTile();
                     }
 
@@ -65,9 +67,12 @@ public class Game {
                         }
                     }
 
-                    if (row - 1 == rowDestination && column - 1 == columnDestination) {
+                    if (row - 1 == rowDestination
+                     && column - 1 == columnDestination
+                            &&  boardClass.board[row-1][column-1].getClass().getSimpleName().equals("EmptyTile")) {
                         boardClass.board[row][column - 1] = new EmptyTile();
-                    } else if (row - 1 == rowDestination && column + 1 == columnDestination) {
+                    } else if (row - 1 == rowDestination && column + 1 == columnDestination
+                            &&  boardClass.board[row-1][column+1].getClass().getSimpleName().equals("EmptyTile")) {
                         boardClass.board[row][column + 1] = new EmptyTile();
                     }
                     break;

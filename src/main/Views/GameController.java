@@ -49,7 +49,7 @@ public class GameController {
 
     @FXML
     public void initialize() throws PlayerColorException {
-
+        TRANSFORMACJA.setVisible(false);
         /*
          * Set image for every piece
          * and for dot
@@ -103,15 +103,23 @@ public class GameController {
                             }
                             ClearPossibleMoves();
                             PaintBoard();
-                            EmulateBoard();
+                            try {
+                                EmulateBoard();
+                            } catch (PlayerColorException e) {
+                                e.printStackTrace();
+                            }
                             break;
                         default:
 //                            if (game.getCurrentPlayer() == game.boardClass.board[row][column].getPlayer()) {
                                 PaintBoard();
                                 ClearPossibleMoves();
+                            try {
                                 EmulateBoard();
+                            } catch (PlayerColorException e) {
+                                e.printStackTrace();
+                            }
 
-                                Tile[row][column].setStyle("-fx-background-color: #fbfb5b");
+                            Tile[row][column].setStyle("-fx-background-color: #fbfb5b");
                                 List<Pair<Integer, Integer>> moves = game.moveClass.CalculateMoves(row, column, false);
 
                                 ImageView[] dotMoves = new ImageView[moves.size()];
@@ -195,7 +203,7 @@ public class GameController {
     }
 
 
-    public void EmulateBoard() {
+    public void EmulateBoard() throws PlayerColorException {
         for (int row = 0; row < 8; row++) {
             for (int column = 0; column < 8; column++) {
                 ImageView tmp = null;
@@ -253,6 +261,22 @@ public class GameController {
 
             }
         }
+
+
+        for(int row = 0; row < 8; row++) {
+            for(int column = 0; column < 8; column++) {
+                switch (game.boardClass.getPiece(row, column).getClass().getSimpleName()) {
+                    case "WhitePawn":
+                        if(((WhitePawn)game.boardClass.getPiece(row, column)).getPromotion()) {
+                            TRANSFORMACJA.setVisible(true);
+                        }
+                        break;
+                    case "BlackPawn":
+
+                        break;
+                }
+            }
+        }
     }
 
     public void checkPromotions() throws PlayerColorException {
@@ -261,6 +285,7 @@ public class GameController {
                 switch (game.boardClass.getPiece(row, column).getClass().getSimpleName()) {
                     case "WhitePawn":
                         if(((WhitePawn)game.boardClass.getPiece(row, column)).getPromotion()) {
+
                             kon(row, column);
                             EmulateBoard();
                         }
@@ -275,6 +300,7 @@ public class GameController {
 
     public void kon(int row, int column) throws PlayerColorException {
         game.boardClass.board[row][column] = new Knight(true);
+        TRANSFORMACJA.setVisible(false);
     }
 
 }
