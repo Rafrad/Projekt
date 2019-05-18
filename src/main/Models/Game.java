@@ -9,12 +9,9 @@ import java.util.List;
 
 
 public class Game {
-    //which player has move, white starts; white = true
     boolean currentlyPlayer;
-    //game over (?)
     boolean isOver;
 
-    //TODO: clock
 
     public Board boardClass;
     public Move moveClass;
@@ -27,7 +24,7 @@ public class Game {
         isOver = false;
     }
 
-    public void move(int row, int column, int rowDestination, int columnDestination) throws PlayerColorException {
+    public void move(int row, int column, int rowDestination, int columnDestination){
         deleteEnPassant();
 
         if (rowDestination == 0 && boardClass.getPiece(row, column).getClass().getSimpleName().equals("WhitePawn")) {
@@ -140,35 +137,6 @@ public class Game {
                 }
             }
         }
-    }
-
-
-    public void UpdateCheck() {
-        for (int row = 0; row < 8; row++) {
-            for (int column = 0; column < 8; column++) {
-                switch (boardClass.getPiece(row, column).getClass().getSimpleName()) {
-                    case "WhiteKing":
-
-                        break;
-                }
-            }
-        }
-    }
-
-    public List<Pair<Integer, Integer>> showAttackedTiles(boolean player) {
-        List<Pair<Integer, Integer>> attackList = new LinkedList<>();
-        for (int row = 0; row < 8; row++) {
-            for (int column = 0; column < 8; column++) {
-                if (!boardClass.getPiece(row, column).getClass().getSimpleName().equals("EmptyTile")
-                        && boardClass.getPiece(row, column).getPlayer() == player) {
-                    attackList = moveClass.CalculateMoves(row, column, true);
-                }
-
-            }
-        }
-
-
-        return attackList;
     }
 
 
