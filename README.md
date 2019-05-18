@@ -2,7 +2,9 @@
 1. Menu
 2. Tury czasowe
 3. Zasady<br />
-  <s>i) roszada<br /></s>
+  i) roszada<br />
+    <s/>- krol zamienia sie miejscami z wieza </s>
+    <br/>- zakaz wykonania przy atakowaniu pola krol-wieza <br/>
   ii) szachowanie + zasady ruchu z szachem<br />
   iii) matowanie<br />
 4. Zegar
