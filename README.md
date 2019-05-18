@@ -1,6 +1,6 @@
 # TO DO
 1. Menu <br/>
-<s/>  i) funkcojalne (wybieranie strony, koloru, timera) </s>><br/>
+<s/>  i) funkcojalne (wybieranie strony, koloru, timera) </s><br/>
   ii) wizualna poprawka (maly priorytet)
 2. Tury czasowe
 3. Zasady<br />
