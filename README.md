@@ -11,4 +11,5 @@
 
 # Wrazliwe na testy w danym momencie
 - En Passant
+- roszada
 
