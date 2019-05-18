@@ -2,7 +2,7 @@
 1. Menu
 2. Tury czasowe
 3. Zasady<br />
-  i) roszada<br />
+  <s>i) roszada<br /></s>
   ii) szachowanie + zasady ruchu z szachem<br />
   iii) matowanie<br />
 4. Zegar
