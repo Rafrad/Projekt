@@ -16,12 +16,12 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("main/Views/Game.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("main/Views/MainMenu.fxml"));
         primaryStage.setTitle("Chess");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
         primaryStage.setResizable(false);
-        primaryStage.getIcons().add(new Image("main/Images/TU_BEDZIE_IKONA.png"));
+        primaryStage.getIcons().add(new Image("main/Images/icon.png"));
     }
 
 

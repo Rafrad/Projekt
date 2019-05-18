@@ -6,6 +6,7 @@ import javafx.scene.layout.HBox;
 import main.Exceptions.PlayerColorException;
 import main.Models.Game;
 
+import main.Models.Options;
 import main.Models.Pieces.*;
 
 import javafx.fxml.FXML;
@@ -16,7 +17,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.util.Pair;
+import javafx.fxml.FXMLLoader;
 
+import java.io.IOException;
 import java.util.List;
 
 public class GameController {
@@ -58,10 +61,14 @@ public class GameController {
 
     private Image dot;
 
+    private List<String> lista;
+    Options opcje;
 
-    private boolean promotionFlagBlockingMove;
-    @FXML
-    public void initialize() throws PlayerColorException {
+    public void smiechawa(Options o) throws PlayerColorException {
+        opcje = o;
+        System.out.println(o.getGameMode());
+        System.out.println(o.getVersusMode());
+        System.out.println(o.getFirstPlayerColor());
         promotionFlagBlockingMove = false;
         hidePromotionButtons();
 
@@ -111,11 +118,7 @@ public class GameController {
                             int selectedPieceRow = selectedPiece.getKey();
                             int selectedPieceColumn = selectedPiece.getValue();
 
-                            try {
-                                game.move(selectedPieceRow, selectedPieceColumn, row, column);
-                            } catch (PlayerColorException e) {
-                                e.printStackTrace();
-                            }
+                            game.move(selectedPieceRow, selectedPieceColumn, row, column);
                             ClearPossibleMoves();
                             PaintBoard();
                             try {
@@ -157,6 +160,16 @@ public class GameController {
             }
         }
 
+
+    }
+
+    private boolean promotionFlagBlockingMove;
+    @FXML
+    public void initialize() throws PlayerColorException, IOException {
+//        FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/Views/Settings.fxml"));
+//        SettingsController kupa = loader.getController();
+//        System.out.println(kupa.testint);
+//        List<String> haha = kupa.odpowiedziDoSprawdzianiu();
 
     }
 

@@ -1,0 +1,100 @@
+package main.Views;
+
+import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Tooltip;
+import javafx.scene.control.TreeTableCell;
+import javafx.stage.Stage;
+import main.Exceptions.PlayerColorException;
+import main.Models.Options;
+
+
+import java.io.IOException;
+
+
+public class SettingsController {
+    @FXML ChoiceBox gameModeChoice;
+    @FXML ChoiceBox versusModeChoice;
+    @FXML ChoiceBox firstPlayerColorChoice;
+    @FXML Button startGameButton;
+    @FXML Button backToMainMenuButton;
+
+    /**
+     * When this method is called, it will change the Scene to main menu
+     */
+
+    public void changeSceneToMainMenu(ActionEvent event) throws IOException {
+        Parent tableViewParent = FXMLLoader.load(getClass().getResource("/main/Views/MainMenu.fxml"));
+        Scene tableViewScene = new Scene(tableViewParent);
+
+        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        window.setScene(tableViewScene);
+        window.show();
+    }
+
+    /**
+     * When this method is called, it will change the Scene to a Game
+     */
+
+    public void startGame(ActionEvent event) throws IOException, PlayerColorException {
+        Options options = new Options();
+        options.setGameMode(gameModeChoice.getValue().toString());
+        options.setVersusMode(versusModeChoice.getValue().toString());
+        options.setFirstPlayerColor(firstPlayerColorChoice.getValue().toString());
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/Views/Game.fxml"));
+        Parent root = loader.load();
+        GameController gameController = loader.getController();
+        gameController.smiechawa(options);
+
+        Scene tableViewScene = new Scene(root);
+
+        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        window.setWidth(1400);
+        window.setHeight(800);
+        window.setScene(tableViewScene);
+
+        window.show();
+
+    }
+
+    @FXML
+    public void initialize() {
+        setChoices();
+        setTooltips();
+        setDefaultsChoices();
+    }
+
+    public void setChoices() {
+        gameModeChoice.setItems(FXCollections.observableArrayList(
+                "Blitz 3|2", "Bullet 1|0", "Rapid 10|0", "Classic 15|15")
+        );
+
+        versusModeChoice.setItems(FXCollections.observableArrayList(
+                "Player VS Player", "Player VS Computer")
+        );
+
+        firstPlayerColorChoice.setItems(FXCollections.observableArrayList(
+                "white", "black")
+        );
+    }
+
+    public void setDefaultsChoices() {
+        gameModeChoice.setValue("Classic 15|15");
+        versusModeChoice.setValue("Player VS Player");
+        firstPlayerColorChoice.setValue("white");
+    }
+
+    public void setTooltips() {
+        gameModeChoice.setTooltip(new Tooltip("szybciej z ta lodziarnia"));
+        firstPlayerColorChoice.setTooltip(new Tooltip("ftw"));
+        versusModeChoice.setTooltip(new Tooltip("nigga"));
+    }
+}
