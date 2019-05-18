@@ -16,22 +16,13 @@ public class MainMenuController {
     @FXML Button startButton;
     @FXML Button exitButton;
 
-    /*
-     * When this method is called, it will change the Scene to a Game
-     */
-
-    public void startGame(ActionEvent event) throws IOException {
-        Parent tableViewParent = FXMLLoader.load(getClass().getResource("/main/Views/Game.fxml"));
+    public void changeSceneToSettings(ActionEvent event) throws IOException {
+        Parent tableViewParent = FXMLLoader.load(getClass().getResource("/main/Views/Settings.fxml"));
         Scene tableViewScene = new Scene(tableViewParent);
 
-
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-        window.setWidth(1400);
-        window.setHeight(800);
         window.setScene(tableViewScene);
-
         window.show();
-
     }
 
     public void exitGame() {
