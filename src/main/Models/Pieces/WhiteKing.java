@@ -9,7 +9,7 @@ public class WhiteKing implements Piece {
     private boolean check;
     private boolean castling;
 
-    WhiteKing() {
+    public WhiteKing() {
         castling = true;
     }
 

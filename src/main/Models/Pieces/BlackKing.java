@@ -6,6 +6,11 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class BlackKing implements Piece {
+    private boolean castling;
+
+    public BlackKing() {
+        castling = true;
+    }
     @Override
     public List<Pair<Integer, Integer>> move() {
         List<Pair<Integer, Integer>> allowedMoves = new LinkedList<>();
@@ -24,5 +29,13 @@ public class BlackKing implements Piece {
     @Override
     public boolean getPlayer() {
         return false;
+    }
+
+    public boolean getCastling() {
+        return castling;
+    }
+
+    public void setCastling(boolean bool) {
+        castling = bool;
     }
 }

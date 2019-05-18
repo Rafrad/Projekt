@@ -281,13 +281,44 @@ public class Move {
                     }
                 }
 
+
+                /**
+                 * castling
+                 */
+
                 if(nameOfChoosedPiece.equals("WhiteKing")) {
                     if(boardClass.getPiece(7, 7).getClass().getSimpleName().equals("Rook")
                     && boardClass.getPiece(7, 6).getClass().getSimpleName().equals("EmptyTile")
+                    && boardClass.getPiece(7, 5).getClass().getSimpleName().equals("EmptyTile")
                     && ((Rook)boardClass.getPiece(7, 7)).getCastling()
-                    && ((WhiteKing)pieceChosen).getCastling() {
-                        availableMoves.add();
+                    && ((WhiteKing)pieceChosen).getCastling()) {
+                        availableMoves.add(new Pair<>(7, 6));
+                    }
+                    if(boardClass.getPiece(7, 0).getClass().getSimpleName().equals("Rook")
+                            && boardClass.getPiece(7, 1).getClass().getSimpleName().equals("EmptyTile")
+                            && boardClass.getPiece(7, 2).getClass().getSimpleName().equals("EmptyTile")
+                            && boardClass.getPiece(7, 3).getClass().getSimpleName().equals("EmptyTile")
+                            && ((Rook)boardClass.getPiece(7, 0)).getCastling()
+                            && ((WhiteKing)pieceChosen).getCastling()) {
+                        availableMoves.add(new Pair<>(7, 2));
+                    }
+                }
 
+                if(nameOfChoosedPiece.equals("BlackKing")) {
+                    if(boardClass.getPiece(0, 7).getClass().getSimpleName().equals("Rook")
+                            && boardClass.getPiece(0, 6).getClass().getSimpleName().equals("EmptyTile")
+                            && boardClass.getPiece(0, 5).getClass().getSimpleName().equals("EmptyTile")
+                            && ((Rook)boardClass.getPiece(0, 7)).getCastling()
+                            && ((BlackKing)pieceChosen).getCastling()) {
+                        availableMoves.add(new Pair<>(0, 6));
+                    }
+                    if(boardClass.getPiece(0, 0).getClass().getSimpleName().equals("Rook")
+                            && boardClass.getPiece(0, 1).getClass().getSimpleName().equals("EmptyTile")
+                            && boardClass.getPiece(0, 2).getClass().getSimpleName().equals("EmptyTile")
+                            && boardClass.getPiece(0, 3).getClass().getSimpleName().equals("EmptyTile")
+                            && ((Rook)boardClass.getPiece(0, 0)).getCastling()
+                            && ((BlackKing)pieceChosen).getCastling()) {
+                        availableMoves.add(new Pair<>(0, 2));
                     }
                 }
 

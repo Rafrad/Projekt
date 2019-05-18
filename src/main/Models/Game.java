@@ -30,18 +30,35 @@ public class Game {
     public void move(int row, int column, int rowDestination, int columnDestination) throws PlayerColorException {
         deleteEnPassant();
 
-        if(rowDestination == 0 && boardClass.getPiece(row, column).getClass().getSimpleName().equals("WhitePawn")) {
-            ((WhitePawn)boardClass.getPiece(row, column)).setPromotion(true);
+        if (rowDestination == 0 && boardClass.getPiece(row, column).getClass().getSimpleName().equals("WhitePawn")) {
+            ((WhitePawn) boardClass.getPiece(row, column)).setPromotion(true);
         } else if (rowDestination == 7 && boardClass.getPiece(row, column).getClass().getSimpleName().equals("BlackPawn")) {
-            ((BlackPawn)boardClass.getPiece(row, column)).setPromotion(true);
+            ((BlackPawn) boardClass.getPiece(row, column)).setPromotion(true);
         }
 
         switch (boardClass.board[row][column].getClass().getSimpleName()) {
             case "WhiteKing":
-                ((WhiteKing)boardClass.getPiece(row, column)).setCastling(false);
+                ((WhiteKing) boardClass.getPiece(row, column)).setCastling(false);
+                if (Math.abs(column - columnDestination) == 2 && columnDestination == 6) {
+                    boardClass.board[7][7] = new EmptyTile();
+                    boardClass.board[7][5] = new Rook(true);
+                } else if (Math.abs(column - columnDestination) == 2 && columnDestination == 2) {
+                    boardClass.board[7][0] = new EmptyTile();
+                    boardClass.board[7][3] = new Rook(true);
+                }
+                break;
+            case "BlackKing":
+                ((BlackKing) boardClass.getPiece(row, column)).setCastling(false);
+                if (Math.abs(column - columnDestination) == 2 && columnDestination == 6) {
+                    boardClass.board[0][7] = new EmptyTile();
+                    boardClass.board[0][5] = new Rook(false);
+                } else if (Math.abs(column - columnDestination) == 2 && columnDestination == 2) {
+                    boardClass.board[0][0] = new EmptyTile();
+                    boardClass.board[0][3] = new Rook(false);
+                }
                 break;
             case "Rook":
-                ((Rook)boardClass.getPiece(row, column)).setCastling(false);
+                ((Rook) boardClass.getPiece(row, column)).setCastling(false);
                 break;
         }
 
@@ -57,10 +74,10 @@ public class Game {
                     }
 
                     if (row + 1 == rowDestination && column - 1 == columnDestination
-                    &&  boardClass.board[row+1][column-1].getClass().getSimpleName().equals("EmptyTile")) {
+                            && boardClass.board[row + 1][column - 1].getClass().getSimpleName().equals("EmptyTile")) {
                         boardClass.board[row][column - 1] = new EmptyTile();
                     } else if (row + 1 == rowDestination && column + 1 == columnDestination
-                            &&  boardClass.board[row+1][column+1].getClass().getSimpleName().equals("EmptyTile")) {
+                            && boardClass.board[row + 1][column + 1].getClass().getSimpleName().equals("EmptyTile")) {
                         boardClass.board[row][column + 1] = new EmptyTile();
                     }
 
@@ -75,11 +92,11 @@ public class Game {
                     }
 
                     if (row - 1 == rowDestination
-                     && column - 1 == columnDestination
-                            &&  boardClass.board[row-1][column-1].getClass().getSimpleName().equals("EmptyTile")) {
+                            && column - 1 == columnDestination
+                            && boardClass.board[row - 1][column - 1].getClass().getSimpleName().equals("EmptyTile")) {
                         boardClass.board[row][column - 1] = new EmptyTile();
                     } else if (row - 1 == rowDestination && column + 1 == columnDestination
-                            &&  boardClass.board[row-1][column+1].getClass().getSimpleName().equals("EmptyTile")) {
+                            && boardClass.board[row - 1][column + 1].getClass().getSimpleName().equals("EmptyTile")) {
                         boardClass.board[row][column + 1] = new EmptyTile();
                     }
                     break;
@@ -140,10 +157,10 @@ public class Game {
 
     public List<Pair<Integer, Integer>> showAttackedTiles(boolean player) {
         List<Pair<Integer, Integer>> attackList = new LinkedList<>();
-        for(int row = 0; row < 8; row++) {
-            for(int column = 0; column < 8; column++) {
-                if(!boardClass.getPiece(row, column).getClass().getSimpleName().equals("EmptyTile")
-                && boardClass.getPiece(row, column).getPlayer() == player) {
+        for (int row = 0; row < 8; row++) {
+            for (int column = 0; column < 8; column++) {
+                if (!boardClass.getPiece(row, column).getClass().getSimpleName().equals("EmptyTile")
+                        && boardClass.getPiece(row, column).getPlayer() == player) {
                     attackList = moveClass.CalculateMoves(row, column, true);
                 }
 
