@@ -8,7 +8,8 @@
     <s/>- krol zamienia sie miejscami z wieza </s>
     <br/>- zakaz wykonania przy atakowaniu pola krol-wieza <br/>
   ii) szachowanie + zasady ruchu z szachem<br />
-  iii) matowanie<br />
+  iii) matowanie<br/>
+  iv) ruchy króla (aktualnie król moze sie ruszac w atakowane pola) <br/>
 4. Zegar
 5. Zwyciestwo/Porazka
 6. Komputer
