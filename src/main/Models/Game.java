@@ -2,10 +2,6 @@ package main.Models;
 
 import main.Exceptions.PlayerColorException;
 import main.Models.Pieces.*;
-import javafx.util.Pair;
-
-import java.util.LinkedList;
-import java.util.List;
 
 
 public class Game {
@@ -19,7 +15,7 @@ public class Game {
     public Game() throws PlayerColorException {
         boardClass = new Board();
         moveClass = new Move(boardClass);
-        boardClass.PrintBoard(true);
+        boardClass.printBoard(true);
         currentlyPlayer = true;
         isOver = false;
     }

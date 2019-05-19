@@ -2,7 +2,6 @@ package main.Views;
 
 
 import javafx.scene.control.Button;
-import javafx.scene.layout.HBox;
 import main.Exceptions.PlayerColorException;
 import main.Models.Game;
 
@@ -17,7 +16,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.util.Pair;
-import javafx.fxml.FXMLLoader;
 
 import java.io.IOException;
 import java.util.List;
@@ -225,7 +223,7 @@ public class GameController {
                 }
             }
         }
-        game.boardClass.ClearPossibleMoves();
+        game.boardClass.clearPossibleMoves();
     }
 
 

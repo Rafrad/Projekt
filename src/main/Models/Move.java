@@ -453,9 +453,9 @@ public class Move {
         } else {
             System.out.println(pieceChosen.getClass().getSimpleName());
             System.out.println("allowed moves: " + allowedPieceMovesFromVector.size());
-            boardClass.AddPossibleMoves(availableMoves);
+            boardClass.addPossibleMoves(availableMoves, false);
             System.out.println("movable boardClass: ");
-            boardClass.PrintBoard(false);
+            boardClass.printBoard(false);
         }
 
         return availableMoves;

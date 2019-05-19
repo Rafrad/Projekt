@@ -44,27 +44,27 @@ public class GeneralModelsTest {
         assertSame(testGame.boardClass.getPiece(5, 0).getClass(), WhitePawn.class);
         assertSame(testGame.boardClass.getPiece(6, 0).getClass(), EmptyTile.class);
         testGame.UpdateBoard(5, 0, 6, 0);
-        testGame.boardClass.PrintBoard(true);
+        testGame.boardClass.printBoard(true);
         assertTrue(isStandardBoard());
 
         testGame.moveClass.CalculateMoves(6, 0, false);
         outputContent.reset();
         testGame.move(6, 0, 5, 0);
         outputContent.reset();
-        testGame.boardClass.PrintBoard(true);
+        testGame.boardClass.printBoard(true);
         assertTrue(outputContent.toString().replaceAll("\n", "").matches(".*w x x x x x x x.*"));
         assertFalse(isStandardBoard());
         assertFalse(testGame.getCurrentPlayer());
 
         testGame.UpdateBoard(5, 0, 6, 0);
-        testGame.boardClass.PrintBoard(true);
+        testGame.boardClass.printBoard(true);
         assertTrue(isStandardBoard());
 
         testGame.moveClass.CalculateMoves(1, 0, false);
         outputContent.reset();
         testGame.move(1, 0, 2, 0);
         outputContent.reset();
-        testGame.boardClass.PrintBoard(true);
+        testGame.boardClass.printBoard(true);
         assertTrue(outputContent.toString().replaceAll("\n", "").matches(".*b x x x x x x x.*"));
         assertFalse(isStandardBoard());
         assertTrue(testGame.getCurrentPlayer());
@@ -78,18 +78,18 @@ public class GeneralModelsTest {
         Board testBoard = new Board();
         assertNotNull(testBoard);
 
-        testBoard.PrintBoard(true);
+        testBoard.printBoard(true);
         assertTrue(isStandardBoard());
-        testBoard.PrintBoard(false);
+        testBoard.printBoard(false);
         assertTrue(isStandardBoard());
 
         assertSame(testBoard.getPiece(0, 4).getClass(), BlackKing.class);
 
         testBoard.boardOfPossibleMoves[0][0] = new Bishop(true);
-        testBoard.PrintBoard(false);
+        testBoard.printBoard(false);
         assertFalse(isStandardBoard());
-        testBoard.ClearPossibleMoves();
-        testBoard.PrintBoard(false);
+        testBoard.clearPossibleMoves();
+        testBoard.printBoard(false);
         assertTrue(isStandardBoard());
     }
 

@@ -16,10 +16,9 @@ public class Board {
         boardOfPossibleMoves = new Piece[8][8];
         attackBoard = new Piece[8][8];
 
-        /*
-         * boardClass init
-         */
-
+        
+        //boardClass init
+        
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 if (i == 7) {
@@ -75,19 +74,14 @@ public class Board {
 
         }
 
-
-
-        /*
-         * movable boardClass init
-         */
-
+        
+        //movable boardClass init
+        
         for (int row = 0; row < 8; row++) {
             System.arraycopy(board[row], 0, boardOfPossibleMoves[row], 0, 8);
         }
 
-        /**
-         * attack boardClass init
-         */
+        //attack boardClass init
 
         for(int row = 0; row < 8; row++) {
             System.arraycopy(board[row], 0, attackBoard[row], 0, 0);
@@ -99,25 +93,27 @@ public class Board {
         return board[row][column];
     }
 
-    public void AddPossibleMoves(List<Pair<Integer, Integer>> list) {
-        int row = 0;
-        int column = 0;
-        for (int i = 0; i < list.size(); i++) {
-            row = list.get(i).getKey();
-            column = list.get(i).getValue();
 
-            boardOfPossibleMoves[row][column] = new Mark_MovableTile();
+    /*
+     * TRUE - ATTACK BOARD
+     * FALSE - MOVABLE BOARD
+     */
+
+    public void addPossibleMoves(List<Pair<Integer, Integer>> list, boolean boardChosen) {
+        Piece[][] boardToFill;
+        if(boardChosen) {
+            boardToFill = attackBoard;
+        } else {
+            boardToFill = boardOfPossibleMoves;
         }
-    }
 
-    public void AddAttacks(List<Pair<Integer, Integer>> list) {
         int row = 0;
         int column = 0;
         for (int i = 0; i < list.size(); i++) {
             row = list.get(i).getKey();
             column = list.get(i).getValue();
 
-            attackBoard[row][column] = new Mark_MovableTile();
+            boardToFill[row][column] = new Mark_MovableTile();
         }
     }
 
@@ -127,9 +123,9 @@ public class Board {
      * FALSE - MOVABLE BOARD
      */
 
-    public void PrintBoard(boolean boardChoosen) {
+    public void printBoard(boolean boardChosen) {
         Piece[][] boardToPrint;
-        if(boardChoosen) {
+        if(boardChosen) {
             boardToPrint = board;
         } else {
             boardToPrint = boardOfPossibleMoves;
@@ -195,13 +191,13 @@ public class Board {
         }
     }
 
-    public void ClearPossibleMoves() {
+    public void clearPossibleMoves() {
         for (int row = 0; row < 8; row++) {
             System.arraycopy(board[row], 0, boardOfPossibleMoves[row], 0, 8);
         }
     }
 
-    public void ClearAttackBoard() {
+    public void clearAttackBoard() {
         for (int row = 0; row < 8; row++) {
             System.arraycopy(board[row], 0, attackBoard[row], 0, 8);
         }
