@@ -27,6 +27,7 @@ public class WhiteKing implements Piece {
 
         return allowedMoves;
     }
+
     @Override
     public boolean getPlayer() {
         return true;
@@ -39,7 +40,6 @@ public class WhiteKing implements Piece {
     public void setCheck(boolean checkTmp) {
         check = checkTmp;
     }
-
 
     public boolean getCastling() {
         return castling;

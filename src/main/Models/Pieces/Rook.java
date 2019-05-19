@@ -7,12 +7,12 @@ import javafx.util.Pair;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Rook implements Piece{
-    boolean player;
-    boolean castling;
+public class Rook implements Piece {
+    private boolean player;
+    private boolean castling;
 
     public Rook() throws PlayerColorException {
-        throw new PlayerColorException("Rook must have a color (white or black)!");
+        throw new PlayerColorException("Rook must be white or black!");
     }
 
     public Rook(boolean color) {
@@ -24,8 +24,8 @@ public class Rook implements Piece{
     public List<Pair<Integer, Integer>> move() {
         List<Pair<Integer, Integer>> allowedMoves = new LinkedList<>();
 
-        for(int i = -7; i <= 7; i++) {
-            if(i != 0) {
+        for (int i = -7; i <= 7; i++) {
+            if (i != 0) {
                 allowedMoves.add(new Pair<>(0, i));
                 allowedMoves.add(new Pair<>(i, 0));
             }
@@ -43,7 +43,7 @@ public class Rook implements Piece{
         return castling;
     }
 
-    public void setCastling(boolean bool) {
-        castling = bool;
+    public void setCastling(boolean castling) {
+        this.castling = castling;
     }
 }

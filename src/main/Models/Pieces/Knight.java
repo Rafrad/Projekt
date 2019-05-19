@@ -8,16 +8,14 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Knight implements Piece {
-    boolean player;
+    private boolean player;
 
-    //TODO: UNIT TESTS
     public Knight() throws PlayerColorException {
         throw new PlayerColorException("Knight must be white or black!");
     }
 
-    //TODO: UNIT TESTS
-    public Knight(boolean playerColor) throws PlayerColorException {
-        this.player = playerColor;
+    public Knight(boolean player) throws PlayerColorException {
+        this.player = player;
     }
 
     @Override

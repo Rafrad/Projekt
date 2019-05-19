@@ -6,7 +6,6 @@ import javafx.util.Pair;
 import java.util.LinkedList;
 import java.util.List;
 
-
 public class BlackPawn implements Piece {
     private boolean player;
     private boolean firstMove;
@@ -29,7 +28,6 @@ public class BlackPawn implements Piece {
         allowedMoves.add(new Pair<>(1, -1));
         allowedMoves.add(new Pair<>(2, 0));
 
-
         return allowedMoves;
     }
 
@@ -42,25 +40,24 @@ public class BlackPawn implements Piece {
         return firstMove;
     }
 
-    public void setFirstMove(boolean move) {
-        firstMove = move;
-    }
-
     public boolean getEnPassant() {
         return enPassant;
-    }
-
-    public void setEnPassant(boolean bool) {
-        enPassant = bool;
     }
 
     public boolean getPromotion() {
         return promotion;
     }
 
-    public void setPromotion(boolean promoted) {
-        promotion = promoted;
+    public void setFirstMove(boolean firstMove) {
+        this.firstMove = firstMove;
     }
 
+    public void setEnPassant(boolean enPassant) {
+        this.enPassant = enPassant;
+    }
+
+    public void setPromotion(boolean promotion) {
+        this.promotion = promotion;
+    }
 
 }

@@ -11,6 +11,7 @@ public class BlackKing implements Piece {
     public BlackKing() {
         castling = true;
     }
+
     @Override
     public List<Pair<Integer, Integer>> move() {
         List<Pair<Integer, Integer>> allowedMoves = new LinkedList<>();
@@ -23,7 +24,6 @@ public class BlackKing implements Piece {
         allowedMoves.add(new Pair<>(1, -1));
         allowedMoves.add(new Pair<>(-1, 1));
 
-
         return allowedMoves;
     }
     @Override
@@ -35,7 +35,7 @@ public class BlackKing implements Piece {
         return castling;
     }
 
-    public void setCastling(boolean bool) {
-        castling = bool;
+    public void setCastling(boolean castling) {
+        this.castling = castling;
     }
 }

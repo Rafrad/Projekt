@@ -2,6 +2,7 @@ package main.Models.Pieces;
 
 
 import javafx.util.Pair;
+
 import java.util.List;
 
 //*** move() ***
@@ -32,5 +33,6 @@ import java.util.List;
 
 public interface Piece {
     List<Pair<Integer, Integer>> move();
+
     boolean getPlayer();
 }
