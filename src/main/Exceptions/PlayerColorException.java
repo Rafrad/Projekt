@@ -1,10 +1,8 @@
 package main.Exceptions;
 
-/*
-
+/**
  * Made for development & tests
  * Some pieces cannot be initialized without given color
-
  */
 
 public class PlayerColorException extends Exception {
