@@ -28,17 +28,47 @@ public class Game {
         }
     }
 
+    public boolean whiteKingCheck() {
+//        System.out.println("blak plajer bord");
+//        boardClass.PPPPPP();
+        for (int row = 0; row < 8; row++) {
+            for (int column = 0; column < 8; column++) {
+//                System.out.println(boardClass.blackPlayerAttackBoard[row][column].getClass().getSimpleName());
+                if (boardClass.blackPlayerAttackBoard[row][column].getClass().getSimpleName().equals("Mark_MovableTile")
+                        && boardClass.getPiece(row, column).getClass().getSimpleName().equals("WhiteKing")) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+
+
+    public boolean blackKingCheck() {
+        for (int row = 0; row < 8; row++) {
+            for (int column = 0; column < 8; column++) {
+                if (boardClass.whitePlayerAttackBoard[row][column].getClass().getSimpleName().equals("Mark_MovableTile")
+                 && boardClass.getPiece(row, column).getClass().getSimpleName().equals("BlackKing")) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     public void move(int row, int column, int rowDestination, int columnDestination) {
         deleteEnPassant();
         checkPromotions(row, column, rowDestination);
 
+
         String nameOfMovedPiece = boardClass.board[row][column].getClass().getSimpleName();
         Piece piece = boardClass.getPiece(row, column);
-        
+
 
         switch (nameOfMovedPiece) {
             case "WhiteKing":
-                ((WhiteKing) boardClass.getPiece(row, column)).setCastling(false);
+                ((WhiteKing) piece).setCastling(false);
                 if (Math.abs(column - columnDestination) == 2 && columnDestination == 6) {
                     boardClass.board[7][7] = new EmptyTile();
                     boardClass.board[7][5] = new Rook(true);
@@ -48,7 +78,7 @@ public class Game {
                 }
                 break;
             case "BlackKing":
-                ((BlackKing) boardClass.getPiece(row, column)).setCastling(false);
+                ((BlackKing) piece).setCastling(false);
                 if (Math.abs(column - columnDestination) == 2 && columnDestination == 6) {
                     boardClass.board[0][7] = new EmptyTile();
                     boardClass.board[0][5] = new Rook(false);
@@ -103,7 +133,14 @@ public class Game {
             }
 
             UpdateBoard(row, column, rowDestination, columnDestination);
+            fillBlackPlayerAttackBoard();
+            fillWhitePlayerAttackBoard();
             currentlyPlayer = !currentlyPlayer;
+
+            System.out.println("whiteKingCheck?");
+            if(whiteKingCheck()) {
+                System.out.println("no i kurwa pan paweł");
+            }
 
         }
     }
@@ -124,7 +161,7 @@ public class Game {
             for (int column = 0; column < 8; column++) {
                 switch (boardClass.board[row][column].getClass().getSimpleName()) {
                     case "BlackPawn":
-                        System.out.println(((BlackPawn) boardClass.board[row][column]).getEnPassant());
+//                        System.out.println(((BlackPawn) boardClass.board[row][column]).getEnPassant());
                         if (((BlackPawn) boardClass.board[row][column]).getEnPassant()) {
                             ((BlackPawn) boardClass.board[row][column]).setEnPassant(false);
                         }
@@ -139,20 +176,29 @@ public class Game {
         }
     }
 
-    public void fillAttackBoard(boolean player) {
-        player = !player;
-        boardClass.clearAttackBoard();
+
+    public void fillWhitePlayerAttackBoard() {
+        boardClass.clearWhitePlayerAttackBoard();
+
         for (int row = 0; row < 8; row++) {
             for (int column = 0; column < 8; column++) {
-                if (boardClass.board[row][column].getPlayer() == player) {
-                    moveClass.CalculateMoves(row, column, true);
+                if (boardClass.board[row][column].getPlayer()) {
+                    moveClass.CalculateMoves(row, column, "w");
                 }
             }
         }
+    }
 
-        System.out.print("attack board for " + player + " player");
-        System.out.println();
-        boardClass.printAttack();
+    public void fillBlackPlayerAttackBoard() {
+        boardClass.clearBlackPlayerAttackBoard();
+
+        for (int row = 0; row < 8; row++) {
+            for (int column = 0; column < 8; column++) {
+                if (!boardClass.board[row][column].getPlayer()) {
+                    moveClass.CalculateMoves(row, column, "b");
+                }
+            }
+        }
     }
 
 

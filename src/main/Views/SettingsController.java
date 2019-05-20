@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -11,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.TreeTableCell;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import main.Exceptions.PlayerColorException;
 import main.Models.Options;
@@ -57,6 +59,10 @@ public class SettingsController {
         Scene tableViewScene = new Scene(root);
 
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+
+        Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
+        window.setX(primaryScreenBounds.getMinX() + primaryScreenBounds.getWidth()-1450);
+        window.setY(primaryScreenBounds.getMinY() + primaryScreenBounds.getHeight()-800);
         window.setWidth(1400);
         window.setHeight(800);
         window.setScene(tableViewScene);

@@ -47,7 +47,7 @@ public class GeneralModelsTest {
         testGame.boardClass.printBoard(true);
         assertTrue(isStandardBoard());
 
-        testGame.moveClass.CalculateMoves(6, 0, false);
+        testGame.moveClass.CalculateMoves(6, 0, "");
         outputContent.reset();
         testGame.move(6, 0, 5, 0);
         outputContent.reset();
@@ -60,7 +60,7 @@ public class GeneralModelsTest {
         testGame.boardClass.printBoard(true);
         assertTrue(isStandardBoard());
 
-        testGame.moveClass.CalculateMoves(1, 0, false);
+        testGame.moveClass.CalculateMoves(1, 0, "");
         outputContent.reset();
         testGame.move(1, 0, 2, 0);
         outputContent.reset();
@@ -108,7 +108,7 @@ public class GeneralModelsTest {
     public void testMove() throws PlayerColorException {
 
         Game testMove = new Game();
-        assertFalse(testMove.moveClass.CalculateMoves(6, 0, false).isEmpty());
+        assertFalse(testMove.moveClass.CalculateMoves(6, 0, "").isEmpty());
         assertTrue(outputContent.toString().replaceAll("\n", "").matches(".*m x x x x x x x m x x x x x x x.*"));
         outputContent.reset();
 

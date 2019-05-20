@@ -9,10 +9,8 @@ import main.Models.Options;
 import main.Models.Pieces.*;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.util.Pair;
@@ -22,15 +20,9 @@ import java.util.List;
 
 public class GameController {
     @FXML
-    private Label time;
-    @FXML
     private GridPane gridPane;
     @FXML
-    private AnchorPane anchor;
-    @FXML
     private Pane[][] Tile;
-
-
     @FXML
     private Button promoteToRookButton;
     @FXML
@@ -59,14 +51,11 @@ public class GameController {
 
     private Image dot;
 
-    private List<String> lista;
-    Options opcje;
 
-    public void smiechawa(Options o) throws PlayerColorException {
-        opcje = o;
-        System.out.println(o.getGameMode());
-        System.out.println(o.getVersusMode());
-        System.out.println(o.getFirstPlayerColor());
+    public void smiechawa(Options options) throws PlayerColorException {
+        System.out.println(options.getGameMode());
+        System.out.println(options.getVersusMode());
+        System.out.println(options.getFirstPlayerColor());
         promotionFlagBlockingMove = false;
         hidePromotionButtons();
 
@@ -126,9 +115,8 @@ public class GameController {
                             }
                             break;
                         default:
-                            game.fillAttackBoard(game.boardClass.boardOfPossibleMoves[row][column].getPlayer());
 //                            if (game.getCurrentPlayer() == game.boardClass.board[row][column].getPlayer()) {
-                            if(!promotionFlagBlockingMove) {
+                            if (!promotionFlagBlockingMove) {
                                 PaintBoard();
                                 ClearPossibleMoves();
                                 try {
@@ -138,10 +126,10 @@ public class GameController {
                                 }
 
                                 Tile[row][column].setStyle("-fx-background-color: #fbfb5b");
-                                List<Pair<Integer, Integer>> moves = game.moveClass.CalculateMoves(row, column, false);
+                                List<Pair<Integer, Integer>> moves = game.moveClass.CalculateMoves(row, column, "");
 
                                 ImageView[] dotMoves = new ImageView[moves.size()];
-                                System.out.println(moves.size());
+//                                System.out.println(moves.size());
                                 for (int i = 0; i < moves.size(); i++) {
                                     dotMoves[i] = new ImageView(dot);
                                     int rowMove = moves.get(i).getKey();
@@ -300,7 +288,7 @@ public class GameController {
                         }
                         break;
                     case "BlackPawn":
-                        if(((BlackPawn)game.boardClass.getPiece(row, column)).getPromotion()) {
+                        if (((BlackPawn) game.boardClass.getPiece(row, column)).getPromotion()) {
                             showPromotionButtons(false);
                         }
                         break;
@@ -332,7 +320,6 @@ public class GameController {
         hidePromotionButtons();
         EmulateBoard();
     }
-
 
 
     public void promoteToRook() throws PlayerColorException {
@@ -381,7 +368,6 @@ public class GameController {
         hidePromotionButtons();
         EmulateBoard();
     }
-
 
 
     public void promoteToKnight() throws PlayerColorException {
