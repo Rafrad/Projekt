@@ -203,4 +203,69 @@ public class Board {
         }
     }
 
+
+
+    public void printAttack() {
+        Piece[][] boardToPrint;
+        boardToPrint = attackBoard;
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                boolean player;
+                switch (boardToPrint[i][j].getClass().getSimpleName()) {
+                    case "WhitePawn":
+                        System.out.print("w ");
+                        break;
+                    case "BlackPawn":
+                        System.out.print("b ");
+                        break;
+                    case "Rook":
+                        player = ((Rook) boardToPrint[i][j]).getPlayer();
+                        if (player) {
+                            System.out.print("R ");
+                        } else {
+                            System.out.print("r ");
+                        }
+                        break;
+                    case "Knight":
+                        player = ((Knight) boardToPrint[i][j]).getPlayer();
+                        if (player) {
+                            System.out.print("K ");
+                        } else {
+                            System.out.print("k ");
+                        }
+                        break;
+                    case "Bishop":
+                        player = ((Bishop) boardToPrint[i][j]).getPlayer();
+                        if (player) {
+                            System.out.print("B ");
+                        } else {
+                            System.out.print("b ");
+                        }
+                        break;
+                    case "Queen":
+                        player = ((Queen) boardToPrint[i][j]).getPlayer();
+                        if (player) {
+                            System.out.print("Q ");
+                        } else {
+                            System.out.print("q ");
+                        }
+                        break;
+                    case "WhiteKing":
+                        System.out.print("Y ");
+                        break;
+                    case "BlackKing":
+                        System.out.print("y ");
+                        break;
+                    case "Mark_MovableTile":
+                        System.out.print("m ");
+                        break;
+                    default:
+                        System.out.print("x ");
+                        break;
+                }
+            }
+            System.out.println();
+        }
+    }
+
 }

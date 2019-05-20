@@ -20,16 +20,23 @@ public class Game {
         isOver = false;
     }
 
-    public void move(int row, int column, int rowDestination, int columnDestination){
-        deleteEnPassant();
-
+    public void checkPromotions(int row, int column, int rowDestination) {
         if (rowDestination == 0 && boardClass.getPiece(row, column).getClass().getSimpleName().equals("WhitePawn")) {
             ((WhitePawn) boardClass.getPiece(row, column)).setPromotion(true);
         } else if (rowDestination == 7 && boardClass.getPiece(row, column).getClass().getSimpleName().equals("BlackPawn")) {
             ((BlackPawn) boardClass.getPiece(row, column)).setPromotion(true);
         }
+    }
 
-        switch (boardClass.board[row][column].getClass().getSimpleName()) {
+    public void move(int row, int column, int rowDestination, int columnDestination) {
+        deleteEnPassant();
+        checkPromotions(row, column, rowDestination);
+
+        String nameOfMovedPiece = boardClass.board[row][column].getClass().getSimpleName();
+        Piece piece = boardClass.getPiece(row, column);
+        
+
+        switch (nameOfMovedPiece) {
             case "WhiteKing":
                 ((WhiteKing) boardClass.getPiece(row, column)).setCastling(false);
                 if (Math.abs(column - columnDestination) == 2 && columnDestination == 6) {
@@ -98,10 +105,7 @@ public class Game {
             UpdateBoard(row, column, rowDestination, columnDestination);
             currentlyPlayer = !currentlyPlayer;
 
-        } else { //delete
-            System.out.println("nie mozna");
         }
-
     }
 
     public void UpdateBoard(int row, int column, int rowDestination, int columnDestination) {
@@ -133,6 +137,22 @@ public class Game {
                 }
             }
         }
+    }
+
+    public void fillAttackBoard(boolean player) {
+        player = !player;
+        boardClass.clearAttackBoard();
+        for (int row = 0; row < 8; row++) {
+            for (int column = 0; column < 8; column++) {
+                if (boardClass.board[row][column].getPlayer() == player) {
+                    moveClass.CalculateMoves(row, column, true);
+                }
+            }
+        }
+
+        System.out.print("attack board for " + player + " player");
+        System.out.println();
+        boardClass.printAttack();
     }
 
 

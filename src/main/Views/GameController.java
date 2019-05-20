@@ -126,6 +126,7 @@ public class GameController {
                             }
                             break;
                         default:
+                            game.fillAttackBoard(game.boardClass.boardOfPossibleMoves[row][column].getPlayer());
 //                            if (game.getCurrentPlayer() == game.boardClass.board[row][column].getPlayer()) {
                             if(!promotionFlagBlockingMove) {
                                 PaintBoard();
@@ -162,13 +163,13 @@ public class GameController {
     }
 
     private boolean promotionFlagBlockingMove;
+
     @FXML
     public void initialize() throws PlayerColorException, IOException {
 //        FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/Views/Settings.fxml"));
 //        SettingsController kupa = loader.getController();
 //        System.out.println(kupa.testint);
 //        List<String> haha = kupa.odpowiedziDoSprawdzianiu();
-
     }
 
 
@@ -438,4 +439,3 @@ public class GameController {
     }
 
 }
-
