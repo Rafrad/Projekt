@@ -4,7 +4,7 @@
   ii) wizualna poprawka (maly priorytet)
 2. Tury czasowe
 3. Zasady<br />
-  i) roszada<br />
+  i) <s/>roszada<br /></s>
     <s/>- krol zamienia sie miejscami z wieza </s>
     <s/><br/>- zakaz wykonania przy atakowaniu pola krol-wieza <br/></s>
   ii) szachowanie + zasady ruchu z szachem<br />
