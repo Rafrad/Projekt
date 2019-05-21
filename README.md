@@ -6,10 +6,10 @@
 3. Zasady<br />
   i) roszada<br />
     <s/>- krol zamienia sie miejscami z wieza </s>
-    <br/>- zakaz wykonania przy atakowaniu pola krol-wieza <br/>
+    <s/><br/>- zakaz wykonania przy atakowaniu pola krol-wieza <br/></s>
   ii) szachowanie + zasady ruchu z szachem<br />
   iii) matowanie<br/>
-  iv) ruchy króla (aktualnie król moze sie ruszac w atakowane pola) <br/>
+  iv) <s/>ruchy króla (aktualnie król moze sie ruszac w atakowane pola) <br/></s>
 4. Zegar
 5. Zwyciestwo/Porazka
 6. Komputer
@@ -17,4 +17,5 @@
 # Wrazliwe na testy w danym momencie
 - En Passant
 - roszada
+- szachowanie
 
