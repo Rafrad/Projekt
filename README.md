@@ -4,10 +4,8 @@
   ii) wizualna poprawka (maly priorytet)
 2. Tury czasowe
 3. Zasady<br />
-  i) <s/>roszada<br /></s>
-    - <s/> krol zamienia sie miejscami z wieza </s>
-    - <s/><br/> zakaz wykonania przy atakowaniu pola krol-wieza <br/></s>
-  ii) szachowanie + zasady ruchu z szachem<br />
+  i) <s/>roszada<br/></s>
+  ii) szachowanie + zasady ruchu z szachem<br/>
   iii) matowanie<br/>
   iv) <s/>ruchy króla (aktualnie król moze sie ruszac w atakowane pola) <br/></s>
 4. Zegar
