@@ -11,6 +11,7 @@ public class WhiteKing implements Piece {
 
     public WhiteKing() {
         castling = true;
+        check = false;
     }
 
     @Override

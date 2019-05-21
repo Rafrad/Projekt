@@ -7,9 +7,11 @@ import java.util.List;
 
 public class BlackKing implements Piece {
     private boolean castling;
+    private boolean check;
 
     public BlackKing() {
         castling = true;
+        check = false;
     }
 
     @Override
@@ -35,7 +37,15 @@ public class BlackKing implements Piece {
         return castling;
     }
 
+    public boolean getCheck() {
+        return check;
+    }
+
     public void setCastling(boolean castling) {
         this.castling = castling;
+    }
+
+    public void setCheck(boolean check) {
+        this.check = check;
     }
 }
