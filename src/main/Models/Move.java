@@ -13,6 +13,21 @@ public class Move {
     Move() throws WrongBoardException {
     }
 
+    private int WhiteKingRow;
+    private int WhiteKingColumn;
+
+    public void WhiteKingCoordinates() {
+        for(int row = 0; row <8; row++) {
+            for(int column = 0; column < 8; column++) {
+                if(boardClass.getPiece(row,column).getClass().getSimpleName().equals("WhiteKing")) {
+                    WhiteKingRow = row;
+                    WhiteKingColumn = column;
+                    break;
+                }
+            }
+        }
+    }
+
     Move(Board boardTmp) {
         this.boardClass = boardTmp;
     }
@@ -24,8 +39,28 @@ public class Move {
         List<Pair<Integer, Integer>> availableMoves = new LinkedList<>();
 
 
+        boolean linia = false;
+        WhiteKingCoordinates();
+        if(PieceRow == WhiteKingRow)
+            linia = true;
+        boolean dymy = false;
+
         switch (nameOfChosenPiece) {
             case "Rook":
+
+                for (int i = PieceColumn - 1; i >= 0; i--) {
+                    if (boardClass.board[PieceRow][i].getClass().getSimpleName().equals("EmptyTile")) {
+                        availableMoves.add(new Pair<>(PieceRow, i));
+                    } else if (boardClass.board[PieceRow][i].getPlayer() == pieceChosen.getPlayer()) {
+                        break;
+                    } else {
+                        availableMoves.add(new Pair<>(PieceRow, i));
+                        dymy = true;
+                        break;
+                    }
+                }
+
+
                 for (int i = PieceRow + 1; i < 8; i++) {
                     if (boardClass.board[i][PieceColumn].getClass().getSimpleName().equals("EmptyTile")) {
                         availableMoves.add(new Pair<>(i, PieceColumn));
@@ -58,16 +93,7 @@ public class Move {
                 }
 
 
-                for (int i = PieceColumn - 1; i >= 0; i--) {
-                    if (boardClass.board[PieceRow][i].getClass().getSimpleName().equals("EmptyTile")) {
-                        availableMoves.add(new Pair<>(PieceRow, i));
-                    } else if (boardClass.board[PieceRow][i].getPlayer() == pieceChosen.getPlayer()) {
-                        break;
-                    } else {
-                        availableMoves.add(new Pair<>(PieceRow, i));
-                        break;
-                    }
-                }
+
 
 
                 for (int i = PieceColumn + 1; i < 8; i++) {
@@ -99,7 +125,8 @@ public class Move {
 
 
 
-                        if(!whiteKingCheck()) {
+//                        if(!whiteKingCheck()) {
+
                             if (nameOfCheck.equals("EmptyTile")) {
                                 availableMoves.add(new Pair<>(allowedMovesRow, allowedMovesColumn));
                             } else if (check.getPlayer() != pieceChosen.getPlayer()) {
@@ -107,7 +134,7 @@ public class Move {
                             } else if ((attack.equals("b") || attack.equals("w")) && check.getPlayer() == pieceChosen.getPlayer()) {
                                 availableMoves.add(new Pair<>(allowedMovesRow, allowedMovesColumn));
                             }
-                        }
+//                        }
                     }
                 }
 //                fillBlackPlayerAttackBoard();

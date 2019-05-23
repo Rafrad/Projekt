@@ -26,7 +26,7 @@ public class Board {
                         case 1:
                         case 6:
                             board[i][j] = new Knight(true);
-                            board[i][j] = new EmptyTile();
+//                            board[i][j] = new EmptyTile();
                             break;
                         case 2:
                         case 5:
@@ -134,9 +134,9 @@ public class Board {
 
         int row = 0;
         int column = 0;
-        for (int i = 0; i < list.size(); i++) {
-            row = list.get(i).getKey();
-            column = list.get(i).getValue();
+        for (Pair<Integer, Integer> pair : list) {
+            row = pair.getKey();
+            column = pair.getValue();
 
             boardToFill[row][column] = new Mark_MovableTile();
         }
@@ -156,6 +156,10 @@ public class Board {
             boardToPrint = boardOfPossibleMoves;
         }
 
+        hehe(boardToPrint);
+    }
+
+    private void hehe(Piece[][] boardToPrint) {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 boolean player;
@@ -220,64 +224,7 @@ public class Board {
         Piece[][] boardToPrint;
 
         boardToPrint = blackPlayerAttackBoard;
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                boolean player;
-                switch (boardToPrint[i][j].getClass().getSimpleName()) {
-                    case "WhitePawn":
-                        System.out.print("w ");
-                        break;
-                    case "BlackPawn":
-                        System.out.print("b ");
-                        break;
-                    case "Rook":
-                        player = ((Rook) boardToPrint[i][j]).getPlayer();
-                        if (player) {
-                            System.out.print("R ");
-                        } else {
-                            System.out.print("r ");
-                        }
-                        break;
-                    case "Knight":
-                        player = ((Knight) boardToPrint[i][j]).getPlayer();
-                        if (player) {
-                            System.out.print("K ");
-                        } else {
-                            System.out.print("k ");
-                        }
-                        break;
-                    case "Bishop":
-                        player = ((Bishop) boardToPrint[i][j]).getPlayer();
-                        if (player) {
-                            System.out.print("I ");
-                        } else {
-                            System.out.print("i ");
-                        }
-                        break;
-                    case "Queen":
-                        player = ((Queen) boardToPrint[i][j]).getPlayer();
-                        if (player) {
-                            System.out.print("Q ");
-                        } else {
-                            System.out.print("q ");
-                        }
-                        break;
-                    case "WhiteKing":
-                        System.out.print("Y ");
-                        break;
-                    case "BlackKing":
-                        System.out.print("y ");
-                        break;
-                    case "Mark_MovableTile":
-                        System.out.print("m ");
-                        break;
-                    default:
-                        System.out.print("x ");
-                        break;
-                }
-            }
-            System.out.println();
-        }
+        hehe(boardToPrint);
     }
 
     public void clearPossibleMoves() {
