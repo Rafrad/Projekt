@@ -1,8 +1,8 @@
 package tests;
 
 import javafx.util.Pair;
-import main.java.project.chess.Exceptions.PlayerColorException;
-import main.java.project.chess.Models.Pieces.*;
+import project.chess.Exceptions.PlayerColorException;
+import project.chess.Models.Pieces.*;
 import org.junit.After;
 import static org.junit.Assert.*;
 import org.junit.Before;
