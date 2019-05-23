@@ -1,4 +1,4 @@
-package main.Models.Pieces;
+package project.chess.Models.Pieces;
 
 import javafx.util.Pair;
 

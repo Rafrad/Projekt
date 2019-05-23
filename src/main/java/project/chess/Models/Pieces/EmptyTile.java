@@ -1,10 +1,12 @@
-package main.Models.Pieces;
+package project.chess.Models.Pieces;
+
 
 import javafx.util.Pair;
 
 import java.util.List;
 
-public class Mark_MovableTile implements Piece {
+public class EmptyTile implements Piece {
+
     @Override
     public List<Pair<Integer, Integer>> move() {
         return null;
@@ -14,4 +16,5 @@ public class Mark_MovableTile implements Piece {
     public boolean getPlayer() {
         return false;
     }
+
 }

@@ -1,4 +1,4 @@
-package main.Models;
+package project.chess.Models;
 
 public class Options {
     private String gameMode;

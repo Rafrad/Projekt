@@ -1,4 +1,4 @@
-package main.Exceptions;
+package project.chess.Exceptions;
 
 /**
  * Made for development & tests

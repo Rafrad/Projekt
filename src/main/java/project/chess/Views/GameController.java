@@ -1,12 +1,12 @@
-package main.Views;
+package project.chess.Views;
 
 
 import javafx.scene.control.Button;
-import main.Exceptions.PlayerColorException;
-import main.Models.Game;
+import project.chess.Exceptions.PlayerColorException;
+import project.chess.Models.Game;
 
-import main.Models.Options;
-import main.Models.Pieces.*;
+import project.chess.Models.Options;
+import project.chess.Models.Pieces.*;
 
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
@@ -63,22 +63,22 @@ public class GameController {
          * and for dot
          */
 
-        blackPawn = new Image("main/Images/black_pawn.png");
-        blackRook = new Image("main/Images/black_rook.png");
-        blackKnight = new Image("main/Images/black_knight.png");
-        blackBishop = new Image("main/Images/black_bishop.png");
-        blackQueen = new Image("main/Images/black_queen.png");
-        blackKing = new Image("main/Images/black_king.png");
+        blackPawn = new Image("main/java/project/chess/Images/black_pawn.png");
+        blackRook = new Image("main/java/project/chess/Images/black_rook.png");
+        blackKnight = new Image("main/java/project/chess/Images/black_knight.png");
+        blackBishop = new Image("main/java/project/chess/Images/black_bishop.png");
+        blackQueen = new Image("main/java/project/chess/Images/black_queen.png");
+        blackKing = new Image("main/java/project/chess/Images/black_king.png");
 
-        whitePawn = new Image("main/Images/white_pawn.png");
-        whiteRook = new Image("main/Images/white_rook.png");
-        whiteKnight = new Image("main/Images/white_knight.png");
-        whiteBishop = new Image("main/Images/white_bishop.png");
-        whiteQueen = new Image("main/Images/white_queen.png");
-        whiteKing = new Image("main/Images/white_king.png");
+        whitePawn = new Image("main/java/project/chess/Images/white_pawn.png");
+        whiteRook = new Image("main/java/project/chess/Images/white_rook.png");
+        whiteKnight = new Image("main/java/project/chess/Images/white_knight.png");
+        whiteBishop = new Image("main/java/project/chess/Images/white_bishop.png");
+        whiteQueen = new Image("main/java/project/chess/Images/white_queen.png");
+        whiteKing = new Image("main/java/project/chess/Images/white_king.png");
 
 
-        dot = new Image("main/Images/dot.png");
+        dot = new Image("main/java/project/chess/Images/dot.png");
 
 
         Tile = new Pane[8][8];

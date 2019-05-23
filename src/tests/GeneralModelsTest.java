@@ -1,9 +1,9 @@
 package tests;
 
-import main.Exceptions.PlayerColorException;
-import main.Models.Board;
-import main.Models.Game;
-import main.Models.Pieces.*;
+import main.java.project.chess.Exceptions.PlayerColorException;
+import main.java.project.chess.Models.Board;
+import main.java.project.chess.Models.Game;
+import main.java.project.chess.Models.Pieces.*;
 import org.junit.After;
 import static org.junit.Assert.*;
 import org.junit.Before;

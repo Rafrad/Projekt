@@ -1,4 +1,4 @@
-package main.Views;
+package project.chess.Views;
 
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -13,8 +13,8 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Tooltip;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import main.Exceptions.PlayerColorException;
-import main.Models.Options;
+import project.chess.Exceptions.PlayerColorException;
+import project.chess.Models.Options;
 
 
 import java.io.IOException;
@@ -35,7 +35,7 @@ public class SettingsController {
      */
 
     public void changeSceneToMainMenu(ActionEvent event) throws IOException {
-        Parent tableViewParent = FXMLLoader.load(getClass().getResource("/main/Views/MainMenu.fxml"));
+        Parent tableViewParent = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
         Scene tableViewScene = new Scene(tableViewParent);
 
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -53,7 +53,7 @@ public class SettingsController {
         options.setVersusMode(versusModeChoice.getValue());
         options.setFirstPlayerColor(firstPlayerColorChoice.getValue());
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/Views/Game.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Game.fxml"));
         Parent root = loader.load();
         GameController gameController = loader.getController();
         gameController.init(options);

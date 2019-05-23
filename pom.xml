@@ -21,7 +21,7 @@
 		    <archive>
 		      <manifest>
 		        <addClasspath>true</addClasspath>
-		        <mainClass>controller.Main</mainClass>
+		        <mainClass>controller.main.java.Main</mainClass>
 		      </manifest>
 		    </archive>
 		  </configuration>

@@ -1,4 +1,4 @@
-package main.Views;
+package project.chess.Views;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,7 +17,7 @@ public class MainMenuController {
     @FXML Button exitButton;
 
     public void changeSceneToSettings(ActionEvent event) throws IOException {
-        Parent tableViewParent = FXMLLoader.load(getClass().getResource("/main/Views/Settings.fxml"));
+        Parent tableViewParent = FXMLLoader.load(getClass().getResource("Settings.fxml"));
         Scene tableViewScene = new Scene(tableViewParent);
 
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();

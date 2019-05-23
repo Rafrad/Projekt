@@ -6,7 +6,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.Views.SettingsController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="project.chess.Views.SettingsController">
    <children>
       <ChoiceBox fx:id="gameModeChoice" layoutX="210.0" layoutY="75.0" prefWidth="150.0" />
       <ChoiceBox fx:id="versusModeChoice" layoutX="216.0" layoutY="185.0" prefWidth="150.0" />

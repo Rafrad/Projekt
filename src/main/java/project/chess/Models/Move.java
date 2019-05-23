@@ -1,10 +1,9 @@
-package main.Models;
+package project.chess.Models;
 
-import main.Exceptions.WrongBoardException;
-import main.Models.Pieces.*;
+import project.chess.Exceptions.WrongBoardException;
+import project.chess.Models.Pieces.*;
 import javafx.util.Pair;
 
-import java.sql.SQLOutput;
 import java.util.*;
 
 public class Move {

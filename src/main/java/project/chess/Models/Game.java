@@ -1,7 +1,7 @@
-package main.Models;
+package project.chess.Models;
 
-import main.Exceptions.PlayerColorException;
-import main.Models.Pieces.*;
+import project.chess.Exceptions.PlayerColorException;
+import project.chess.Models.Pieces.*;
 
 
 public class Game {

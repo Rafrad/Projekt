@@ -1,6 +1,6 @@
-package main.Models.Pieces;
+package project.chess.Models.Pieces;
 
-import main.Exceptions.PlayerColorException;
+import project.chess.Exceptions.PlayerColorException;
 import javafx.util.Pair;
 import java.util.LinkedList;
 import java.util.List;
