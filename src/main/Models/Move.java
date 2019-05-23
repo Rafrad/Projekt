@@ -44,6 +44,11 @@ public class Move {
         if(PieceRow == WhiteKingRow)
             linia = true;
         boolean dymy = false;
+        for(int i = PieceColumn - 1; i >= 0; i--) {
+            if(boardClass.getPiece(PieceRow, i).getClass().getSimpleName().equals("Queen")) {
+                dymy = true;
+            }
+        }
 
         switch (nameOfChosenPiece) {
             case "Rook":
@@ -55,14 +60,13 @@ public class Move {
                         break;
                     } else {
                         availableMoves.add(new Pair<>(PieceRow, i));
-                        dymy = true;
                         break;
                     }
                 }
 
 
                 for (int i = PieceRow + 1; i < 8; i++) {
-                    if (boardClass.board[i][PieceColumn].getClass().getSimpleName().equals("EmptyTile")) {
+                    if (boardClass.board[i][PieceColumn].getClass().getSimpleName().equals("EmptyTile")  && !dymy) {
                         availableMoves.add(new Pair<>(i, PieceColumn));
                     } else if (boardClass.board[i][PieceColumn].getPlayer() == pieceChosen.getPlayer()) {
                         if(pieceChosen.getPlayer() == boardClass.getPiece(i, PieceColumn).getPlayer()
@@ -70,14 +74,14 @@ public class Move {
                             availableMoves.add(new Pair<>(i, PieceColumn));
                         }
                         break;
-                    } else {
+                    } else if(!dymy){
                         availableMoves.add(new Pair<>(i, PieceColumn));
                         break;
                     }
                 }
 
                 for (int i = PieceRow - 1; i >= 0; i--) {
-                    if (boardClass.board[i][PieceColumn].getClass().getSimpleName().equals("EmptyTile")) {
+                    if (boardClass.board[i][PieceColumn].getClass().getSimpleName().equals("EmptyTile") && !dymy) {
                         //HEHEHEHHE
                         availableMoves.add(new Pair<>(i, PieceColumn));
                     } else if (boardClass.board[i][PieceColumn].getPlayer() == pieceChosen.getPlayer()) {
@@ -86,7 +90,7 @@ public class Move {
                             availableMoves.add(new Pair<>(i, PieceColumn));
                         }
                         break;
-                    } else {
+                    } else if(!dymy){
                         availableMoves.add(new Pair<>(i, PieceColumn));
                         break;
                     }
