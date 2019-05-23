@@ -1,4 +1,4 @@
-package tests;
+package project.chess;
 
 import project.chess.Exceptions.PlayerColorException;
 import project.chess.Models.Board;

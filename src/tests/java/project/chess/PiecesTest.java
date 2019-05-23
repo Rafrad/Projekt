@@ -1,4 +1,4 @@
-package tests;
+package project.chess;
 
 import javafx.util.Pair;
 import project.chess.Exceptions.PlayerColorException;

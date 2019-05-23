@@ -35,7 +35,8 @@ public class SettingsController {
      */
 
     public void changeSceneToMainMenu(ActionEvent event) throws IOException {
-        Parent tableViewParent = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/fxml/MainMenu.fxml"));
+        Parent tableViewParent = loader.load();
         Scene tableViewScene = new Scene(tableViewParent);
 
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -53,7 +54,7 @@ public class SettingsController {
         options.setVersusMode(versusModeChoice.getValue());
         options.setFirstPlayerColor(firstPlayerColorChoice.getValue());
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("Game.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/fxml/Game.fxml"));
         Parent root = loader.load();
         GameController gameController = loader.getController();
         gameController.init(options);

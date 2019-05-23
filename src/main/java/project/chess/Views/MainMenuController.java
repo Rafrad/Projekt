@@ -17,7 +17,8 @@ public class MainMenuController {
     @FXML Button exitButton;
 
     public void changeSceneToSettings(ActionEvent event) throws IOException {
-        Parent tableViewParent = FXMLLoader.load(getClass().getResource("Settings.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/fxml/Settings.fxml"));
+        Parent tableViewParent = loader.load();
         Scene tableViewScene = new Scene(tableViewParent);
 
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
