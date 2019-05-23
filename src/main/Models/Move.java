@@ -4,6 +4,7 @@ import main.Exceptions.WrongBoardException;
 import main.Models.Pieces.*;
 import javafx.util.Pair;
 
+import java.sql.SQLOutput;
 import java.util.*;
 
 public class Move {
@@ -16,20 +17,23 @@ public class Move {
         this.boardClass = boardTmp;
     }
 
-
     public List<Pair<Integer, Integer>> CalculateMoves(int PieceRow, int PieceColumn, String attack) {
-
         Piece pieceChosen = boardClass.getPiece(PieceRow, PieceColumn);
-        String nameOfChoosedPiece = pieceChosen.getClass().getSimpleName();
+        String nameOfChosenPiece = pieceChosen.getClass().getSimpleName();
         List<Pair<Integer, Integer>> allowedPieceMovesFromVector = pieceChosen.move();
         List<Pair<Integer, Integer>> availableMoves = new LinkedList<>();
 
-        switch (nameOfChoosedPiece) {
+
+        switch (nameOfChosenPiece) {
             case "Rook":
                 for (int i = PieceRow + 1; i < 8; i++) {
                     if (boardClass.board[i][PieceColumn].getClass().getSimpleName().equals("EmptyTile")) {
                         availableMoves.add(new Pair<>(i, PieceColumn));
                     } else if (boardClass.board[i][PieceColumn].getPlayer() == pieceChosen.getPlayer()) {
+                        if(pieceChosen.getPlayer() == boardClass.getPiece(i, PieceColumn).getPlayer()
+                                && (attack.equals("w") || attack.equals("b"))) {
+                            availableMoves.add(new Pair<>(i, PieceColumn));
+                        }
                         break;
                     } else {
                         availableMoves.add(new Pair<>(i, PieceColumn));
@@ -39,8 +43,13 @@ public class Move {
 
                 for (int i = PieceRow - 1; i >= 0; i--) {
                     if (boardClass.board[i][PieceColumn].getClass().getSimpleName().equals("EmptyTile")) {
+                        //HEHEHEHHE
                         availableMoves.add(new Pair<>(i, PieceColumn));
                     } else if (boardClass.board[i][PieceColumn].getPlayer() == pieceChosen.getPlayer()) {
+                        if(pieceChosen.getPlayer() == boardClass.getPiece(i, PieceColumn).getPlayer()
+                        && (attack.equals("w") || attack.equals("b"))) {
+                            availableMoves.add(new Pair<>(i, PieceColumn));
+                        }
                         break;
                     } else {
                         availableMoves.add(new Pair<>(i, PieceColumn));
@@ -88,15 +97,20 @@ public class Move {
                         Piece check = boardClass.getPiece(allowedMovesRow, allowedMovesColumn);
                         String nameOfCheck = check.getClass().getSimpleName();
 
-                        if (nameOfCheck.equals("EmptyTile")) {
-                            availableMoves.add(new Pair<>(allowedMovesRow, allowedMovesColumn));
-                        } else if (check.getPlayer() != pieceChosen.getPlayer()) {
-                            availableMoves.add(new Pair<>(allowedMovesRow, allowedMovesColumn));
+
+
+                        if(!whiteKingCheck()) {
+                            if (nameOfCheck.equals("EmptyTile")) {
+                                availableMoves.add(new Pair<>(allowedMovesRow, allowedMovesColumn));
+                            } else if (check.getPlayer() != pieceChosen.getPlayer()) {
+                                availableMoves.add(new Pair<>(allowedMovesRow, allowedMovesColumn));
+                            } else if ((attack.equals("b") || attack.equals("w")) && check.getPlayer() == pieceChosen.getPlayer()) {
+                                availableMoves.add(new Pair<>(allowedMovesRow, allowedMovesColumn));
+                            }
                         }
-
-
                     }
                 }
+//                fillBlackPlayerAttackBoard();
                 break;
 
 
@@ -272,7 +286,7 @@ public class Move {
                         Piece check = boardClass.getPiece(allowedMovesRow, allowedMovesColumn);
                         String nameOfCheck = check.getClass().getSimpleName();
 
-                        if(nameOfChoosedPiece.equals("WhiteKing")) {
+                        if(nameOfChosenPiece.equals("WhiteKing")) {
                             if (!boardClass.blackPlayerAttackBoard[allowedMovesRow][allowedMovesColumn].getClass().getSimpleName().equals("Mark_MovableTile")) {
                                 if (nameOfCheck.equals("EmptyTile")) {
                                     availableMoves.add(new Pair<>(allowedMovesRow, allowedMovesColumn));
@@ -280,7 +294,7 @@ public class Move {
                                     availableMoves.add(new Pair<>(allowedMovesRow, allowedMovesColumn));
                                 }
                             }
-                        } else if(nameOfChoosedPiece.equals("BlackKing")) {
+                        } else if(nameOfChosenPiece.equals("BlackKing")) {
                             if (!boardClass.whitePlayerAttackBoard[allowedMovesRow][allowedMovesColumn].getClass().getSimpleName().equals("Mark_MovableTile")) {
                                 if (nameOfCheck.equals("EmptyTile")) {
                                     availableMoves.add(new Pair<>(allowedMovesRow, allowedMovesColumn));
@@ -299,7 +313,7 @@ public class Move {
                  * castling
                  */
 
-                if (nameOfChoosedPiece.equals("WhiteKing")) {
+                if (nameOfChosenPiece.equals("WhiteKing")) {
                     if (boardClass.getPiece(7, 7).getClass().getSimpleName().equals("Rook")
                             && boardClass.getPiece(7, 6).getClass().getSimpleName().equals("EmptyTile")
                             && !boardClass.blackPlayerAttackBoard[7][6].getClass().getSimpleName().equals("Mark_MovableTile")
@@ -324,7 +338,7 @@ public class Move {
                     }
                 }
 
-                if (nameOfChoosedPiece.equals("BlackKing")) {
+                if (nameOfChosenPiece.equals("BlackKing")) {
                     if (boardClass.getPiece(0, 7).getClass().getSimpleName().equals("Rook")
                             && boardClass.getPiece(0, 6).getClass().getSimpleName().equals("EmptyTile")
                             && !boardClass.whitePlayerAttackBoard[0][6].getClass().getSimpleName().equals("Mark_MovableTile")
@@ -353,7 +367,7 @@ public class Move {
         }
 
 
-        if (nameOfChoosedPiece.equals("BlackPawn") || nameOfChoosedPiece.equals("WhitePawn")) {
+        if (nameOfChosenPiece.equals("BlackPawn") || nameOfChosenPiece.equals("WhitePawn")) {
 
 
             for (int i = 0; i < allowedPieceMovesFromVector.size(); i++) {
@@ -374,10 +388,10 @@ public class Move {
                     String nameOfCheck = check.getClass().getSimpleName();
 
 
-                    if (nameOfChoosedPiece.equals("BlackPawn") || nameOfChoosedPiece.equals("WhitePawn")) {
+                    if (nameOfChosenPiece.equals("BlackPawn") || nameOfChosenPiece.equals("WhitePawn")) {
 
                         //tutaj bez petli (en passant)
-                        if (nameOfChoosedPiece.equals("WhitePawn") && !(attack.equals("w") || attack.equals("b"))) {
+                        if (nameOfChosenPiece.equals("WhitePawn") && !(attack.equals("w") || attack.equals("b"))) {
                             if (PieceColumn - 1 >= 0) {
                                 if (boardClass.getPiece(PieceRow, PieceColumn - 1).getClass().getSimpleName().equals("BlackPawn")) {
                                     if (((BlackPawn) boardClass.board[PieceRow][PieceColumn - 1]).getEnPassant()) {
@@ -395,7 +409,7 @@ public class Move {
 
 
                         //tutaj bez petli (en passant)
-                        if (nameOfChoosedPiece.equals("BlackPawn") && !(attack.equals("w") || attack.equals("b"))) {
+                        if (nameOfChosenPiece.equals("BlackPawn") && !(attack.equals("w") || attack.equals("b"))) {
                             if (PieceColumn - 1 >= 0) {
                                 if (boardClass.getPiece(PieceRow, PieceColumn - 1).getClass().getSimpleName().equals("WhitePawn")) {
                                     if (((WhitePawn) boardClass.board[PieceRow][PieceColumn - 1]).getEnPassant()) {
@@ -414,7 +428,7 @@ public class Move {
 
                         if (nameOfCheck.equals("EmptyTile")
                                 && PieceColumn == allowedMovesColumn) {
-                            switch (nameOfChoosedPiece) {
+                            switch (nameOfChosenPiece) {
                                 case "BlackPawn":
                                     if (((BlackPawn) boardClass.board[PieceRow][PieceColumn]).getFirstMove()) {
                                         if (boardClass.board[PieceRow + 1][PieceColumn].getClass().getSimpleName().equals("EmptyTile")) {
@@ -476,6 +490,8 @@ public class Move {
             boardClass.addPossibleMoves(availableMoves, "w");
         } else if(attack.equals("b")) {
             boardClass.addPossibleMoves(availableMoves, "b");
+        } else if(attack.equals("f")) {
+            boardClass.addPossibleMoves(availableMoves, "f");
         } else {
 //            System.out.println(pieceChosen.getClass().getSimpleName());
 //            System.out.println("allowed moves: " + allowedPieceMovesFromVector.size());
@@ -487,5 +503,35 @@ public class Move {
 
         return availableMoves;
     }
+
+
+     void fillBlackPlayerAttackBoard() {
+        boardClass.clearBlackPlayerAttackBoard();
+
+        for (int row = 0; row < 8; row++) {
+            for (int column = 0; column < 8; column++) {
+                if (!boardClass.board[row][column].getPlayer()) {
+                    CalculateMoves(row, column, "b");
+                }
+            }
+        }
+    }
+
+
+    public boolean whiteKingCheck() {
+//        System.out.println("blak plajer bord");
+//        boardClass.PPPPPP();
+        for (int row = 0; row < 8; row++) {
+            for (int column = 0; column < 8; column++) {
+                if (boardClass.blackPlayerAttackBoard[row][column].getClass().getSimpleName().equals("Mark_MovableTile")
+                        && boardClass.getPiece(row, column).getClass().getSimpleName().equals("WhiteKing")) {
+                    ((WhiteKing)boardClass.getPiece(row, column)).setCheck(true);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
 
 }

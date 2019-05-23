@@ -15,7 +15,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.util.Pair;
 
-import java.io.IOException;
 import java.util.List;
 
 public class GameController {
@@ -52,7 +51,7 @@ public class GameController {
     private Image dot;
 
 
-    public void smiechawa(Options options) throws PlayerColorException {
+    void init(Options options) throws PlayerColorException {
         System.out.println(options.getGameMode());
         System.out.println(options.getVersusMode());
         System.out.println(options.getFirstPlayerColor());
@@ -153,11 +152,7 @@ public class GameController {
     private boolean promotionFlagBlockingMove;
 
     @FXML
-    public void initialize() throws PlayerColorException, IOException {
-//        FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/Views/Settings.fxml"));
-//        SettingsController kupa = loader.getController();
-//        System.out.println(kupa.testint);
-//        List<String> haha = kupa.odpowiedziDoSprawdzianiu();
+    public void initialize(){
     }
 
 
@@ -165,8 +160,7 @@ public class GameController {
         for (int row = 0; row < 8; row++) {
             for (int column = 0; column < 8; column++) {
                 if (Tile[row][column].styleProperty().getValueSafe().subSequence(22, 29).equals("#fbfb5b")) {
-                    Pair<Integer, Integer> pair = new Pair<Integer, Integer>(row, column);
-                    return pair;
+                    return new Pair<>(row, column);
                 }
             }
         }
@@ -174,12 +168,12 @@ public class GameController {
     }
 
 
-    boolean isEven(int a, int b) {
+    private boolean isEven(int a, int b) {
         return (a + b) % 2 == 0;
     }
 
 
-    public void InitializeTiles() {
+    private void InitializeTiles() {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 Tile[i][j] = new Pane();
@@ -189,7 +183,7 @@ public class GameController {
     }
 
 
-    public void PaintBoard() {
+    private void PaintBoard() {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 if (isEven(i, j)) {
@@ -201,7 +195,7 @@ public class GameController {
         }
     }
 
-    public void ClearPossibleMoves() {
+    private void ClearPossibleMoves() {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 if (game.boardClass.boardOfPossibleMoves[i][j].getClass().getSimpleName().equals("Mark_MovableTile")) {
@@ -216,7 +210,7 @@ public class GameController {
     }
 
 
-    public void EmulateBoard() throws PlayerColorException {
+    private void EmulateBoard() throws PlayerColorException {
         for (int row = 0; row < 8; row++) {
             for (int column = 0; column < 8; column++) {
                 ImageView tmp = null;
@@ -275,9 +269,7 @@ public class GameController {
             }
         }
 
-        /**
-         * promotion box
-         */
+        //promotion box
 
         for (int row = 0; row < 8; row++) {
             for (int column = 0; column < 8; column++) {
@@ -394,7 +386,7 @@ public class GameController {
     }
 
 
-    public void hidePromotionButtons() {
+    private void hidePromotionButtons() {
         promoteToBishopButton.setVisible(false);
         promoteToRookButton.setVisible(false);
         promoteToKnightButton.setVisible(false);
@@ -403,7 +395,7 @@ public class GameController {
         promotionFlagBlockingMove = false;
     }
 
-    public void showPromotionButtons(boolean player) {
+    private void showPromotionButtons(boolean player) {
         promotionFlagBlockingMove = true;
         if (player) {
             promoteToQueenButton.setGraphic(new ImageView(whiteQueen));

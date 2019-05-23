@@ -9,20 +9,12 @@ import java.util.List;
 public class Board {
     public Piece[][] board;
     public Piece[][] boardOfPossibleMoves;
-    public Piece[][] whitePlayerAttackBoard;
-    public Piece[][] blackPlayerAttackBoard;
-    public Piece[][] fakeBoard;
-
-    public Board() throws PlayerColorException {
-        board = new Piece[8][8];
-        boardOfPossibleMoves = new Piece[8][8];
-        whitePlayerAttackBoard = new Piece[8][8];
-        blackPlayerAttackBoard = new Piece[8][8];
-        fakeBoard = new Piece[8][8];
+    Piece[][] whitePlayerAttackBoard;
+    Piece[][] blackPlayerAttackBoard;
+    Piece[][] fakeBoard;
 
 
-        //boardClass init
-
+    private void initBoard() throws PlayerColorException {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 if (i == 7) {
@@ -81,10 +73,9 @@ public class Board {
             }
 
         }
+    }
 
-
-        //movable boardClass init
-
+    private void initEveryBoard() {
         for (int row = 0; row < 8; row++) {
             System.arraycopy(board[row], 0, boardOfPossibleMoves[row], 0, 8);
         }
@@ -98,13 +89,21 @@ public class Board {
             System.arraycopy(board[row], 0, blackPlayerAttackBoard[row], 0, 8);
         }
 
-
-        //fake board init
-
         for (int row = 0; row < 8; row++) {
             System.arraycopy(board[row], 0, fakeBoard[row], 0, 8);
         }
+    }
 
+
+    public Board() throws PlayerColorException {
+        board = new Piece[8][8];
+        boardOfPossibleMoves = new Piece[8][8];
+        whitePlayerAttackBoard = new Piece[8][8];
+        blackPlayerAttackBoard = new Piece[8][8];
+        fakeBoard = new Piece[8][8];
+
+        initBoard();
+        initEveryBoard();
     }
 
     public Piece getPiece(int row, int column) {
@@ -127,6 +126,8 @@ public class Board {
             boardToFill = whitePlayerAttackBoard;
         } else if (boardChosen.equals("b")) {
             boardToFill = blackPlayerAttackBoard;
+        } else if (boardChosen.equals("f")) {
+            boardToFill = fakeBoard;
         } else {
             boardToFill = boardOfPossibleMoves;
         }

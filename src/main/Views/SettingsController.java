@@ -11,7 +11,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Tooltip;
-import javafx.scene.control.TreeTableCell;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import main.Exceptions.PlayerColorException;
@@ -22,9 +21,12 @@ import java.io.IOException;
 
 
 public class SettingsController {
-    @FXML ChoiceBox gameModeChoice;
-    @FXML ChoiceBox versusModeChoice;
-    @FXML ChoiceBox firstPlayerColorChoice;
+    @FXML
+    ChoiceBox<String> gameModeChoice;
+    @FXML
+    ChoiceBox<String> versusModeChoice;
+    @FXML
+    ChoiceBox<String> firstPlayerColorChoice;
     @FXML Button startGameButton;
     @FXML Button backToMainMenuButton;
 
@@ -47,14 +49,14 @@ public class SettingsController {
 
     public void startGame(ActionEvent event) throws IOException, PlayerColorException {
         Options options = new Options();
-        options.setGameMode(gameModeChoice.getValue().toString());
-        options.setVersusMode(versusModeChoice.getValue().toString());
-        options.setFirstPlayerColor(firstPlayerColorChoice.getValue().toString());
+        options.setGameMode(gameModeChoice.getValue());
+        options.setVersusMode(versusModeChoice.getValue());
+        options.setFirstPlayerColor(firstPlayerColorChoice.getValue());
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/Views/Game.fxml"));
         Parent root = loader.load();
         GameController gameController = loader.getController();
-        gameController.smiechawa(options);
+        gameController.init(options);
 
         Scene tableViewScene = new Scene(root);
 
@@ -78,7 +80,7 @@ public class SettingsController {
         setDefaultsChoices();
     }
 
-    public void setChoices() {
+    private void setChoices() {
         gameModeChoice.setItems(FXCollections.observableArrayList(
                 "Blitz 3|2", "Bullet 1|0", "Rapid 10|0", "Classic 15|15")
         );
@@ -92,13 +94,13 @@ public class SettingsController {
         );
     }
 
-    public void setDefaultsChoices() {
+    private void setDefaultsChoices() {
         gameModeChoice.setValue("Classic 15|15");
         versusModeChoice.setValue("Player VS Player");
         firstPlayerColorChoice.setValue("white");
     }
 
-    public void setTooltips() {
+    private void setTooltips() {
         gameModeChoice.setTooltip(new Tooltip("szybciej z ta lodziarnia"));
         firstPlayerColorChoice.setTooltip(new Tooltip("ftw"));
         versusModeChoice.setTooltip(new Tooltip("nigga"));
