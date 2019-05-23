@@ -1,5 +1,8 @@
 #Ignore output files
 out/
+bin/
+projekt.iml
+src/module-info.java
 
 /target/
 .project

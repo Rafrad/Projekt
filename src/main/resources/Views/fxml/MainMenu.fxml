@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="project.chess.Controllers.MainMenuController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.Controllers.MainMenuController">
    <children>
       <Button fx:id="startButton" alignment="CENTER" contentDisplay="CENTER" layoutX="84.0" layoutY="62.0" mnemonicParsing="false" onAction="#changeSceneToSettings" prefHeight="95.0" prefWidth="221.0" text="Play" AnchorPane.bottomAnchor="250.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="50.0">
          <contextMenu>

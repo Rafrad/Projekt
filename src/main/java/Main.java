@@ -1,4 +1,4 @@
-package project.chess;
+package main.java;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -18,12 +18,12 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/Views/fxml/MainMenu.fxml"));
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("main/resources/Views/fxml/MainMenu.fxml"));
         primaryStage.setTitle("Chess");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
         primaryStage.setResizable(false);
-        primaryStage.getIcons().add(new Image("/Images/icon.png"));
+        primaryStage.getIcons().add(new Image("main/resources/Images/icon.png"));
     }
 
 
