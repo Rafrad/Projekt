@@ -1,4 +1,4 @@
-package project.chess.Views;
+package project.chess.Controllers;
 
 
 import javafx.scene.control.Button;
