@@ -1,6 +1,6 @@
 #Ignore output files
 out/
-
+.idea/libraries
 /target/
 .project
 .classpath

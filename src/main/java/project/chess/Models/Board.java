@@ -26,16 +26,16 @@ public class Board {
                         case 1:
                         case 6:
                             board[i][j] = new Knight(true);
-                            board[i][j] = new EmptyTile();
+                            //board[i][j] = new EmptyTile();
                             break;
                         case 2:
                         case 5:
                             board[i][j] = new Bishop(true);
-                            board[i][j] = new EmptyTile();
+                            //board[i][j] = new EmptyTile();
                             break;
                         case 3:
                             board[i][j] = new Queen(true);
-                            board[i][j] = new EmptyTile();
+                            //board[i][j] = new EmptyTile();
                             break;
                         case 4:
                             board[i][j] = new WhiteKing();
@@ -64,7 +64,7 @@ public class Board {
                     }
                 } else if (i == 6) {
                     board[i][j] = new WhitePawn();
-                    board[i][j] = new EmptyTile();
+                    //board[i][j] = new EmptyTile();
                 } else if (i == 1) {
                     board[i][j] = new BlackPawn();
                 } else {

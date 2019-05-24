@@ -12,7 +12,7 @@ public class Bishop implements Piece {
         throw new PlayerColorException("Bishop must be white or black!");
     }
 
-    public Bishop(boolean player) throws PlayerColorException {
+    public Bishop(boolean player) {
         this.player = player;
     }
 

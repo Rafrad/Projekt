@@ -14,7 +14,7 @@ public class Knight implements Piece {
         throw new PlayerColorException("Knight must be white or black!");
     }
 
-    public Knight(boolean player) throws PlayerColorException {
+    public Knight(boolean player) {
         this.player = player;
     }
 
