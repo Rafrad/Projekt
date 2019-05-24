@@ -49,7 +49,7 @@ public class Game {
         for (int row = 0; row < 8; row++) {
             for (int column = 0; column < 8; column++) {
                 if (boardClass.whitePlayerAttackBoard[row][column].getClass().getSimpleName().equals("Mark_MovableTile")
-                 && boardClass.getPiece(row, column).getClass().getSimpleName().equals("BlackKing")) {
+                        && boardClass.getPiece(row, column).getClass().getSimpleName().equals("BlackKing")) {
                     ((BlackKing)boardClass.getPiece(row, column)).setCheck(true);
                     return true;
                 }
@@ -76,17 +76,6 @@ public class Game {
 
     }
 
-    public void fillFakeBoard() {
-        boardClass.clearFakeBoard();
-
-        for (int row = 0; row < 8; row++) {
-            for (int column = 0; column < 8; column++) {
-                if (boardClass.board[row][column].getPlayer()) {
-                    moveClass.CalculateMoves(row, column, "f");
-                }
-            }
-        }
-    }
 
     public void move(int row, int column, int rowDestination, int columnDestination) {
         deleteEnPassant();
@@ -240,6 +229,3 @@ public class Game {
 
 
 }
-
-
-

@@ -11,8 +11,6 @@ public class Board {
     public Piece[][] boardOfPossibleMoves;
     Piece[][] whitePlayerAttackBoard;
     Piece[][] blackPlayerAttackBoard;
-    Piece[][] fakeBoard;
-
 
     private void initBoard() throws PlayerColorException {
         for (int i = 0; i < 8; i++) {
@@ -26,16 +24,13 @@ public class Board {
                         case 1:
                         case 6:
                             board[i][j] = new Knight(true);
-                            board[i][j] = new EmptyTile();
                             break;
                         case 2:
                         case 5:
                             board[i][j] = new Bishop(true);
-                            board[i][j] = new EmptyTile();
                             break;
                         case 3:
                             board[i][j] = new Queen(true);
-                            board[i][j] = new EmptyTile();
                             break;
                         case 4:
                             board[i][j] = new WhiteKing();
@@ -89,9 +84,6 @@ public class Board {
             System.arraycopy(board[row], 0, blackPlayerAttackBoard[row], 0, 8);
         }
 
-        for (int row = 0; row < 8; row++) {
-            System.arraycopy(board[row], 0, fakeBoard[row], 0, 8);
-        }
     }
 
 
@@ -100,7 +92,6 @@ public class Board {
         boardOfPossibleMoves = new Piece[8][8];
         whitePlayerAttackBoard = new Piece[8][8];
         blackPlayerAttackBoard = new Piece[8][8];
-        fakeBoard = new Piece[8][8];
 
         initBoard();
         initEveryBoard();
@@ -110,33 +101,31 @@ public class Board {
         return board[row][column];
     }
 
-    public void setPiece(int row, int column, Piece piece) {
-        board[row][column] = piece;
-    }
-
 
     /*
      * TRUE - ATTACK BOARD
      * FALSE - MOVABLE BOARD
      */
 
-    public void addPossibleMoves(List<Pair<Integer, Integer>> list, String boardChosen) {
+    void addPossibleMoves(List<Pair<Integer, Integer>> list, String boardChosen) {
         Piece[][] boardToFill;
-        if (boardChosen.equals("w")) {
-            boardToFill = whitePlayerAttackBoard;
-        } else if (boardChosen.equals("b")) {
-            boardToFill = blackPlayerAttackBoard;
-        } else if (boardChosen.equals("f")) {
-            boardToFill = fakeBoard;
-        } else {
-            boardToFill = boardOfPossibleMoves;
+        switch (boardChosen) {
+            case "w":
+                boardToFill = whitePlayerAttackBoard;
+                break;
+            case "b":
+                boardToFill = blackPlayerAttackBoard;
+                break;
+            default:
+                boardToFill = boardOfPossibleMoves;
+                break;
         }
 
-        int row = 0;
-        int column = 0;
-        for (int i = 0; i < list.size(); i++) {
-            row = list.get(i).getKey();
-            column = list.get(i).getValue();
+        int row;
+        int column;
+        for (Pair<Integer, Integer> pair : list) {
+            row = pair.getKey();
+            column = pair.getValue();
 
             boardToFill[row][column] = new Mark_MovableTile();
         }
@@ -156,70 +145,17 @@ public class Board {
             boardToPrint = boardOfPossibleMoves;
         }
 
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                boolean player;
-                switch (boardToPrint[i][j].getClass().getSimpleName()) {
-                    case "WhitePawn":
-                        System.out.print("w ");
-                        break;
-                    case "BlackPawn":
-                        System.out.print("b ");
-                        break;
-                    case "Rook":
-                        player = ((Rook) boardToPrint[i][j]).getPlayer();
-                        if (player) {
-                            System.out.print("R ");
-                        } else {
-                            System.out.print("r ");
-                        }
-                        break;
-                    case "Knight":
-                        player = ((Knight) boardToPrint[i][j]).getPlayer();
-                        if (player) {
-                            System.out.print("K ");
-                        } else {
-                            System.out.print("k ");
-                        }
-                        break;
-                    case "Bishop":
-                        player = ((Bishop) boardToPrint[i][j]).getPlayer();
-                        if (player) {
-                            System.out.print("I ");
-                        } else {
-                            System.out.print("i ");
-                        }
-                        break;
-                    case "Queen":
-                        player = ((Queen) boardToPrint[i][j]).getPlayer();
-                        if (player) {
-                            System.out.print("Q ");
-                        } else {
-                            System.out.print("q ");
-                        }
-                        break;
-                    case "WhiteKing":
-                        System.out.print("Y ");
-                        break;
-                    case "BlackKing":
-                        System.out.print("y ");
-                        break;
-                    case "Mark_MovableTile":
-                        System.out.print("m ");
-                        break;
-                    default:
-                        System.out.print("x ");
-                        break;
-                }
-            }
-            System.out.println();
-        }
+        hehe(boardToPrint);
     }
 
-    public void PPPPPP() {
+    void PPPPPP() {
         Piece[][] boardToPrint;
 
         boardToPrint = blackPlayerAttackBoard;
+        hehe(boardToPrint);
+    }
+
+    private void hehe(Piece[][] boardToPrint) {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 boolean player;
@@ -231,7 +167,7 @@ public class Board {
                         System.out.print("b ");
                         break;
                     case "Rook":
-                        player = ((Rook) boardToPrint[i][j]).getPlayer();
+                        player = boardToPrint[i][j].getPlayer();
                         if (player) {
                             System.out.print("R ");
                         } else {
@@ -239,7 +175,7 @@ public class Board {
                         }
                         break;
                     case "Knight":
-                        player = ((Knight) boardToPrint[i][j]).getPlayer();
+                        player = boardToPrint[i][j].getPlayer();
                         if (player) {
                             System.out.print("K ");
                         } else {
@@ -247,7 +183,7 @@ public class Board {
                         }
                         break;
                     case "Bishop":
-                        player = ((Bishop) boardToPrint[i][j]).getPlayer();
+                        player = boardToPrint[i][j].getPlayer();
                         if (player) {
                             System.out.print("I ");
                         } else {
@@ -255,7 +191,7 @@ public class Board {
                         }
                         break;
                     case "Queen":
-                        player = ((Queen) boardToPrint[i][j]).getPlayer();
+                        player = boardToPrint[i][j].getPlayer();
                         if (player) {
                             System.out.print("Q ");
                         } else {
@@ -279,6 +215,8 @@ public class Board {
             System.out.println();
         }
     }
+
+
 
     public void clearPossibleMoves() {
         for (int row = 0; row < 8; row++) {
@@ -286,21 +224,15 @@ public class Board {
         }
     }
 
-    public void clearWhitePlayerAttackBoard() {
+    void clearWhitePlayerAttackBoard() {
         for (int row = 0; row < 8; row++) {
             System.arraycopy(board[row], 0, whitePlayerAttackBoard[row], 0, 8);
         }
     }
 
-    public void clearBlackPlayerAttackBoard() {
+    void clearBlackPlayerAttackBoard() {
         for (int row = 0; row < 8; row++) {
             System.arraycopy(board[row], 0, blackPlayerAttackBoard[row], 0, 8);
-        }
-    }
-
-    public void clearFakeBoard() {
-        for (int row = 0; row < 8; row++) {
-            System.arraycopy(board[row], 0, fakeBoard[row], 0, 8);
         }
     }
 }
