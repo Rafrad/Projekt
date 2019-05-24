@@ -76,17 +76,6 @@ public class Game {
 
     }
 
-    public void fillFakeBoard() {
-        boardClass.clearFakeBoard();
-
-        for (int row = 0; row < 8; row++) {
-            for (int column = 0; column < 8; column++) {
-                if (boardClass.board[row][column].getPlayer()) {
-                    moveClass.CalculateMoves(row, column, "f");
-                }
-            }
-        }
-    }
 
     public void move(int row, int column, int rowDestination, int columnDestination) {
         deleteEnPassant();

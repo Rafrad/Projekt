@@ -4,11 +4,10 @@ import main.Exceptions.WrongBoardException;
 import main.Models.Pieces.*;
 import javafx.util.Pair;
 
-import java.sql.SQLOutput;
 import java.util.*;
 
 public class Move {
-    Board boardClass;
+    private Board boardClass;
 
     Move() throws WrongBoardException {
     }
@@ -19,10 +18,15 @@ public class Move {
     public void WhiteKingCoordinates() {
         for(int row = 0; row <8; row++) {
             for(int column = 0; column < 8; column++) {
-                if(boardClass.getPiece(row,column).getClass().getSimpleName().equals("WhiteKing")) {
-                    WhiteKingRow = row;
-                    WhiteKingColumn = column;
-                    break;
+                if(!boardClass.getPiece(row,column).getClass().getSimpleName().equals("EmptyTile")) {
+                    if(boardClass.getPiece(row,column).getClass().getSimpleName().equals("WhiteKing")) {
+                        WhiteKingRow = row;
+                        WhiteKingColumn = column;
+                        break;
+                    } else {
+//                        WhiteKingRow = 100;
+//                        WhiteKingColumn = 100;
+                }
                 }
             }
         }
@@ -39,65 +43,88 @@ public class Move {
         List<Pair<Integer, Integer>> availableMoves = new LinkedList<>();
 
 
-        boolean linia = false;
+        boolean isSameRow = false;
         WhiteKingCoordinates();
+        //czy PIece szachowany
+
         if(PieceRow == WhiteKingRow)
-            linia = true;
-        boolean dymy = false;
-        for(int i = PieceColumn - 1; i >= 0; i--) {
-            if(boardClass.getPiece(PieceRow, i).getClass().getSimpleName().equals("Queen")) {
-                dymy = true;
+            isSameRow = true;
+
+        for(int column = PieceColumn + 1; column < 8; column++) {
+            if(boardClass.board[PieceRow][column].getClass().getSimpleName().equals("WhiteKing")) {
+                break;
+            } else if (!boardClass.board[PieceRow][column].getClass().getSimpleName().equals("EmptyTile")) {
+                isSameRow = false;
             }
         }
+
+
+
+        boolean leftLine = false;
+        boolean rightLine = false;
+
+        if(isSameRow) {
+            if(PieceColumn < WhiteKingColumn) {
+                for (int i = PieceColumn - 1; i >= 0; i--) {
+                    if(nameOfChosenPiece.equals("King")
+                     || nameOfChosenPiece.equals("Rook")) {
+                        availableMoves.add(new Pair<>(PieceRow, i));
+                    }
+
+                    if (!boardClass.getPiece(PieceRow, i).getClass().getSimpleName().equals("EmptyTile")) {
+                        if (boardClass.getPiece(PieceRow, i).getClass().getSimpleName().equals("Queen")
+                                || boardClass.getPiece(PieceRow, i).getClass().getSimpleName().equals("Rook")) {
+                            if(boardClass.getPiece(PieceRow, i).getPlayer() != pieceChosen.getPlayer()) {
+                                return availableMoves;
+                            } else {
+                                break;
+                            }
+
+                        } else {
+                            break;
+                        }
+                    }
+                }
+            } else {
+
+                for (int i = PieceColumn + 1; i < 8; i++) {
+                    if (!boardClass.getPiece(PieceRow, i).getClass().getSimpleName().equals("EmptyTile")) {
+                        if (boardClass.getPiece(PieceRow, i).getClass().getSimpleName().equals("Queen")
+                                || boardClass.getPiece(PieceRow, i).getClass().getSimpleName().equals("Rook")) {
+                            rightLine = true;
+                        } else {
+                            break;
+                        }
+                    }
+                }
+
+            }
+        }
+
+        availableMoves.clear();
+
+        System.out.println("right line? ");
+        System.out.println(rightLine);
+        System.out.println("left line?");
+        System.out.println(leftLine);
+
 
         switch (nameOfChosenPiece) {
             case "Rook":
 
-                for (int i = PieceColumn - 1; i >= 0; i--) {
-                    if (boardClass.board[PieceRow][i].getClass().getSimpleName().equals("EmptyTile")) {
-                        availableMoves.add(new Pair<>(PieceRow, i));
-                    } else if (boardClass.board[PieceRow][i].getPlayer() == pieceChosen.getPlayer()) {
-                        break;
-                    } else {
-                        availableMoves.add(new Pair<>(PieceRow, i));
-                        break;
-                    }
-                }
+                if(!leftLine) {
 
-
-                for (int i = PieceRow + 1; i < 8; i++) {
-                    if (boardClass.board[i][PieceColumn].getClass().getSimpleName().equals("EmptyTile")  && !dymy) {
-                        availableMoves.add(new Pair<>(i, PieceColumn));
-                    } else if (boardClass.board[i][PieceColumn].getPlayer() == pieceChosen.getPlayer()) {
-                        if(pieceChosen.getPlayer() == boardClass.getPiece(i, PieceColumn).getPlayer()
-                                && (attack.equals("w") || attack.equals("b"))) {
-                            availableMoves.add(new Pair<>(i, PieceColumn));
+                    for (int i = PieceColumn - 1; i >= 0; i--) {
+                        if (boardClass.board[PieceRow][i].getClass().getSimpleName().equals("EmptyTile")) {
+                            availableMoves.add(new Pair<>(PieceRow, i));
+                        } else if (boardClass.board[PieceRow][i].getPlayer() == pieceChosen.getPlayer()) {
+                            break;
+                        } else {
+                            availableMoves.add(new Pair<>(PieceRow, i));
+                            break;
                         }
-                        break;
-                    } else if(!dymy){
-                        availableMoves.add(new Pair<>(i, PieceColumn));
-                        break;
                     }
                 }
-
-                for (int i = PieceRow - 1; i >= 0; i--) {
-                    if (boardClass.board[i][PieceColumn].getClass().getSimpleName().equals("EmptyTile") && !dymy) {
-                        //HEHEHEHHE
-                        availableMoves.add(new Pair<>(i, PieceColumn));
-                    } else if (boardClass.board[i][PieceColumn].getPlayer() == pieceChosen.getPlayer()) {
-                        if(pieceChosen.getPlayer() == boardClass.getPiece(i, PieceColumn).getPlayer()
-                        && (attack.equals("w") || attack.equals("b"))) {
-                            availableMoves.add(new Pair<>(i, PieceColumn));
-                        }
-                        break;
-                    } else if(!dymy){
-                        availableMoves.add(new Pair<>(i, PieceColumn));
-                        break;
-                    }
-                }
-
-
-
 
 
                 for (int i = PieceColumn + 1; i < 8; i++) {
@@ -110,6 +137,46 @@ public class Move {
                         break;
                     }
                 }
+
+
+
+                //dol
+                for (int i = PieceRow + 1; i < 8; i++) {
+                    if (boardClass.board[i][PieceColumn].getClass().getSimpleName().equals("EmptyTile")  && (!leftLine && !rightLine)) {
+                        availableMoves.add(new Pair<>(i, PieceColumn));
+                    } else if (boardClass.board[i][PieceColumn].getPlayer() == pieceChosen.getPlayer()) {
+                        if(pieceChosen.getPlayer() == boardClass.getPiece(i, PieceColumn).getPlayer()
+                                && (attack.equals("w") || attack.equals("b"))) {
+                            availableMoves.add(new Pair<>(i, PieceColumn));
+                        }
+                        break;
+                    } else if((!leftLine && !rightLine)){
+                        availableMoves.add(new Pair<>(i, PieceColumn));
+                        break;
+                    }
+                }
+
+                //gora
+                for (int i = PieceRow - 1; i >= 0; i--) {
+                    if (boardClass.board[i][PieceColumn].getClass().getSimpleName().equals("EmptyTile") && (!leftLine && !rightLine)) {
+                        availableMoves.add(new Pair<>(i, PieceColumn));
+                    } else if (boardClass.board[i][PieceColumn].getPlayer() == pieceChosen.getPlayer()) {
+                        if(pieceChosen.getPlayer() == boardClass.getPiece(i, PieceColumn).getPlayer()
+                        && (attack.equals("w") || attack.equals("b"))) {
+                            availableMoves.add(new Pair<>(i, PieceColumn));
+                        }
+                        break;
+                    } else if(!leftLine && !rightLine){
+                        availableMoves.add(new Pair<>(i, PieceColumn));
+                        break;
+                    }
+                }
+
+
+
+
+
+
                 break;
 
 
