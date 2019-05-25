@@ -12,6 +12,16 @@ public class Board {
     Piece[][] whitePlayerAttackBoard;
     Piece[][] blackPlayerAttackBoard;
 
+    public Board() throws PlayerColorException {
+        board = new Piece[8][8];
+        boardOfPossibleMoves = new Piece[8][8];
+        whitePlayerAttackBoard = new Piece[8][8];
+        blackPlayerAttackBoard = new Piece[8][8];
+
+        initBoard();
+        initEveryBoard();
+    }
+
     private void initBoard() throws PlayerColorException {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
@@ -83,29 +93,12 @@ public class Board {
         for (int row = 0; row < 8; row++) {
             System.arraycopy(board[row], 0, blackPlayerAttackBoard[row], 0, 8);
         }
-
     }
 
-
-    public Board() throws PlayerColorException {
-        board = new Piece[8][8];
-        boardOfPossibleMoves = new Piece[8][8];
-        whitePlayerAttackBoard = new Piece[8][8];
-        blackPlayerAttackBoard = new Piece[8][8];
-
-        initBoard();
-        initEveryBoard();
-    }
 
     public Piece getPiece(int row, int column) {
         return board[row][column];
     }
-
-
-    /*
-     * TRUE - ATTACK BOARD
-     * FALSE - MOVABLE BOARD
-     */
 
     void addPossibleMoves(List<Pair<Integer, Integer>> list, String boardChosen) {
         Piece[][] boardToFill;
@@ -132,30 +125,7 @@ public class Board {
     }
 
 
-    /*
-     * TRUE - BOARD
-     * FALSE - MOVABLE BOARD
-     */
-
-    public void printBoard(boolean boardChosen) {
-        Piece[][] boardToPrint;
-        if (boardChosen) {
-            boardToPrint = board;
-        } else {
-            boardToPrint = boardOfPossibleMoves;
-        }
-
-        hehe(boardToPrint);
-    }
-
-    void PPPPPP() {
-        Piece[][] boardToPrint;
-
-        boardToPrint = blackPlayerAttackBoard;
-        hehe(boardToPrint);
-    }
-
-    private void hehe(Piece[][] boardToPrint) {
+    private void printChosenBoard(Piece[][] boardToPrint) {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 boolean player;
@@ -216,8 +186,7 @@ public class Board {
         }
     }
 
-
-
+    
     public void clearPossibleMoves() {
         for (int row = 0; row < 8; row++) {
             System.arraycopy(board[row], 0, boardOfPossibleMoves[row], 0, 8);
