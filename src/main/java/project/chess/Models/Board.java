@@ -125,7 +125,7 @@ public class Board {
     }
 
 
-    private void printChosenBoard(Piece[][] boardToPrint) {
+    public void printChosenBoard(Piece[][] boardToPrint) {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 boolean player;
@@ -186,7 +186,7 @@ public class Board {
         }
     }
 
-    
+
     public void clearPossibleMoves() {
         for (int row = 0; row < 8; row++) {
             System.arraycopy(board[row], 0, boardOfPossibleMoves[row], 0, 8);
@@ -204,4 +204,7 @@ public class Board {
             System.arraycopy(board[row], 0, blackPlayerAttackBoard[row], 0, 8);
         }
     }
+
+
+
 }
