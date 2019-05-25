@@ -50,3 +50,66 @@
 //        );
 //        clock.setCycleCount(Animation.INDEFINITE);
 //        clock.play();
+
+
+
+
+
+
+
+//        if(isSameRow) {
+//            if(PieceColumn < WhiteKingColumn) {
+//                for (int i = PieceColumn - 1; i >= 0; i--) {
+//                    if(nameOfChosenPiece.equals("King")
+//                            || nameOfChosenPiece.equals("Rook")) {
+//                        availableMoves.add(new Pair<>(PieceRow, i));
+//                    }
+//
+//                    if (!boardClass.getPiece(PieceRow, i).getClass().getSimpleName().equals("EmptyTile")) {
+//                        if (boardClass.getPiece(PieceRow, i).getClass().getSimpleName().equals("Queen")
+//                                || boardClass.getPiece(PieceRow, i).getClass().getSimpleName().equals("Rook")) {
+//                            if(boardClass.getPiece(PieceRow, i).getPlayer() != pieceChosen.getPlayer()) {
+//                                return availableMoves;
+//                            } else {
+//                                break;
+//                            }
+//
+//                        } else {
+//                            break;
+//                        }
+//                    }
+//                }
+//            } else {
+//
+//                for (int i = PieceColumn + 1; i < 8; i++) {
+//                    if (!boardClass.getPiece(PieceRow, i).getClass().getSimpleName().equals("EmptyTile")) {
+//                        if (boardClass.getPiece(PieceRow, i).getClass().getSimpleName().equals("Queen")
+//                                || boardClass.getPiece(PieceRow, i).getClass().getSimpleName().equals("Rook")) {
+//                            rightLine = true;
+//                        } else {
+//                            break;
+//                        }
+//                    }
+//                }
+//
+//            }
+//        }
+//        if(attack.equals("b")) {
+//            switch (nameOfChosenPiece) {
+//                case "Rook":
+//                    for (int i = PieceColumn + 1; i < 8; i++) {
+//                        if (boardClass.blackPlayerAttackBoard[PieceRow][i].getClass().getSimpleName().equals("EmptyTile")) {
+//                            availableMoves.add(new Pair<>(PieceRow, i));
+//                        } else if (boardClass.blackPlayerAttackBoard[PieceRow][i].getPlayer() == pieceChosen.getPlayer()) {
+//                            break;
+//                        } else {
+//                            availableMoves.add(new Pair<>(PieceRow, i));
+//                            break;
+//                        }
+//                    }
+//                    boardClass.addPossibleMoves(availableMoves, "b");
+//                    return availableMoves;
+//            }
+//
+//
+//        }

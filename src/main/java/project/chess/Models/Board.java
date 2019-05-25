@@ -12,7 +12,7 @@ public class Board {
     Piece[][] whitePlayerAttackBoard;
     Piece[][] blackPlayerAttackBoard;
 
-    public Board() throws PlayerColorException {
+    Board() throws PlayerColorException {
         board = new Piece[8][8];
         boardOfPossibleMoves = new Piece[8][8];
         whitePlayerAttackBoard = new Piece[8][8];
@@ -72,6 +72,7 @@ public class Board {
                     board[i][j] = new EmptyTile();
                 } else if (i == 1) {
                     board[i][j] = new BlackPawn();
+                    board[i][j] = new EmptyTile();
                 } else {
                     board[i][j] = new EmptyTile();
                 }
@@ -125,7 +126,7 @@ public class Board {
     }
 
 
-    public void printChosenBoard(Piece[][] boardToPrint) {
+    void printChosenBoard(Piece[][] boardToPrint) {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 boolean player;
