@@ -26,7 +26,7 @@ public class Board {
     /**
      * FACTORY DESIGN PATTERN
      *
-     * @throws PlayerColorException
+     * 
      */
 
     private void initBoard() throws PlayerColorException {
@@ -148,61 +148,7 @@ public class Board {
     void printChosenBoard(Piece[][] boardToPrint) {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                boolean player;
-                player = boardToPrint[i][j].getPlayer();
-                boardToPrint[i][j].print(player);
-//                switch (boardToPrint[i][j].getClass().getSimpleName()) {
-//                    case "WhitePawn":
-//                        System.out.print("w ");
-//                        break;
-//                    case "BlackPawn":
-//                        System.out.print("b ");
-//                        break;
-//                    case "Rook":
-//                        player = boardToPrint[i][j].getPlayer();
-//                        if (player) {
-//                            System.out.print("R ");
-//                        } else {
-//                            System.out.print("r ");
-//                        }
-//                        break;
-//                    case "Knight":
-//                        player = boardToPrint[i][j].getPlayer();
-//                        if (player) {
-//                            System.out.print("K ");
-//                        } else {
-//                            System.out.print("k ");
-//                        }
-//                        break;
-//                    case "Bishop":
-//                        player = boardToPrint[i][j].getPlayer();
-//                        if (player) {
-//                            System.out.print("I ");
-//                        } else {
-//                            System.out.print("i ");
-//                        }
-//                        break;
-//                    case "Queen":
-//                        player = boardToPrint[i][j].getPlayer();
-//                        if (player) {
-//                            System.out.print("Q ");
-//                        } else {
-//                            System.out.print("q ");
-//                        }
-//                        break;
-//                    case "WhiteKing":
-//                        System.out.print("Y ");
-//                        break;
-//                    case "BlackKing":
-//                        System.out.print("y ");
-//                        break;
-//                    case "Mark_MovableTile":
-//                        System.out.print("m ");
-//                        break;
-//                    default:
-//                        System.out.print("x ");
-//                        break;
-//                }
+                boardToPrint[i][j].print();
             }
             System.out.println();
         }
