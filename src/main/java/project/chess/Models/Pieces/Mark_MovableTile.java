@@ -16,7 +16,7 @@ public class Mark_MovableTile implements Piece {
     }
 
     @Override
-    public void print(boolean player) {
+    public void print() {
         System.out.print("m ");
     }
 }

@@ -43,7 +43,7 @@ public class Queen implements Piece {
     }
 
     @Override
-    public void print(boolean player) {
+    public void print() {
         if (player) {
             System.out.print("Q ");
         } else {

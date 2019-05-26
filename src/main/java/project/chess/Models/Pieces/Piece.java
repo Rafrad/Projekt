@@ -35,5 +35,5 @@ public interface Piece {
     List<Pair<Integer, Integer>> move();
 
     boolean getPlayer();
-    void print(boolean player);
+    void print();
 }

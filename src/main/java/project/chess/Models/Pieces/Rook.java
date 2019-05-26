@@ -40,7 +40,7 @@ public class Rook implements Piece {
     }
 
     @Override
-    public void print(boolean player) {
+    public void print() {
         if (player) {
             System.out.print("R ");
         } else {

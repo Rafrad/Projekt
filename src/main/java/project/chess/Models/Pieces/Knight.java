@@ -38,7 +38,7 @@ public class Knight implements Piece {
     }
 
     @Override
-    public void print(boolean player) {
+    public void print() {
         if (player) {
             System.out.print("K ");
         } else {

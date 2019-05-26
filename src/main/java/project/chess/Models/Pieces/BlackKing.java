@@ -34,7 +34,7 @@ public class BlackKing implements Piece {
     }
 
     @Override
-    public void print(boolean player) {
+    public void print() {
         System.out.print("y ");
     }
 
