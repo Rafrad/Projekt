@@ -79,209 +79,88 @@ public class Move {
                 }
 
                 break;
-//
-//
-//            case "Queen":
-//
-//
-//                for (int i = PieceRow + 1; i < 8; i++) {
-//                    if (boardClass.board[i][PieceColumn].getClass().getSimpleName().equals("EmptyTile")) {
-//                        availableMoves.add(new Pair<>(i, PieceColumn));
-//                    } else if (boardClass.board[i][PieceColumn].getPlayer() == pieceChosen.getPlayer()) {
-//                        break;
-//                    } else {
-//                        availableMoves.add(new Pair<>(i, PieceColumn));
-//                        break;
-//                    }
-//                }
-//
-//                for (int i = PieceRow - 1; i >= 0; i--) {
-//                    if (boardClass.board[i][PieceColumn].getClass().getSimpleName().equals("EmptyTile")) {
-//                        availableMoves.add(new Pair<>(i, PieceColumn));
-//                    } else if (boardClass.board[i][PieceColumn].getPlayer() == pieceChosen.getPlayer()) {
-//                        break;
-//                    } else {
-//                        availableMoves.add(new Pair<>(i, PieceColumn));
-//                        break;
-//                    }
-//                }
-//
-//
-//                for (int i = PieceColumn - 1; i >= 0; i--) {
-//                    if (boardClass.board[PieceRow][i].getClass().getSimpleName().equals("EmptyTile")) {
-//                        availableMoves.add(new Pair<>(PieceRow, i));
-//                    } else if (boardClass.board[PieceRow][i].getPlayer() == pieceChosen.getPlayer()) {
-//                        break;
-//                    } else {
-//                        availableMoves.add(new Pair<>(PieceRow, i));
-//                        break;
-//                    }
-//                }
-//
-//
-//                for (int i = PieceColumn + 1; i < 8; i++) {
-//                    if (boardClass.board[PieceRow][i].getClass().getSimpleName().equals("EmptyTile")) {
-//                        availableMoves.add(new Pair<>(PieceRow, i));
-//                    } else if (boardClass.board[PieceRow][i].getPlayer() == pieceChosen.getPlayer()) {
-//                        break;
-//                    } else {
-//                        availableMoves.add(new Pair<>(PieceRow, i));
-//                        break;
-//                    }
-//                }
-//
-//
-//                for (int i = PieceRow + 1, j = PieceColumn + 1; i < 8 && j < 8; i++, j++) {
-//                    if (boardClass.board[i][j].getClass().getSimpleName().equals("EmptyTile")) {
-//                        availableMoves.add(new Pair<>(i, j));
-//                    } else if (boardClass.board[i][j].getPlayer() == pieceChosen.getPlayer()) {
-//                        break;
-//                    } else {
-//                        availableMoves.add(new Pair<>(i, j));
-//                        break;
-//                    }
-//                }
-//
-//
-//                for (int i = PieceRow - 1, j = PieceColumn - 1; i >= 0 && j >= 0; i--, j--) {
-//                    if (boardClass.board[i][j].getClass().getSimpleName().equals("EmptyTile")) {
-//                        availableMoves.add(new Pair<>(i, j));
-//                    } else if (boardClass.board[i][j].getPlayer() == pieceChosen.getPlayer()) {
-//                        break;
-//                    } else {
-//                        availableMoves.add(new Pair<>(i, j));
-//                        break;
-//                    }
-//                }
-//
-//
-//                for (int i = PieceRow + 1, j = PieceColumn - 1; i < 8 && j >= 0; i++, j--) {
-//                    if (boardClass.board[i][j].getClass().getSimpleName().equals("EmptyTile")) {
-//                        availableMoves.add(new Pair<>(i, j));
-//                    } else if (boardClass.board[i][j].getPlayer() == pieceChosen.getPlayer()) {
-//                        break;
-//                    } else {
-//                        availableMoves.add(new Pair<>(i, j));
-//                        break;
-//                    }
-//                }
-//
-//                for (int i = PieceRow - 1, j = PieceColumn + 1; i >= 0 && j < 8; i--, j++) {
-//                    if (boardClass.board[i][j].getClass().getSimpleName().equals("EmptyTile")) {
-//                        availableMoves.add(new Pair<>(i, j));
-//                    } else if (boardClass.board[i][j].getPlayer() == pieceChosen.getPlayer()) {
-//                        break;
-//                    } else {
-//                        availableMoves.add(new Pair<>(i, j));
-//                        break;
-//                    }
-//                }
-//
-//                break;
-//
-//
-//            //dopracowac
-//            case "WhiteKing":
-//            case "BlackKing":
-//
-//                for (int i = 0; i < allowedPieceMovesFromVector.size(); i++) {
-//
-//                    int allowedMovesRow = 0;
-//                    int allowedMovesColumn = 0;
-//
-//
-//                    allowedMovesRow = allowedPieceMovesFromVector.get(i).getKey() + PieceRow;
-//                    allowedMovesColumn = allowedPieceMovesFromVector.get(i).getValue() + PieceColumn;
-//
-//
-//                    if (allowedMovesRow >= 0
-//                            && allowedMovesColumn >= 0
-//                            && allowedMovesRow <= 7
-//                            && allowedMovesColumn <= 7) {
-////                        System.out.println(boardClass.blackPlayerAttackBoard[allowedMovesRow][allowedMovesColumn].getClass().getSimpleName());
-//
-//                        Piece check = boardClass.getPiece(allowedMovesRow, allowedMovesColumn);
-//                        String nameOfCheck = check.getClass().getSimpleName();
-//
-//                        if (nameOfChosenPiece.equals("WhiteKing")) {
-////                            if (!boardClass.blackPlayerAttackBoard[allowedMovesRow][allowedMovesColumn].getClass().getSimpleName().equals("Mark_MovableTile")) {
-//                            if (nameOfCheck.equals("EmptyTile")) {
-//                                availableMoves.add(new Pair<>(allowedMovesRow, allowedMovesColumn));
-//                            } else if (check.getPlayer() != pieceChosen.getPlayer()) {
-//                                availableMoves.add(new Pair<>(allowedMovesRow, allowedMovesColumn));
-//                            }
-////                            }
-//                        } else if (nameOfChosenPiece.equals("BlackKing")) {
-//                            if (!boardClass.whitePlayerAttackBoard[allowedMovesRow][allowedMovesColumn].getClass().getSimpleName().equals("Mark_MovableTile")) {
-//                                if (nameOfCheck.equals("EmptyTile")) {
-//                                    availableMoves.add(new Pair<>(allowedMovesRow, allowedMovesColumn));
-//                                } else if (check.getPlayer() != pieceChosen.getPlayer()) {
-//                                    availableMoves.add(new Pair<>(allowedMovesRow, allowedMovesColumn));
-//                                }
-//                            }
-//                        }
-//
-//
-//                    }
+
+            case "Queen":
+                leftRook(PieceRow, PieceColumn, boardToCheck[PieceRow], pieceChosen, availableMoves, attack);
+                upRook(PieceRow, PieceColumn, boardToCheck, pieceChosen, availableMoves, attack);
+                rightRook(PieceRow, PieceColumn, boardToCheck[PieceRow], pieceChosen, availableMoves, attack);
+                downRook(PieceRow, PieceColumn, boardToCheck, pieceChosen, availableMoves, attack);
+
+                for (int i = PieceRow + 1, j = PieceColumn + 1; i < 8 && j < 8; i++, j++) {
+                    if (bishopMoves(pieceChosen, availableMoves, i, j)) break;
                 }
-//
-//
-//                /**
-//                 * castling
-//                 */
-//
-//                if (nameOfChosenPiece.equals("WhiteKing")) {
-//                    if (boardClass.getPiece(7, 7).getClass().getSimpleName().equals("Rook")
-//                            && boardClass.getPiece(7, 6).getClass().getSimpleName().equals("EmptyTile")
-//                            && !boardClass.blackPlayerAttackBoard[7][6].getClass().getSimpleName().equals("Mark_MovableTile")
-//                            && boardClass.getPiece(7, 5).getClass().getSimpleName().equals("EmptyTile")
-//                            && !boardClass.blackPlayerAttackBoard[7][5].getClass().getSimpleName().equals("Mark_MovableTile")
-//                            && !boardClass.blackPlayerAttackBoard[7][4].getClass().getSimpleName().equals("Mark_MovableTile")
-//                            && ((Rook) boardClass.getPiece(7, 7)).getCastling()
-//                            && ((WhiteKing) pieceChosen).getCastling()) {
-//                        availableMoves.add(new Pair<>(7, 6));
-//                    }
-//                    if (boardClass.getPiece(7, 0).getClass().getSimpleName().equals("Rook")
-//                            && boardClass.getPiece(7, 1).getClass().getSimpleName().equals("EmptyTile")
-//                            && !boardClass.blackPlayerAttackBoard[7][1].getClass().getSimpleName().equals("Mark_MovableTile")
-//                            && boardClass.getPiece(7, 2).getClass().getSimpleName().equals("EmptyTile")
-//                            && !boardClass.blackPlayerAttackBoard[7][2].getClass().getSimpleName().equals("Mark_MovableTile")
-//                            && boardClass.getPiece(7, 3).getClass().getSimpleName().equals("EmptyTile")
-//                            && !boardClass.blackPlayerAttackBoard[7][3].getClass().getSimpleName().equals("Mark_MovableTile")
-//                            && !boardClass.blackPlayerAttackBoard[7][4].getClass().getSimpleName().equals("Mark_MovableTile")
-//                            && ((Rook) boardClass.getPiece(7, 0)).getCastling()
-//                            && ((WhiteKing) pieceChosen).getCastling()) {
-//                        availableMoves.add(new Pair<>(7, 2));
-//                    }
-//                }
-//
-//                if (nameOfChosenPiece.equals("BlackKing")) {
-//                    if (boardClass.getPiece(0, 7).getClass().getSimpleName().equals("Rook")
-//                            && boardClass.getPiece(0, 6).getClass().getSimpleName().equals("EmptyTile")
-//                            && !boardClass.whitePlayerAttackBoard[0][6].getClass().getSimpleName().equals("Mark_MovableTile")
-//                            && boardClass.getPiece(0, 5).getClass().getSimpleName().equals("EmptyTile")
-//                            && !boardClass.whitePlayerAttackBoard[0][5].getClass().getSimpleName().equals("Mark_MovableTile")
-//                            && !boardClass.whitePlayerAttackBoard[0][4].getClass().getSimpleName().equals("Mark_MovableTile")
-//                            && ((Rook) boardClass.getPiece(0, 7)).getCastling()
-//                            && ((BlackKing) pieceChosen).getCastling()) {
-//                        availableMoves.add(new Pair<>(0, 6));
-//                    }
-//                    if (boardClass.getPiece(0, 0).getClass().getSimpleName().equals("Rook")
-//                            && boardClass.getPiece(0, 1).getClass().getSimpleName().equals("EmptyTile")
-//                            && !boardClass.whitePlayerAttackBoard[0][1].getClass().getSimpleName().equals("Mark_MovableTile")
-//                            && boardClass.getPiece(0, 2).getClass().getSimpleName().equals("EmptyTile")
-//                            && !boardClass.whitePlayerAttackBoard[0][2].getClass().getSimpleName().equals("Mark_MovableTile")
-//                            && boardClass.getPiece(0, 3).getClass().getSimpleName().equals("EmptyTile")
-//                            && !boardClass.whitePlayerAttackBoard[0][3].getClass().getSimpleName().equals("Mark_MovableTile")
-//                            && !boardClass.whitePlayerAttackBoard[0][4].getClass().getSimpleName().equals("Mark_MovableTile")
-//                            && ((Rook) boardClass.getPiece(0, 0)).getCastling()
-//                            && ((BlackKing) pieceChosen).getCastling()) {
-//                        availableMoves.add(new Pair<>(0, 2));
-//                    }
-//                }
-//
-//
-//        }
+
+
+                for (int i = PieceRow - 1, j = PieceColumn - 1; i >= 0 && j >= 0; i--, j--) {
+                    if (bishopMoves(pieceChosen, availableMoves, i, j)) break;
+                }
+
+
+                for (int i = PieceRow + 1, j = PieceColumn - 1; i < 8 && j >= 0; i++, j--) {
+                    if (bishopMoves(pieceChosen, availableMoves, i, j)) break;
+                }
+
+                for (int i = PieceRow - 1, j = PieceColumn + 1; i >= 0 && j < 8; i--, j++) {
+                    if (bishopMoves(pieceChosen, availableMoves, i, j)) break;
+                }
+
+                break;
+
+            case "WhiteKing":
+            case "BlackKing":
+
+                for (Pair<Integer, Integer> pair : allowedPieceMovesFromVector) {
+
+                    int allowedMovesRow = 0;
+                    int allowedMovesColumn = 0;
+
+
+                    allowedMovesRow = pair.getKey() + PieceRow;
+                    allowedMovesColumn = pair.getValue() + PieceColumn;
+
+
+                    if (allowedMovesRow >= 0
+                            && allowedMovesColumn >= 0
+                            && allowedMovesRow <= 7
+                            && allowedMovesColumn <= 7) {
+
+                        Piece check = boardToCheck[allowedMovesRow][allowedMovesColumn];
+                        String nameOfCheck = check.getClass().getSimpleName();
+
+                        if (nameOfChosenPiece.equals("WhiteKing")) {
+//                            if (!boardClass.blackPlayerAttackBoard[allowedMovesRow][allowedMovesColumn].getClass().getSimpleName().equals("Mark_MovableTile")) {
+                            if (nameOfCheck.equals("EmptyTile")) {
+                                availableMoves.add(new Pair<>(allowedMovesRow, allowedMovesColumn));
+                            } else if (check.getPlayer() != pieceChosen.getPlayer()) {
+                                availableMoves.add(new Pair<>(allowedMovesRow, allowedMovesColumn));
+                            }
+//                            }
+                        } else if (nameOfChosenPiece.equals("BlackKing")) {
+                            if (!boardClass.whitePlayerAttackBoard[allowedMovesRow][allowedMovesColumn].getClass().getSimpleName().equals("Mark_MovableTile")) {
+                                if (nameOfCheck.equals("EmptyTile")) {
+                                    availableMoves.add(new Pair<>(allowedMovesRow, allowedMovesColumn));
+                                } else if (check.getPlayer() != pieceChosen.getPlayer()) {
+                                    availableMoves.add(new Pair<>(allowedMovesRow, allowedMovesColumn));
+                                }
+                            }
+                        }
+
+
+                    }
+                }
+
+
+
+                if (nameOfChosenPiece.equals("WhiteKing")) {
+                    whiteKingCastling((WhiteKing) pieceChosen, availableMoves);
+                }
+
+                if (nameOfChosenPiece.equals("BlackKing")) {
+                    blackKingCastling((BlackKing) pieceChosen, availableMoves);
+                }
+
+
+        }
 //
 //
 //        if (nameOfChosenPiece.equals("BlackPawn") || nameOfChosenPiece.equals("WhitePawn")) {
@@ -417,6 +296,56 @@ public class Move {
 
 
         return availableMoves;
+    }
+
+    private void blackKingCastling(BlackKing pieceChosen, List<Pair<Integer, Integer>> availableMoves) {
+        if (boardClass.getPiece(0, 7).getClass().getSimpleName().equals("Rook")
+                && boardClass.getPiece(0, 6).getClass().getSimpleName().equals("EmptyTile")
+                && !boardClass.whitePlayerAttackBoard[0][6].getClass().getSimpleName().equals("Mark_MovableTile")
+                && boardClass.getPiece(0, 5).getClass().getSimpleName().equals("EmptyTile")
+                && !boardClass.whitePlayerAttackBoard[0][5].getClass().getSimpleName().equals("Mark_MovableTile")
+                && !boardClass.whitePlayerAttackBoard[0][4].getClass().getSimpleName().equals("Mark_MovableTile")
+                && ((Rook) boardClass.getPiece(0, 7)).getCastling()
+                && pieceChosen.getCastling()) {
+            availableMoves.add(new Pair<>(0, 6));
+        }
+        if (boardClass.getPiece(0, 0).getClass().getSimpleName().equals("Rook")
+                && boardClass.getPiece(0, 1).getClass().getSimpleName().equals("EmptyTile")
+                && !boardClass.whitePlayerAttackBoard[0][1].getClass().getSimpleName().equals("Mark_MovableTile")
+                && boardClass.getPiece(0, 2).getClass().getSimpleName().equals("EmptyTile")
+                && !boardClass.whitePlayerAttackBoard[0][2].getClass().getSimpleName().equals("Mark_MovableTile")
+                && boardClass.getPiece(0, 3).getClass().getSimpleName().equals("EmptyTile")
+                && !boardClass.whitePlayerAttackBoard[0][3].getClass().getSimpleName().equals("Mark_MovableTile")
+                && !boardClass.whitePlayerAttackBoard[0][4].getClass().getSimpleName().equals("Mark_MovableTile")
+                && ((Rook) boardClass.getPiece(0, 0)).getCastling()
+                && pieceChosen.getCastling()) {
+            availableMoves.add(new Pair<>(0, 2));
+        }
+    }
+
+    private void whiteKingCastling(WhiteKing pieceChosen, List<Pair<Integer, Integer>> availableMoves) {
+        if (boardClass.getPiece(7, 7).getClass().getSimpleName().equals("Rook")
+                && boardClass.getPiece(7, 6).getClass().getSimpleName().equals("EmptyTile")
+                && !boardClass.blackPlayerAttackBoard[7][6].getClass().getSimpleName().equals("Mark_MovableTile")
+                && boardClass.getPiece(7, 5).getClass().getSimpleName().equals("EmptyTile")
+                && !boardClass.blackPlayerAttackBoard[7][5].getClass().getSimpleName().equals("Mark_MovableTile")
+                && !boardClass.blackPlayerAttackBoard[7][4].getClass().getSimpleName().equals("Mark_MovableTile")
+                && ((Rook) boardClass.getPiece(7, 7)).getCastling()
+                && pieceChosen.getCastling()) {
+            availableMoves.add(new Pair<>(7, 6));
+        }
+        if (boardClass.getPiece(7, 0).getClass().getSimpleName().equals("Rook")
+                && boardClass.getPiece(7, 1).getClass().getSimpleName().equals("EmptyTile")
+                && !boardClass.blackPlayerAttackBoard[7][1].getClass().getSimpleName().equals("Mark_MovableTile")
+                && boardClass.getPiece(7, 2).getClass().getSimpleName().equals("EmptyTile")
+                && !boardClass.blackPlayerAttackBoard[7][2].getClass().getSimpleName().equals("Mark_MovableTile")
+                && boardClass.getPiece(7, 3).getClass().getSimpleName().equals("EmptyTile")
+                && !boardClass.blackPlayerAttackBoard[7][3].getClass().getSimpleName().equals("Mark_MovableTile")
+                && !boardClass.blackPlayerAttackBoard[7][4].getClass().getSimpleName().equals("Mark_MovableTile")
+                && ((Rook) boardClass.getPiece(7, 0)).getCastling()
+                && pieceChosen.getCastling()) {
+            availableMoves.add(new Pair<>(7, 2));
+        }
     }
 
     private boolean bishopMoves(Piece pieceChosen, List<Pair<Integer, Integer>> availableMoves, int i, int j) {

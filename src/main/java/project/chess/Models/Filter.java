@@ -40,6 +40,20 @@ public class Filter {
         }
     }
 
+    private void updateWhiteKingCoordinatesv2() {
+        for (int row = 0; row < 8; row++) {
+            for (int column = 0; column < 8; column++) {
+                if (!gameClass.boardClass.blackPlayerAttackBoard[row][column].getClass().getSimpleName().equals("EmptyTile")) {
+                    if (gameClass.boardClass.blackPlayerAttackBoard[row][column].getClass().getSimpleName().equals("WhiteKing")) {
+                        kingRow = row;
+                        kingColumn = column;
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
     private void updateBlackKingCoordinates() {
         for (int row = 0; row < 8; row++) {
             for (int column = 0; column < 8; column++) {
@@ -75,20 +89,22 @@ public class Filter {
 
             gameClass.fillBlackPlayerAttackBoard();
 
-
+            System.out.println("===========================");
             gameClass.boardClass.printChosenBoard(blackBoard);
 
             updateWhiteKingCoordinates();
+            updateWhiteKingCoordinatesv2();
 
-            System.out.println("===========================");
 
-
-            if(blackBoard[rowDestination][columnDestination].getClass().getSimpleName().equals("Mark_MovableTile")
-            && board[rowDestination][columnDestination].getClass().getSimpleName().equals("WhiteKing")) {
-                System.out.println("o ziom");
+            if(blackBoard[kingRow][kingColumn].getClass().getSimpleName().equals("WhiteKing")) {
+                System.out.println("jest krul");
+                result.add(new Pair<>(rowDestination, columnDestination));
+            } else {
+//                if(board[pieceRow][pieceColumn].getClass().getSimpleName().equals("WhiteKing")) {
+//
+//                }
+                System.out.println("nie ma krula");
             }
-
-            result.add(new Pair<>(rowDestination, columnDestination));
         }
 
         return result;

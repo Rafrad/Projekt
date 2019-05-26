@@ -35,7 +35,8 @@ public class Computer {
         while(iter.hasNext()) {
             element = iter.next();
             position = element.getKey();
-            available_moves = session.moveClass.CalculateMoves(position.getKey(), position.getValue(),"");
+            List<Pair<Integer, Integer>> dummy = new LinkedList<>();
+            available_moves = session.moveClass.CalculateMoves(position.getKey(), position.getValue(),"", dummy);
             if(!available_moves.isEmpty()) {
                 currMove = selectBest(available_moves, element.getValue());
                 if(currMove[2] > bestMove[4]) {

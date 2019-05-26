@@ -55,16 +55,20 @@ public class Board {
                         case 1:
                         case 6:
                             board[i][j] = new Knight(false);
+                            board[i][j] = new EmptyTile();
                             break;
                         case 2:
                         case 5:
                             board[i][j] = new Bishop(false);
+                            board[i][j] = new EmptyTile();
                             break;
                         case 3:
                             board[i][j] = new Queen(false);
+                            board[i][j] = new EmptyTile();
                             break;
                         case 4:
                             board[i][j] = new BlackKing();
+                            board[i][j] = new EmptyTile();
                             break;
                     }
                 } else if (i == 6) {
@@ -101,7 +105,7 @@ public class Board {
         return board[row][column];
     }
 
-    void addPossibleMoves(List<Pair<Integer, Integer>> list, String boardChosen) {
+    void addPossibleMoves(List<Pair<Integer, Integer>> list, String boardChosen, List<Pair<Integer, Integer>> stack) {
         Piece[][] boardToFill;
         switch (boardChosen) {
             case "w":
@@ -121,7 +125,14 @@ public class Board {
             row = pair.getKey();
             column = pair.getValue();
 
-            boardToFill[row][column] = new Mark_MovableTile();
+            if(boardToFill[row][column].getClass().getSimpleName().equals("EmptyTile")) {
+                boardToFill[row][column] = new Mark_MovableTile();
+            } else if(boardChosen.equals("w") || boardChosen.equals("b")){
+                stack.add(new Pair<>(row, column));
+            } else {
+                boardToFill[row][column] = new Mark_MovableTile();
+            }
+
         }
     }
 

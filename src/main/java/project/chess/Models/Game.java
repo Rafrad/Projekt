@@ -1,12 +1,16 @@
 package project.chess.Models;
 
+import javafx.util.Pair;
 import project.chess.Exceptions.PlayerColorException;
 import project.chess.Models.Pieces.*;
 
+import java.util.LinkedList;
+import java.util.List;
+
 
 public class Game {
-    boolean currentlyPlayer;
-    boolean isOver;
+    private boolean currentlyPlayer;
+    private boolean isOver;
 
 
     public Board boardClass;
@@ -15,12 +19,16 @@ public class Game {
     public Game() throws PlayerColorException {
         boardClass = new Board();
         moveClass = new Move(boardClass);
-        boardClass.printBoard(true);
+        boardClass.printChosenBoard(boardClass.board);
         currentlyPlayer = true;
         isOver = false;
     }
 
-    public void checkPromotions(int row, int column, int rowDestination) {
+    private void checkGameOver() {
+
+    }
+
+    private void checkPromotions(int row, int column, int rowDestination) {
         if (rowDestination == 0 && boardClass.getPiece(row, column).getClass().getSimpleName().equals("WhitePawn")) {
             ((WhitePawn) boardClass.getPiece(row, column)).setPromotion(true);
         } else if (rowDestination == 7 && boardClass.getPiece(row, column).getClass().getSimpleName().equals("BlackPawn")) {
@@ -28,13 +36,12 @@ public class Game {
         }
     }
 
-    public boolean whiteKingCheck() {
-//        System.out.println("blak plajer bord");
-//        boardClass.PPPPPP();
+
+    private boolean isWhiteKingChecked() {
         for (int row = 0; row < 8; row++) {
             for (int column = 0; column < 8; column++) {
                 if (boardClass.blackPlayerAttackBoard[row][column].getClass().getSimpleName().equals("Mark_MovableTile")
-                        && boardClass.getPiece(row, column).getClass().getSimpleName().equals("WhiteKing")) {
+                 && boardClass.getPiece(row, column).getClass().getSimpleName().equals("WhiteKing")) {
                     ((WhiteKing)boardClass.getPiece(row, column)).setCheck(true);
                     return true;
                 }
@@ -44,8 +51,7 @@ public class Game {
     }
 
 
-
-    public boolean blackKingCheck() {
+    private boolean isBlackKingChecked() {
         for (int row = 0; row < 8; row++) {
             for (int column = 0; column < 8; column++) {
                 if (boardClass.whitePlayerAttackBoard[row][column].getClass().getSimpleName().equals("Mark_MovableTile")
@@ -58,7 +64,7 @@ public class Game {
         return false;
     }
 
-    public void removeKingCheck() {
+    private void removeKingsCheck() {
         for (int row = 0; row < 8; row++) {
             for (int column = 0; column < 8; column++) {
                 switch (boardClass.getPiece(row, column).getClass().getSimpleName()) {
@@ -80,7 +86,7 @@ public class Game {
     public void move(int row, int column, int rowDestination, int columnDestination) {
         deleteEnPassant();
         checkPromotions(row, column, rowDestination);
-        removeKingCheck();
+        removeKingsCheck();
 
 
         String nameOfMovedPiece = boardClass.board[row][column].getClass().getSimpleName();
@@ -154,19 +160,9 @@ public class Game {
             }
 
             UpdateBoard(row, column, rowDestination, columnDestination);
-            moveClass.fillBlackPlayerAttackBoard();
-            fillWhitePlayerAttackBoard();
+//            fillBlackPlayerAttackBoard();
+//            fillWhitePlayerAttackBoard();
             currentlyPlayer = !currentlyPlayer;
-
-            System.out.println("whiteKingCheck?");
-            if(whiteKingCheck()) {
-                System.out.println("no i kurwa pan paweł");
-
-            }
-            blackKingCheck();
-
-            System.out.println("BLACK PLAYER BOARD ATTACK:");
-            boardClass.PPPPPP();
 
         }
     }
@@ -176,14 +172,23 @@ public class Game {
         boardClass.board[row][column] = new EmptyTile();
     }
 
+    public void updateBlackPlayerAttackBoard(int row, int column, int rowDestination, int columnDestination) {
+        boardClass.blackPlayerAttackBoard[rowDestination][columnDestination] = boardClass.blackPlayerAttackBoard[row][column];
+        boardClass.blackPlayerAttackBoard[row][column] = new EmptyTile();
+    }
+
+    public void updateWhitePlayerAttackBoard(int row, int column, int rowDestination, int columnDestination) {
+        boardClass.whitePlayerAttackBoard[rowDestination][columnDestination] = boardClass.whitePlayerAttackBoard[row][column];
+        boardClass.whitePlayerAttackBoard[row][column] = new EmptyTile();
+    }
+
 
 
     public boolean getCurrentPlayer() {
         return currentlyPlayer;
     }
 
-    public void deleteEnPassant() {
-
+    private void deleteEnPassant() {
         for (int row = 0; row < 8; row++) {
             for (int column = 0; column < 8; column++) {
                 switch (boardClass.board[row][column].getClass().getSimpleName()) {
@@ -203,29 +208,35 @@ public class Game {
     }
 
 
-    public void fillWhitePlayerAttackBoard() {
-        boardClass.clearWhitePlayerAttackBoard();
-
-        for (int row = 0; row < 8; row++) {
-            for (int column = 0; column < 8; column++) {
-                if (boardClass.board[row][column].getPlayer()) {
-                    moveClass.CalculateMoves(row, column, "w");
-                }
-            }
-        }
-    }
-
-//    public void fillBlackPlayerAttackBoard() {
-//        boardClass.clearBlackPlayerAttackBoard();
-//
+//    public void fillWhitePlayerAttackBoard() {
 //        for (int row = 0; row < 8; row++) {
 //            for (int column = 0; column < 8; column++) {
-//                if (!boardClass.board[row][column].getPlayer()) {
-//                    moveClass.CalculateMoves(row, column, "b");
+//                if (boardClass.whitePlayerAttackBoard[row][column].getPlayer()) {
+//                    moveClass.CalculateMoves(row, column, "w");
 //                }
 //            }
 //        }
 //    }
 
+    void fillBlackPlayerAttackBoard() {
+        List<Pair<Integer, Integer>> stack = new LinkedList<>();
+
+        for (int row = 0; row < 8; row++) {
+            for (int column = 0; column < 8; column++) {
+                if (!boardClass.blackPlayerAttackBoard[row][column].getPlayer()
+                 && !boardClass.blackPlayerAttackBoard[row][column].getClass().getSimpleName().equals("EmptyTile")) {
+                    moveClass.CalculateMoves(row, column, "b", stack);
+                }
+            }
+        }
+
+        for (Pair<Integer, Integer> pair : stack) {
+            int row = pair.getKey();
+            int column = pair.getValue();
+            boardClass.blackPlayerAttackBoard[row][column] = new Mark_MovableTile();
+        }
+        System.out.println(stack.size());
+
+    }
 
 }
