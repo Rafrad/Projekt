@@ -354,19 +354,7 @@ public class Move {
 
 
     private boolean bishopMoves(Piece pieceChosen, List<Pair<Integer, Integer>> availableMoves, int i, int j, Piece[][] boardToCheck) {
-        if (boardToCheck[i][j].getClass().getSimpleName().equals("EmptyTile")
-                ||(boardToCheck[i][j] instanceof Mark_MovableTile && attack)) {
-            availableMoves.add(new Pair<>(i, j));
-        } else if (boardToCheck[i][j].getPlayer() == pieceChosen.getPlayer()) {
-            if(attack) {
-                availableMoves.add(new Pair<>(i, j));
-            }
-            return true;
-        } else {
-            availableMoves.add(new Pair<>(i, j));
-            return true;
-        }
-        return false;
+        return upDownAndBishopMoves(j, boardToCheck, pieceChosen, availableMoves, i, attack);
     }
 
     private void knightMoves(int PieceRow,
@@ -404,6 +392,10 @@ public class Move {
 
 
     private boolean upDown(int PieceColumn, Piece[][] boardToCheck, Piece pieceChosen, List<Pair<Integer, Integer>> availableMoves, int i, boolean attack) {
+        return upDownAndBishopMoves(PieceColumn, boardToCheck, pieceChosen, availableMoves, i, attack);
+    }
+
+    private boolean upDownAndBishopMoves(int PieceColumn, Piece[][] boardToCheck, Piece pieceChosen, List<Pair<Integer, Integer>> availableMoves, int i, boolean attack) {
         if (boardToCheck[i][PieceColumn].getClass().getSimpleName().equals("EmptyTile")
            ||(boardToCheck[i][PieceColumn] instanceof Mark_MovableTile && attack)) {
             availableMoves.add(new Pair<>(i, PieceColumn));

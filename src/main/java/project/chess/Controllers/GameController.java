@@ -3,7 +3,6 @@ package project.chess.Controllers;
 
 import javafx.scene.control.Button;
 import project.chess.Exceptions.PlayerColorException;
-import project.chess.Models.Board;
 import project.chess.Models.Filter;
 import project.chess.Models.Game;
 
