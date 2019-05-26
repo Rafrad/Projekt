@@ -91,8 +91,6 @@ public class GameController {
         EmulateBoard();
 
 
-
-
         for (int r = 0; r < 8; r++) {
             for (int c = 0; c < 8; c++) {
                 final int row = r;
@@ -119,57 +117,50 @@ public class GameController {
                             }
                             break;
                         default:
-//                            if (game.getCurrentPlayer() == game.boardClass.board[row][column].getPlayer()) {
-                            if (!promotionFlagBlockingMove) {
-                                PaintBoard();
-                                ClearPossibleMoves();
-                                try {
-                                    EmulateBoard();
-                                } catch (PlayerColorException e) {
-                                    e.printStackTrace();
-                                }
+                            if (game.getCurrentPlayer() == game.boardClass.board[row][column].getPlayer()
+                            && !game.isOver) {
+                                if (!promotionFlagBlockingMove) {
+                                    PaintBoard();
+                                    ClearPossibleMoves();
+                                    try {
+                                        EmulateBoard();
+                                    } catch (PlayerColorException e) {
+                                        e.printStackTrace();
+                                    }
 
-                                Tile[row][column].setStyle("-fx-background-color: #fbfb5b");
-                                List<Pair<Integer, Integer>> dummy = new LinkedList<>();
-                                List<Pair<Integer, Integer>> moves = game.moveClass.CalculateMoves(row, column, "", dummy);
-
-//                                for (Pair<Integer, Integer> pair : dummy) {
-//                                    int tmpRow = pair.getKey();
-//                                    int tmpColumn = pair.getKey();
-//
-//                                    moves.add(new Pair<>(tmpRow, tmpColumn));
-//                                }
+                                    Tile[row][column].setStyle("-fx-background-color: #fbfb5b");
+                                    List<Pair<Integer, Integer>> dummy = new LinkedList<>();
+                                    List<Pair<Integer, Integer>> moves = game.moveClass.CalculateMoves(row, column, "", dummy);
 
 
-                                //TUTAJ FILTR
-                                //===========================================
-                                Filter filter = new Filter(game, moves, row, column, false);
+                                    //TUTAJ FILTR
+                                    //===========================================
+                                    Filter filter = new Filter(game, moves, row, column);
 //                                moves.clear();
-                                moves = filter.filterMoves();
+                                    moves = filter.filterMoves();
 
-                                game.boardClass.clearPossibleMoves();
+                                    game.boardClass.clearPossibleMoves();
 
-                                for(int q = 0; q < moves.size(); q++) {
-                                    int rowMove = moves.get(q).getKey();
-                                    int columnMove = moves.get(q).getValue();
+                                    for (int q = 0; q < moves.size(); q++) {
+                                        int rowMove = moves.get(q).getKey();
+                                        int columnMove = moves.get(q).getValue();
 
-                                    game.boardClass.boardOfPossibleMoves[rowMove][columnMove] = new Mark_MovableTile();
+                                        game.boardClass.boardOfPossibleMoves[rowMove][columnMove] = new Mark_MovableTile();
+                                    }
+
+                                    //===========================================
+
+
+                                    ImageView[] dotMoves = new ImageView[moves.size()];
+                                    for (int i = 0; i < moves.size(); i++) {
+                                        dotMoves[i] = new ImageView(dot);
+                                        int rowMove = moves.get(i).getKey();
+                                        int columnMove = moves.get(i).getValue();
+
+                                        Tile[rowMove][columnMove].getChildren().add(dotMoves[i]);
+                                    }
                                 }
-
-                                //===========================================
-
-
-
-                                ImageView[] dotMoves = new ImageView[moves.size()];
-                                for (int i = 0; i < moves.size(); i++) {
-                                    dotMoves[i] = new ImageView(dot);
-                                    int rowMove = moves.get(i).getKey();
-                                    int columnMove = moves.get(i).getValue();
-
-                                    Tile[rowMove][columnMove].getChildren().add(dotMoves[i]);
-                                }
-                            }
-//                            }
+                            } // current player
 
                             break;
                     }
@@ -184,7 +175,7 @@ public class GameController {
     private boolean promotionFlagBlockingMove;
 
     @FXML
-    public void initialize(){
+    public void initialize() {
     }
 
 

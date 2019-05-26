@@ -25,8 +25,6 @@ public class Board {
 
     /**
      * FACTORY DESIGN PATTERN
-     *
-     * 
      */
 
     private void initBoard() throws PlayerColorException {
@@ -62,28 +60,22 @@ public class Board {
                         case 1:
                         case 6:
                             board[i][j] = new Knight(false);
-//                            board[i][j] = new EmptyTile();
                             break;
                         case 2:
                         case 5:
                             board[i][j] = new Bishop(false);
-//                            board[i][j] = new EmptyTile();
                             break;
                         case 3:
                             board[i][j] = new Queen(false);
-//                            board[i][j] = new EmptyTile();
                             break;
                         case 4:
                             board[i][j] = new BlackKing();
-//                            board[i][j] = new EmptyTile();
                             break;
                     }
                 } else if (i == 6) {
-//                    board[i][j] = new WhitePawn();
-                    board[i][j] = new EmptyTile();
+                    board[i][j] = new WhitePawn();
                 } else if (i == 1) {
                     board[i][j] = new BlackPawn();
-//                    board[i][j] = new EmptyTile();
                 } else {
                     board[i][j] = new EmptyTile();
                 }
