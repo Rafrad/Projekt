@@ -37,6 +37,12 @@ public class WhitePawn implements Piece {
         return player;
     }
 
+    @Override
+    public void print(boolean player) {
+        System.out.print("w ");
+    }
+
+
     public boolean getFirstMove() {
         return firstMove;
     }

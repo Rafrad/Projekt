@@ -143,17 +143,11 @@ public class GameController {
 
                                 //TUTAJ FILTR
                                 //===========================================
-                                Filter filter = new Filter(game, moves, row, column, game.getCurrentPlayer());
+                                Filter filter = new Filter(game, moves, row, column, false);
 //                                moves.clear();
                                 moves = filter.filterMoves();
 
-                                for(int tmpRow = 0; tmpRow < 8; tmpRow++) {
-                                    for(int tmpColumn = 0; tmpColumn < 8; tmpColumn++) {
-
-                                    }
-                                }
                                 game.boardClass.clearPossibleMoves();
-
 
                                 for(int q = 0; q < moves.size(); q++) {
                                     int rowMove = moves.get(q).getKey();

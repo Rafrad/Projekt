@@ -22,6 +22,13 @@ public class Board {
         initEveryBoard();
     }
 
+
+    /**
+     * FACTORY DESIGN PATTERN
+     *
+     * @throws PlayerColorException
+     */
+
     private void initBoard() throws PlayerColorException {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
@@ -55,28 +62,28 @@ public class Board {
                         case 1:
                         case 6:
                             board[i][j] = new Knight(false);
-                            board[i][j] = new EmptyTile();
+//                            board[i][j] = new EmptyTile();
                             break;
                         case 2:
                         case 5:
                             board[i][j] = new Bishop(false);
-                            board[i][j] = new EmptyTile();
+//                            board[i][j] = new EmptyTile();
                             break;
                         case 3:
                             board[i][j] = new Queen(false);
-                            board[i][j] = new EmptyTile();
+//                            board[i][j] = new EmptyTile();
                             break;
                         case 4:
                             board[i][j] = new BlackKing();
-                            board[i][j] = new EmptyTile();
+//                            board[i][j] = new EmptyTile();
                             break;
                     }
                 } else if (i == 6) {
-                    board[i][j] = new WhitePawn();
+//                    board[i][j] = new WhitePawn();
                     board[i][j] = new EmptyTile();
                 } else if (i == 1) {
                     board[i][j] = new BlackPawn();
-                    board[i][j] = new EmptyTile();
+//                    board[i][j] = new EmptyTile();
                 } else {
                     board[i][j] = new EmptyTile();
                 }
@@ -125,7 +132,8 @@ public class Board {
             row = pair.getKey();
             column = pair.getValue();
 
-            if(boardToFill[row][column].getClass().getSimpleName().equals("EmptyTile")) {
+
+            if(boardToFill[row][column] instanceof EmptyTile) {
                 boardToFill[row][column] = new Mark_MovableTile();
             } else if(boardChosen.equals("w") || boardChosen.equals("b")){
                 stack.add(new Pair<>(row, column));
@@ -141,58 +149,60 @@ public class Board {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 boolean player;
-                switch (boardToPrint[i][j].getClass().getSimpleName()) {
-                    case "WhitePawn":
-                        System.out.print("w ");
-                        break;
-                    case "BlackPawn":
-                        System.out.print("b ");
-                        break;
-                    case "Rook":
-                        player = boardToPrint[i][j].getPlayer();
-                        if (player) {
-                            System.out.print("R ");
-                        } else {
-                            System.out.print("r ");
-                        }
-                        break;
-                    case "Knight":
-                        player = boardToPrint[i][j].getPlayer();
-                        if (player) {
-                            System.out.print("K ");
-                        } else {
-                            System.out.print("k ");
-                        }
-                        break;
-                    case "Bishop":
-                        player = boardToPrint[i][j].getPlayer();
-                        if (player) {
-                            System.out.print("I ");
-                        } else {
-                            System.out.print("i ");
-                        }
-                        break;
-                    case "Queen":
-                        player = boardToPrint[i][j].getPlayer();
-                        if (player) {
-                            System.out.print("Q ");
-                        } else {
-                            System.out.print("q ");
-                        }
-                        break;
-                    case "WhiteKing":
-                        System.out.print("Y ");
-                        break;
-                    case "BlackKing":
-                        System.out.print("y ");
-                        break;
-                    case "Mark_MovableTile":
-                        System.out.print("m ");
-                        break;
-                    default:
-                        System.out.print("x ");
-                        break;
-                }
+                player = boardToPrint[i][j].getPlayer();
+                boardToPrint[i][j].print(player);
+//                switch (boardToPrint[i][j].getClass().getSimpleName()) {
+//                    case "WhitePawn":
+//                        System.out.print("w ");
+//                        break;
+//                    case "BlackPawn":
+//                        System.out.print("b ");
+//                        break;
+//                    case "Rook":
+//                        player = boardToPrint[i][j].getPlayer();
+//                        if (player) {
+//                            System.out.print("R ");
+//                        } else {
+//                            System.out.print("r ");
+//                        }
+//                        break;
+//                    case "Knight":
+//                        player = boardToPrint[i][j].getPlayer();
+//                        if (player) {
+//                            System.out.print("K ");
+//                        } else {
+//                            System.out.print("k ");
+//                        }
+//                        break;
+//                    case "Bishop":
+//                        player = boardToPrint[i][j].getPlayer();
+//                        if (player) {
+//                            System.out.print("I ");
+//                        } else {
+//                            System.out.print("i ");
+//                        }
+//                        break;
+//                    case "Queen":
+//                        player = boardToPrint[i][j].getPlayer();
+//                        if (player) {
+//                            System.out.print("Q ");
+//                        } else {
+//                            System.out.print("q ");
+//                        }
+//                        break;
+//                    case "WhiteKing":
+//                        System.out.print("Y ");
+//                        break;
+//                    case "BlackKing":
+//                        System.out.print("y ");
+//                        break;
+//                    case "Mark_MovableTile":
+//                        System.out.print("m ");
+//                        break;
+//                    default:
+//                        System.out.print("x ");
+//                        break;
+//                }
             }
             System.out.println();
         }

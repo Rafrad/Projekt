@@ -33,6 +33,11 @@ public class BlackKing implements Piece {
         return false;
     }
 
+    @Override
+    public void print(boolean player) {
+        System.out.print("y ");
+    }
+
     public boolean getCastling() {
         return castling;
     }

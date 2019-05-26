@@ -36,6 +36,11 @@ public class BlackPawn implements Piece {
         return player;
     }
 
+    @Override
+    public void print(boolean player) {
+        System.out.print("b ");
+    }
+
     public boolean getFirstMove() {
         return firstMove;
     }

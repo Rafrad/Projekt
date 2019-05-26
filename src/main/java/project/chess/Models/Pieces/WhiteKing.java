@@ -34,6 +34,11 @@ public class WhiteKing implements Piece {
         return true;
     }
 
+    @Override
+    public void print(boolean player) {
+        System.out.print("Y ");
+    }
+
     public boolean getCheck() {
         return check;
     }

@@ -39,6 +39,15 @@ public class Rook implements Piece {
         return player;
     }
 
+    @Override
+    public void print(boolean player) {
+        if (player) {
+            System.out.print("R ");
+        } else {
+            System.out.print("r ");
+        }
+    }
+
     public boolean getCastling() {
         return castling;
     }

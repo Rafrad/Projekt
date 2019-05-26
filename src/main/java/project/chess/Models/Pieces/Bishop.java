@@ -32,4 +32,14 @@ public class Bishop implements Piece {
     public boolean getPlayer() {
         return player;
     }
+
+    @Override
+    public void print(boolean player) {
+        if (player) {
+            System.out.print("I ");
+        } else {
+            System.out.print("i ");
+        }
+    }
+
 }

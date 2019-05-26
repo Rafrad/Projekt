@@ -161,121 +161,121 @@ public class Move {
 
 
         }
-//
-//
-//        if (nameOfChosenPiece.equals("BlackPawn") || nameOfChosenPiece.equals("WhitePawn")) {
-//
-//
-//            for (int i = 0; i < allowedPieceMovesFromVector.size(); i++) {
-//                int allowedMovesRow = 0;
-//                int allowedMovesColumn = 0;
-//
-//                allowedMovesRow = allowedPieceMovesFromVector.get(i).getKey() + PieceRow;
-//                allowedMovesColumn = allowedPieceMovesFromVector.get(i).getValue() + PieceColumn;
-//
-//                // dodajemy ruchy dozwolone
-//
-//                if (allowedMovesRow >= 0
-//                        && allowedMovesColumn >= 0
-//                        && allowedMovesRow <= 7
-//                        && allowedMovesColumn <= 7) {
-//
-//                    Piece check = boardClass.getPiece(allowedMovesRow, allowedMovesColumn);
-//                    String nameOfCheck = check.getClass().getSimpleName();
-//
-//
-//                    if (nameOfChosenPiece.equals("BlackPawn") || nameOfChosenPiece.equals("WhitePawn")) {
-//
-//                        //tutaj bez petli (en passant)
-//                        if (nameOfChosenPiece.equals("WhitePawn") && !(attack.equals("w") || attack.equals("b"))) {
-//                            if (PieceColumn - 1 >= 0) {
-//                                if (boardClass.getPiece(PieceRow, PieceColumn - 1).getClass().getSimpleName().equals("BlackPawn")) {
-//                                    if (((BlackPawn) boardClass.board[PieceRow][PieceColumn - 1]).getEnPassant()) {
-//                                        availableMoves.add(new Pair<>(PieceRow - 1, PieceColumn - 1));
-//                                    }
-//                                }
-//                            }
-//
-//                            if (PieceColumn + 1 < 8
-//                                    && boardClass.getPiece(PieceRow, PieceColumn + 1).getClass().getSimpleName().equals("BlackPawn")
-//                                    && ((BlackPawn) boardClass.board[PieceRow][PieceColumn + 1]).getEnPassant()) {
-//                                availableMoves.add(new Pair<>(PieceRow - 1, PieceColumn + 1));
-//                            }
-//                        }
-//
-//
-//                        //tutaj bez petli (en passant)
-//                        if (nameOfChosenPiece.equals("BlackPawn") && !(attack.equals("w") || attack.equals("b"))) {
-//                            if (PieceColumn - 1 >= 0) {
-//                                if (boardClass.getPiece(PieceRow, PieceColumn - 1).getClass().getSimpleName().equals("WhitePawn")) {
-//                                    if (((WhitePawn) boardClass.board[PieceRow][PieceColumn - 1]).getEnPassant()) {
-//                                        availableMoves.add(new Pair<>(PieceRow + 1, PieceColumn - 1));
-//                                    }
-//                                }
-//                            }
-//
-//                            if (PieceColumn + 1 < 8
-//                                    && boardClass.getPiece(PieceRow, PieceColumn + 1).getClass().getSimpleName().equals("WhitePawn")
-//                                    && ((WhitePawn) boardClass.board[PieceRow][PieceColumn + 1]).getEnPassant()) {
-//                                availableMoves.add(new Pair<>(PieceRow + 1, PieceColumn + 1));
-//                            }
-//                        }
-//
-//
-//                        if (nameOfCheck.equals("EmptyTile")
-//                                && PieceColumn == allowedMovesColumn) {
-//                            switch (nameOfChosenPiece) {
-//                                case "BlackPawn":
-//                                    if (((BlackPawn) boardClass.board[PieceRow][PieceColumn]).getFirstMove()) {
-//                                        if (boardClass.board[PieceRow + 1][PieceColumn].getClass().getSimpleName().equals("EmptyTile")) {
-//                                            if (!(attack.equals("w") || attack.equals("b")))
-//                                                availableMoves.add(new Pair<>(allowedMovesRow, allowedMovesColumn));
-//                                        }
-//                                    } else {
-//                                        if (!(PieceRow == allowedMovesRow - 2)) {
-//                                            if (!(attack.equals("w") || attack.equals("b")))
-//                                                availableMoves.add(new Pair<>(allowedMovesRow, allowedMovesColumn));
-//                                        }
-//                                    }
-//
-//
-//                                    break;
-//                                case "WhitePawn":
-//                                    if (((WhitePawn) boardClass.board[PieceRow][PieceColumn]).getFirstMove()) {
-//                                        if (boardClass.board[PieceRow - 1][PieceColumn].getClass().getSimpleName().equals("EmptyTile")) {
-//                                            availableMoves.add(new Pair<>(allowedMovesRow, allowedMovesColumn));
-//                                        }
-//                                    } else {
-//                                        if (!(PieceRow == allowedMovesRow + 2)) {
-//                                            availableMoves.add(new Pair<>(allowedMovesRow, allowedMovesColumn));
-//                                        }
-//
-//                                    }
-//                                    break;
-//                                default:
-//                                    break;
-//                            }
-//
-//
-//                        } else if (PieceColumn != allowedMovesColumn && !nameOfCheck.equals("EmptyTile")) {
-//                            boolean basicPlayer = pieceChosen.getPlayer();
-//                            boolean player = check.getPlayer();
-//
-//                            if (basicPlayer != player) {
-//                                availableMoves.add(new Pair<>(allowedMovesRow, allowedMovesColumn));
-//                            }
-//
-//                        }
-//                        if (PieceColumn != allowedMovesColumn && (attack.equals("w") || attack.equals("b"))) {
-//                            availableMoves.add(new Pair<>(allowedMovesRow, allowedMovesColumn));
-//                        }
-//
-//                    }
-//
-//                }
-//
-//            }
-//        }
+
+
+        if (nameOfChosenPiece.equals("BlackPawn") || nameOfChosenPiece.equals("WhitePawn")) {
+
+
+            for (int i = 0; i < allowedPieceMovesFromVector.size(); i++) {
+                int allowedMovesRow = 0;
+                int allowedMovesColumn = 0;
+
+                allowedMovesRow = allowedPieceMovesFromVector.get(i).getKey() + PieceRow;
+                allowedMovesColumn = allowedPieceMovesFromVector.get(i).getValue() + PieceColumn;
+
+                // dodajemy ruchy dozwolone
+
+                if (allowedMovesRow >= 0
+                        && allowedMovesColumn >= 0
+                        && allowedMovesRow <= 7
+                        && allowedMovesColumn <= 7) {
+
+                    Piece check = boardClass.getPiece(allowedMovesRow, allowedMovesColumn);
+                    String nameOfCheck = check.getClass().getSimpleName();
+
+
+                    if (nameOfChosenPiece.equals("BlackPawn") || nameOfChosenPiece.equals("WhitePawn")) {
+
+                        //tutaj bez petli (en passant)
+                        if (nameOfChosenPiece.equals("WhitePawn") && !(playerAttackBoard.equals("w") || playerAttackBoard.equals("b"))) {
+                            if (PieceColumn - 1 >= 0) {
+                                if (boardClass.getPiece(PieceRow, PieceColumn - 1).getClass().getSimpleName().equals("BlackPawn")) {
+                                    if (((BlackPawn) boardClass.board[PieceRow][PieceColumn - 1]).getEnPassant()) {
+                                        availableMoves.add(new Pair<>(PieceRow - 1, PieceColumn - 1));
+                                    }
+                                }
+                            }
+
+                            if (PieceColumn + 1 < 8
+                                    && boardClass.getPiece(PieceRow, PieceColumn + 1).getClass().getSimpleName().equals("BlackPawn")
+                                    && ((BlackPawn) boardClass.board[PieceRow][PieceColumn + 1]).getEnPassant()) {
+                                availableMoves.add(new Pair<>(PieceRow - 1, PieceColumn + 1));
+                            }
+                        }
+
+
+                        //tutaj bez petli (en passant)
+                        if (nameOfChosenPiece.equals("BlackPawn") && !(playerAttackBoard.equals("w") || playerAttackBoard.equals("b"))) {
+                            if (PieceColumn - 1 >= 0) {
+                                if (boardClass.getPiece(PieceRow, PieceColumn - 1).getClass().getSimpleName().equals("WhitePawn")) {
+                                    if (((WhitePawn) boardClass.board[PieceRow][PieceColumn - 1]).getEnPassant()) {
+                                        availableMoves.add(new Pair<>(PieceRow + 1, PieceColumn - 1));
+                                    }
+                                }
+                            }
+
+                            if (PieceColumn + 1 < 8
+                                    && boardClass.getPiece(PieceRow, PieceColumn + 1).getClass().getSimpleName().equals("WhitePawn")
+                                    && ((WhitePawn) boardClass.board[PieceRow][PieceColumn + 1]).getEnPassant()) {
+                                availableMoves.add(new Pair<>(PieceRow + 1, PieceColumn + 1));
+                            }
+                        }
+
+
+                        if (nameOfCheck.equals("EmptyTile")
+                                && PieceColumn == allowedMovesColumn) {
+                            switch (nameOfChosenPiece) {
+                                case "BlackPawn":
+                                    if (((BlackPawn) boardClass.board[PieceRow][PieceColumn]).getFirstMove()) {
+                                        if (boardClass.board[PieceRow + 1][PieceColumn].getClass().getSimpleName().equals("EmptyTile")) {
+                                            if (!(playerAttackBoard.equals("w") || playerAttackBoard.equals("b")))
+                                                availableMoves.add(new Pair<>(allowedMovesRow, allowedMovesColumn));
+                                        }
+                                    } else {
+                                        if (!(PieceRow == allowedMovesRow - 2)) {
+                                            if (!(playerAttackBoard.equals("w") || playerAttackBoard.equals("b")))
+                                                availableMoves.add(new Pair<>(allowedMovesRow, allowedMovesColumn));
+                                        }
+                                    }
+
+
+                                    break;
+                                case "WhitePawn":
+                                    if (((WhitePawn) boardClass.board[PieceRow][PieceColumn]).getFirstMove()) {
+                                        if (boardClass.board[PieceRow - 1][PieceColumn].getClass().getSimpleName().equals("EmptyTile")) {
+                                            availableMoves.add(new Pair<>(allowedMovesRow, allowedMovesColumn));
+                                        }
+                                    } else {
+                                        if (!(PieceRow == allowedMovesRow + 2)) {
+                                            availableMoves.add(new Pair<>(allowedMovesRow, allowedMovesColumn));
+                                        }
+
+                                    }
+                                    break;
+                                default:
+                                    break;
+                            }
+
+
+                        } else if (PieceColumn != allowedMovesColumn && !nameOfCheck.equals("EmptyTile")) {
+                            boolean basicPlayer = pieceChosen.getPlayer();
+                            boolean player = check.getPlayer();
+
+                            if (basicPlayer != player) {
+                                availableMoves.add(new Pair<>(allowedMovesRow, allowedMovesColumn));
+                            }
+
+                        }
+                        if (PieceColumn != allowedMovesColumn && (playerAttackBoard.equals("w") || playerAttackBoard.equals("b"))) {
+                            availableMoves.add(new Pair<>(allowedMovesRow, allowedMovesColumn));
+                        }
+
+                    }
+
+                }
+
+            }
+        }
 
 
         for (Object availableMove : availableMoves) {
@@ -398,7 +398,8 @@ public class Move {
 
 
     private boolean upDown(int PieceColumn, Piece[][] boardToCheck, Piece pieceChosen, List<Pair<Integer, Integer>> availableMoves, int i, boolean attack) {
-        if (boardToCheck[i][PieceColumn].getClass().getSimpleName().equals("EmptyTile")) {
+        if (boardToCheck[i][PieceColumn].getClass().getSimpleName().equals("EmptyTile")
+           ||(boardToCheck[i][PieceColumn] instanceof Mark_MovableTile && attack)) {
             availableMoves.add(new Pair<>(i, PieceColumn));
         } else if (boardToCheck[i][PieceColumn].getPlayer() == pieceChosen.getPlayer()) {
             if(attack) {
@@ -409,11 +410,14 @@ public class Move {
             availableMoves.add(new Pair<>(i, PieceColumn));
             return true;
         }
+
+
         return false;
     }
 
     private boolean rightLeft(int PieceRow, Piece[] pieces, Piece pieceChosen, List<Pair<Integer, Integer>> availableMoves, int i, boolean attack) {
-        if (pieces[i].getClass().getSimpleName().equals("EmptyTile")) {
+        if (pieces[i].getClass().getSimpleName().equals("EmptyTile")
+                ||(pieces[i] instanceof Mark_MovableTile && attack)) {
             availableMoves.add(new Pair<>(PieceRow, i));
         } else if (pieces[i].getPlayer() == pieceChosen.getPlayer()) {
             if(attack) {

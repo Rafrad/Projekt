@@ -41,4 +41,13 @@ public class Queen implements Piece {
     public boolean getPlayer() {
         return player;
     }
+
+    @Override
+    public void print(boolean player) {
+        if (player) {
+            System.out.print("Q ");
+        } else {
+            System.out.print("q ");
+        }
+    }
 }

@@ -14,4 +14,9 @@ public class Mark_MovableTile implements Piece {
     public boolean getPlayer() {
         return false;
     }
+
+    @Override
+    public void print(boolean player) {
+        System.out.print("m ");
+    }
 }

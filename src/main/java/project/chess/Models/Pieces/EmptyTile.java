@@ -17,4 +17,9 @@ public class EmptyTile implements Piece {
         return false;
     }
 
+    @Override
+    public void print(boolean player) {
+        System.out.print("x ");
+    }
+
 }

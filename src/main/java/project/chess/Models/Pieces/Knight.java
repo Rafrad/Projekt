@@ -36,4 +36,13 @@ public class Knight implements Piece {
     public boolean getPlayer() {
         return player;
     }
+
+    @Override
+    public void print(boolean player) {
+        if (player) {
+            System.out.print("K ");
+        } else {
+            System.out.print("k ");
+        }
+    }
 }

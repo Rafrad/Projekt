@@ -77,33 +77,36 @@ public class Filter {
             int rowDestination = listOfMoves.get(i).getKey();
             int columnDestination = listOfMoves.get(i).getValue();
 
-            if(currentPlayer) {
+            if (gameClass.boardClass.board[pieceRow][pieceColumn].getPlayer()) {
                 //TODO
-            }
-            Piece[][] blackBoard = gameClass.boardClass.blackPlayerAttackBoard;
-            Piece[][] board = gameClass.boardClass.board;
-            gameClass.boardClass.clearBlackPlayerAttackBoard();
+
+                Piece[][] blackBoard = gameClass.boardClass.blackPlayerAttackBoard;
+                Piece[][] board = gameClass.boardClass.board;
+                gameClass.boardClass.clearBlackPlayerAttackBoard();
 
 
-            gameClass.updateBlackPlayerAttackBoard(pieceRow, pieceColumn, rowDestination, columnDestination);
+                gameClass.updateBlackPlayerAttackBoard(pieceRow, pieceColumn, rowDestination, columnDestination);
 
-            gameClass.fillBlackPlayerAttackBoard();
+                gameClass.fillBlackPlayerAttackBoard();
 
-            System.out.println("===========================");
-            gameClass.boardClass.printChosenBoard(blackBoard);
+                System.out.println("===========================");
+                gameClass.boardClass.printChosenBoard(blackBoard);
 
-            updateWhiteKingCoordinates();
-            updateWhiteKingCoordinatesv2();
+                updateWhiteKingCoordinates();
+                updateWhiteKingCoordinatesv2();
 
 
-            if(blackBoard[kingRow][kingColumn].getClass().getSimpleName().equals("WhiteKing")) {
-                System.out.println("jest krul");
-                result.add(new Pair<>(rowDestination, columnDestination));
-            } else {
+                if (blackBoard[kingRow][kingColumn].getClass().getSimpleName().equals("WhiteKing")) {
+                    System.out.println("jest krul");
+                    result.add(new Pair<>(rowDestination, columnDestination));
+                } else {
 //                if(board[pieceRow][pieceColumn].getClass().getSimpleName().equals("WhiteKing")) {
 //
 //                }
-                System.out.println("nie ma krula");
+                    System.out.println("nie ma krula");
+                }
+            } else {
+                return listOfMoves;
             }
         }
 
