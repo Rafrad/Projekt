@@ -1,27 +1,31 @@
 package project.chess.Controllers;
 
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
-import javafx.event.ActionEvent;
 import java.io.IOException;
 
 
 public class MainMenuController {
-    @FXML Button startButton;
-    @FXML Button exitButton;
+    @FXML
+    ImageView playButton;
+    @FXML
+    ImageView exitButton;
 
-    public void changeSceneToSettings(ActionEvent event) throws IOException {
+
+    public void changeSceneToSettings(Event event) throws IOException {
         Parent tableViewParent = FXMLLoader.load(getClass().getResource("/Views/fxml/Settings.fxml"));
         Scene tableViewScene = new Scene(tableViewParent);
 
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(tableViewScene);
+
         window.show();
     }
 
