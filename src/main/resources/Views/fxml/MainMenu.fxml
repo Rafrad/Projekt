@@ -3,7 +3,7 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #5848FB;"
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #898887;"
             xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="project.chess.Controllers.MainMenuController">
     <children>
