@@ -46,4 +46,23 @@ public class Rook implements Piece {
     public void setCastling(boolean castling) {
         this.castling = castling;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Rook other = (Rook) obj;
+        if (player == false) {
+            if (other.player != false)
+                return false;
+        } else if (player == true) {
+            if (other.player != true)
+                return false;
+        }
+        return true;
+    }
 }

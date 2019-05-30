@@ -48,4 +48,15 @@ public class BlackKing implements Piece {
     public void setCheck(boolean check) {
         this.check = check;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        return true;
+    }
 }

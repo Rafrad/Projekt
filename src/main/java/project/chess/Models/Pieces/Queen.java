@@ -38,6 +38,25 @@ public class Queen implements Piece {
     }
 
     @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Queen other = (Queen) obj;
+        if (player == false) {
+            if (other.player != false)
+                return false;
+        } else if (player == true) {
+            if (other.player != true)
+                return false;
+        }
+        return true;
+    }
+
+    @Override
     public boolean getPlayer() {
         return player;
     }
