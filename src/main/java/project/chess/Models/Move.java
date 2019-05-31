@@ -299,12 +299,10 @@ public class Move {
     private void blackKingCastling(BlackKing pieceChosen, List<Pair<Integer, Integer>> availableMoves) {
         if (boardClass.board[0][7] instanceof Rook
                 && boardClass.board[0][6] instanceof EmptyTile
-
-                && boardClass.getPiece(0, 6).getClass().getSimpleName().equals("EmptyTile")
-                && !boardClass.whitePlayerAttackBoard[0][6].getClass().getSimpleName().equals("Mark_MovableTile")
-                && boardClass.getPiece(0, 5).getClass().getSimpleName().equals("EmptyTile")
-                && !boardClass.whitePlayerAttackBoard[0][5].getClass().getSimpleName().equals("Mark_MovableTile")
-                && !boardClass.whitePlayerAttackBoard[0][4].getClass().getSimpleName().equals("Mark_MovableTile")
+                && !(boardClass.whitePlayerAttackBoard[0][6] instanceof Mark_MovableTile)
+                && boardClass.board[0][5] instanceof EmptyTile
+                && !(boardClass.whitePlayerAttackBoard[0][5] instanceof Mark_MovableTile)
+                && !(boardClass.whitePlayerAttackBoard[0][4] instanceof Mark_MovableTile)
                 && ((Rook) boardClass.getPiece(0, 7)).getCastling()
                 && pieceChosen.getCastling()) {
             availableMoves.add(new Pair<>(0, 6));
@@ -347,8 +345,6 @@ public class Move {
             availableMoves.add(new Pair<>(7, 2));
         }
     }
-
-//dlaczego to dziala xdXD
 
 
     private boolean bishopMoves(Piece pieceChosen, List<Pair<Integer, Integer>> availableMoves, int i, int j, Piece[][] boardToCheck) {

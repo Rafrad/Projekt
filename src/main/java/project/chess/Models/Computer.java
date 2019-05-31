@@ -3,6 +3,7 @@ package project.chess.Models;
 import javafx.util.Pair;
 import project.chess.Models.Pieces.Piece;
 
+import java.net.MalformedURLException;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -20,7 +21,7 @@ public class Computer {
         initPieceList();
     }
 
-    public void makeAMove() {
+    public void makeAMove() throws MalformedURLException {
         bodyDisposal();
         Pair<Pair<Integer, Integer>, Piece> element;
         Pair<Integer, Integer> position;
