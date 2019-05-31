@@ -24,18 +24,13 @@ public class MainMenuController {
         Scene tableViewScene = new Scene(tableViewParent);
 
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setScene(tableViewScene);
 
+        window.setScene(tableViewScene);
         window.show();
     }
 
     public void exitGame() {
         Stage stage = (Stage) exitButton.getScene().getWindow();
         stage.close();
-    }
-
-    @FXML
-    public void initialize() {
-
     }
 }
