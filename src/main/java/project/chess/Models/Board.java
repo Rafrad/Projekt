@@ -23,10 +23,6 @@ public class Board {
     }
 
 
-    /**
-     * FACTORY DESIGN PATTERN
-     */
-
     private void initBoard() throws PlayerColorException {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
@@ -105,18 +101,7 @@ public class Board {
     }
 
     void addPossibleMoves(List<Pair<Integer, Integer>> list, String boardChosen, List<Pair<Integer, Integer>> stack) {
-        Piece[][] boardToFill;
-        switch (boardChosen) {
-            case "w":
-                boardToFill = whitePlayerAttackBoard;
-                break;
-            case "b":
-                boardToFill = blackPlayerAttackBoard;
-                break;
-            default:
-                boardToFill = boardOfPossibleMoves;
-                break;
-        }
+        Piece[][] boardToFill = getBoard(boardChosen);
 
         int row;
         int column;
@@ -136,6 +121,26 @@ public class Board {
         }
     }
 
+    private Piece[][] getBoard(String boardChosen) {
+        Piece[][] boardToFill;
+        switch (boardChosen) {
+            case "w":
+                boardToFill = whitePlayerAttackBoard;
+                break;
+            case "b":
+                boardToFill = blackPlayerAttackBoard;
+                break;
+            default:
+                boardToFill = boardOfPossibleMoves;
+                break;
+        }
+        return boardToFill;
+    }
+
+
+    /**
+     * Made for development & tests
+     */
 
     void printChosenBoard(Piece[][] boardToPrint) {
         for (int i = 0; i < 8; i++) {
@@ -164,7 +169,5 @@ public class Board {
             System.arraycopy(board[row], 0, blackPlayerAttackBoard[row], 0, 8);
         }
     }
-
-
 
 }
