@@ -1,6 +1,8 @@
 package project.chess.Models.Pieces;
 
 
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import project.chess.Exceptions.PlayerColorException;
 import javafx.util.Pair;
 
@@ -9,6 +11,8 @@ import java.util.List;
 
 public class Knight implements Piece {
     private boolean player;
+    private char unicode;
+    private Image image;
 
     public Knight() throws PlayerColorException {
         throw new PlayerColorException("Knight must be white or black!");
@@ -16,6 +20,14 @@ public class Knight implements Piece {
 
     public Knight(boolean player) throws PlayerColorException {
         this.player = player;
+
+        if(player) {
+            unicode = 0x2658;
+            image = new Image("Images/white_knight.png");
+        } else {
+            unicode = 0x265E;
+            image = new Image("Images/black_knight.png");
+        }
     }
 
     @Override
@@ -44,5 +56,15 @@ public class Knight implements Piece {
         } else {
             System.out.print("k ");
         }
+    }
+
+    @Override
+    public char getUnicode() {
+        return unicode;
+    }
+
+    @Override
+    public ImageView getImageView() {
+        return new ImageView(image);
     }
 }

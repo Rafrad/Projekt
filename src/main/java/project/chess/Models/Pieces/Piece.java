@@ -1,10 +1,6 @@
 package project.chess.Models.Pieces;
-
-
-import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.util.Pair;
-
-import javax.swing.text.html.ImageView;
 import java.util.List;
 
 //*** move() ***
@@ -38,7 +34,6 @@ public interface Piece {
 
     boolean getPlayer();
     void print();
-    //get Image????
-//    ImageView addImageView(Image img);
-    //get unicode
+    char getUnicode();
+    ImageView getImageView();
 }

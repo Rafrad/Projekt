@@ -1,6 +1,8 @@
 package project.chess.Models.Pieces;
 
 
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.util.Pair;
 
 import java.util.LinkedList;
@@ -14,12 +16,16 @@ public class WhitePawn implements Piece {
     private boolean promotion;
     private char unicode;
 
+    private Image image;
+
     public WhitePawn() {
         player = true;
         firstMove = true;
         enPassant = false;
         promotion = false;
+
         unicode = 0x2659;
+        image = new Image("Images/white_pawn.png");
     }
 
     @Override
@@ -73,6 +79,10 @@ public class WhitePawn implements Piece {
         return unicode;
     }
 
+    @Override
+    public ImageView getImageView() {
+        return new ImageView(image);
+    }
 
 
 }
