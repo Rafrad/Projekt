@@ -27,8 +27,12 @@ public class SettingsController {
     ChoiceBox<String> versusModeChoice;
     @FXML
     ChoiceBox<String> firstPlayerColorChoice;
-    @FXML Button startGameButton;
-    @FXML Button backToMainMenuButton;
+
+    @FXML
+    Button startGameButton;
+    @FXML
+    Button backToMainMenuButton;
+
 
     /**
      * When this method is called, it will change the Scene to main menu
@@ -38,7 +42,7 @@ public class SettingsController {
         Parent tableViewParent = FXMLLoader.load(getClass().getResource("/Views/fxml/MainMenu.fxml"));
         Scene tableViewScene = new Scene(tableViewParent);
 
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(tableViewScene);
         window.show();
     }
@@ -48,10 +52,7 @@ public class SettingsController {
      */
 
     public void startGame(ActionEvent event) throws IOException, PlayerColorException {
-        Options options = new Options();
-        options.setGameMode(gameModeChoice.getValue());
-        options.setVersusMode(versusModeChoice.getValue());
-        options.setFirstPlayerColor(firstPlayerColorChoice.getValue());
+        Options options = setOptions();
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/fxml/Game.fxml"));
         Parent root = loader.load();
@@ -60,17 +61,27 @@ public class SettingsController {
 
         Scene tableViewScene = new Scene(root);
 
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
+        setWindow(tableViewScene, window);
+        window.show();
+    }
+
+    private void setWindow(Scene tableViewScene, Stage window) {
         Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
-        window.setX(primaryScreenBounds.getMinX() + primaryScreenBounds.getWidth()-1450);
-        window.setY(primaryScreenBounds.getMinY() + primaryScreenBounds.getHeight()-800);
+        window.setX(primaryScreenBounds.getMinX() + primaryScreenBounds.getWidth() - 1450);
+        window.setY(primaryScreenBounds.getMinY() + primaryScreenBounds.getHeight() - 800);
         window.setWidth(1400);
         window.setHeight(800);
         window.setScene(tableViewScene);
+    }
 
-        window.show();
-
+    private Options setOptions() {
+        Options options = new Options();
+        options.setGameMode(gameModeChoice.getValue());
+        options.setVersusMode(versusModeChoice.getValue());
+        options.setFirstPlayerColor(firstPlayerColorChoice.getValue());
+        return options;
     }
 
     @FXML
@@ -78,6 +89,7 @@ public class SettingsController {
         setChoices();
         setTooltips();
         setDefaultsChoices();
+
     }
 
     private void setChoices() {
@@ -101,8 +113,8 @@ public class SettingsController {
     }
 
     private void setTooltips() {
-        gameModeChoice.setTooltip(new Tooltip("szybciej z ta lodziarnia"));
-        firstPlayerColorChoice.setTooltip(new Tooltip("ftw"));
-        versusModeChoice.setTooltip(new Tooltip("nigga"));
+        gameModeChoice.setTooltip(new Tooltip("choose game mode"));
+        firstPlayerColorChoice.setTooltip(new Tooltip("white starts"));
+        versusModeChoice.setTooltip(new Tooltip("play vs computer or player"));
     }
 }
