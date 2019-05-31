@@ -23,7 +23,7 @@ public class BlackPawn implements Piece {
         enPassant = false;
         promotion = false;
 
-        unicode = 0x9823;
+        unicode = 0x265F;
         image = new Image("Images/black_pawn.png");
     }
 
