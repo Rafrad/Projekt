@@ -40,4 +40,5 @@ public interface Piece {
     void print();
     //get Image????
 //    ImageView addImageView(Image img);
+    //get unicode
 }

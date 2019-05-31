@@ -12,12 +12,14 @@ public class WhitePawn implements Piece {
     private boolean firstMove;
     private boolean enPassant;
     private boolean promotion;
+    private char unicode;
 
     public WhitePawn() {
         player = true;
         firstMove = true;
         enPassant = false;
         promotion = false;
+        unicode = 0x2659;
     }
 
     @Override
@@ -66,6 +68,11 @@ public class WhitePawn implements Piece {
     public void setPromotion(boolean promotion) {
         this.promotion = promotion;
     }
+
+    public char getUnicode() {
+        return unicode;
+    }
+
 
 
 }

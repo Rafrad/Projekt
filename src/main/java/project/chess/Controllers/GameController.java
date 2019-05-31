@@ -176,11 +176,24 @@ public class GameController {
 
 
                             Piece piece = game.boardClass.getPiece(row, column);
+                            char uni = 't';
+                            StringBuilder stringBuilder = new StringBuilder();
+
+                            if(piece instanceof WhitePawn) {
+//                                uni = 0x2659;
+                                uni  = ((WhitePawn) piece).getUnicode();
+                            } else if(piece instanceof BlackPawn) {
+                                uni = 0x265F;
+                            }
+
                             if (piece instanceof WhitePawn || piece instanceof BlackPawn) {
-                                String coordinates = replaceToChessNotation(row, column).toString();
+                                stringBuilder.append(uni);
+                                stringBuilder.append(replaceToChessNotation(row, column));
+                                String coordinates = stringBuilder.toString();
+
                                 drawHistory(coordinates);
                             }
-                            
+
 
                             System.out.println();
 
