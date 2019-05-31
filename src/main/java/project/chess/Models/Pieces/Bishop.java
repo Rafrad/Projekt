@@ -1,7 +1,10 @@
 package project.chess.Models.Pieces;
 
+import javafx.scene.image.Image;
 import project.chess.Exceptions.PlayerColorException;
 import javafx.util.Pair;
+
+import javax.swing.text.html.ImageView;
 import java.util.LinkedList;
 import java.util.List;
 

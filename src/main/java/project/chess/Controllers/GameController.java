@@ -16,6 +16,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.util.Pair;
 
+import java.net.MalformedURLException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -32,15 +33,19 @@ public class GameController {
     private Button promoteToBishopButton;
     @FXML
     private Button promoteToQueenButton;
+    @FXML
+    private Button resignButton;
+    @FXML
+    private Button drawButton;
 
     private Game game;
 
-    private Image blackPawn;
-    private Image blackRook;
-    private Image blackKnight;
-    private Image blackBishop;
-    private Image blackQueen;
-    private Image blackKing;
+    private Image blackPawnImage;
+    private Image blackRookImage;
+    private Image blackKnightImage;
+    private Image blackBishopImage;
+    private Image blackQueenImage;
+    private Image blackKingImage;
 
     private Image whitePawn;
     private Image whiteRook;
@@ -49,9 +54,17 @@ public class GameController {
     private Image whiteQueen;
     private Image whiteKing;
 
-
     private Image dot;
+    private Image resignImage;
+    private Image drawImage;
 
+    private void showImageResignButton() {
+        resignButton.setGraphic(new ImageView(resignImage));
+    }
+
+    private void showImageDrawButton() {
+        drawButton.setGraphic(new ImageView(drawImage));
+    }
 
     void init(Options options) throws PlayerColorException {
         System.out.println(options.getGameMode());
@@ -62,15 +75,15 @@ public class GameController {
 
         /*
          * Set image for every piece
-         * and for dot
+         * dot, draw & resign
          */
 
-        blackPawn = new Image("Images/black_pawn.png");
-        blackRook = new Image("Images/black_rook.png");
-        blackKnight = new Image("Images/black_knight.png");
-        blackBishop = new Image("Images/black_bishop.png");
-        blackQueen = new Image("Images/black_queen.png");
-        blackKing = new Image("Images/black_king.png");
+        blackPawnImage = new Image("Images/black_pawn.png");
+        blackRookImage = new Image("Images/black_rook.png");
+        blackKnightImage = new Image("Images/black_knight.png");
+        blackBishopImage = new Image("Images/black_bishop.png");
+        blackQueenImage = new Image("Images/black_queen.png");
+        blackKingImage = new Image("Images/black_king.png");
 
         whitePawn = new Image("Images/white_pawn.png");
         whiteRook = new Image("Images/white_rook.png");
@@ -81,6 +94,10 @@ public class GameController {
 
 
         dot = new Image("Images/dot.png");
+        resignImage = new Image("Images/resign.png");
+        drawImage = new Image("Images/draw.png");
+        showImageDrawButton();
+        showImageResignButton();
 
 
         Tile = new Pane[8][8];
@@ -103,46 +120,44 @@ public class GameController {
                         case "Mark_MovableTile":
                             Pair<Integer, Integer> selectedPiece = getSelectedPiece();
 
+                            assert selectedPiece != null;
                             int selectedPieceRow = selectedPiece.getKey();
                             int selectedPieceColumn = selectedPiece.getValue();
 
-                            game.move(selectedPieceRow, selectedPieceColumn, row, column);
-                            ClearPossibleMoves();
-                            PaintBoard();
                             try {
-                                EmulateBoard();
-                            } catch (PlayerColorException e) {
+                                game.move(selectedPieceRow, selectedPieceColumn, row, column);
+                            } catch (MalformedURLException e) {
                                 e.printStackTrace();
                             }
+                            ClearPossibleMoves();
+                            PaintBoard();
+                            EmulateBoard();
+
                             break;
                         default:
                             if (game.getCurrentPlayer() == game.boardClass.board[row][column].getPlayer()
-                            && !game.isOver) {
+                                    && !game.isOver) {
                                 if (!promotionFlagBlockingMove) {
                                     PaintBoard();
                                     ClearPossibleMoves();
-                                    try {
-                                        EmulateBoard();
-                                    } catch (PlayerColorException e) {
-                                        e.printStackTrace();
-                                    }
+
+                                    EmulateBoard();
+
 
                                     Tile[row][column].setStyle("-fx-background-color: #fbfb5b");
                                     List<Pair<Integer, Integer>> dummy = new LinkedList<>();
                                     List<Pair<Integer, Integer>> moves = game.moveClass.CalculateMoves(row, column, "", dummy);
 
 
-                                    //TUTAJ FILTR
                                     //===========================================
                                     Filter filter = new Filter(game, moves, row, column);
-//                                moves.clear();
                                     moves = filter.filterMoves();
 
                                     game.boardClass.clearPossibleMoves();
 
-                                    for (int q = 0; q < moves.size(); q++) {
-                                        int rowMove = moves.get(q).getKey();
-                                        int columnMove = moves.get(q).getValue();
+                                    for (Pair<Integer, Integer> move : moves) {
+                                        int rowMove = move.getKey();
+                                        int columnMove = move.getValue();
 
                                         game.boardClass.boardOfPossibleMoves[rowMove][columnMove] = new Mark_MovableTile();
                                     }
@@ -178,7 +193,7 @@ public class GameController {
     }
 
 
-    public Pair<Integer, Integer> getSelectedPiece() {
+    private Pair<Integer, Integer> getSelectedPiece() {
         for (int row = 0; row < 8; row++) {
             for (int column = 0; column < 8; column++) {
                 if (Tile[row][column].styleProperty().getValueSafe().subSequence(22, 29).equals("#fbfb5b")) {
@@ -187,6 +202,18 @@ public class GameController {
             }
         }
         return null;
+    }
+
+
+    /**
+     * resign game
+     */
+
+    @FXML
+    private void resign() {
+        game.isOver = true;
+        EmulateBoard();
+        PaintBoard();
     }
 
 
@@ -232,7 +259,7 @@ public class GameController {
     }
 
 
-    private void EmulateBoard() throws PlayerColorException {
+    private void EmulateBoard() {
         for (int row = 0; row < 8; row++) {
             for (int column = 0; column < 8; column++) {
                 ImageView tmp = null;
@@ -243,7 +270,7 @@ public class GameController {
 
                 switch (game.boardClass.board[row][column].getClass().getSimpleName()) {
                     case "BlackPawn":
-                        tmp = new ImageView(blackPawn);
+                        tmp = new ImageView(blackPawnImage);
                         break;
                     case "WhitePawn":
                         tmp = new ImageView(whitePawn);
@@ -252,32 +279,32 @@ public class GameController {
                         if (((Rook) game.boardClass.board[row][column]).getPlayer()) {
                             tmp = new ImageView(whiteRook);
                         } else {
-                            tmp = new ImageView(blackRook);
+                            tmp = new ImageView(blackRookImage);
                         }
                         break;
                     case "Knight":
                         if (((Knight) game.boardClass.board[row][column]).getPlayer()) {
                             tmp = new ImageView(whiteKnight);
                         } else {
-                            tmp = new ImageView(blackKnight);
+                            tmp = new ImageView(blackKnightImage);
                         }
                         break;
                     case "Bishop":
                         if (((Bishop) game.boardClass.board[row][column]).getPlayer()) {
                             tmp = new ImageView(whiteBishop);
                         } else {
-                            tmp = new ImageView(blackBishop);
+                            tmp = new ImageView(blackBishopImage);
                         }
                         break;
                     case "Queen":
                         if (((Queen) game.boardClass.board[row][column]).getPlayer()) {
                             tmp = new ImageView(whiteQueen);
                         } else {
-                            tmp = new ImageView(blackQueen);
+                            tmp = new ImageView(blackQueenImage);
                         }
                         break;
                     case "BlackKing":
-                        tmp = new ImageView(blackKing);
+                        tmp = new ImageView(blackKingImage);
                         break;
                     case "WhiteKing":
                         tmp = new ImageView(whiteKing);
@@ -291,8 +318,10 @@ public class GameController {
             }
         }
 
-        //promotion box
+        checkPromotionBox();
+    }
 
+    private void checkPromotionBox() {
         for (int row = 0; row < 8; row++) {
             for (int column = 0; column < 8; column++) {
                 switch (game.boardClass.getPiece(row, column).getClass().getSimpleName()) {
@@ -312,7 +341,7 @@ public class GameController {
     }
 
 
-    public void promoteToQueen() throws PlayerColorException {
+    public void promoteToQueen(){
         for (int row = 0; row < 8; row++) {
             for (int column = 0; column < 8; column++) {
                 switch (game.boardClass.getPiece(row, column).getClass().getSimpleName()) {
@@ -336,7 +365,7 @@ public class GameController {
     }
 
 
-    public void promoteToRook() throws PlayerColorException {
+    public void promoteToRook() {
         for (int row = 0; row < 8; row++) {
             for (int column = 0; column < 8; column++) {
                 switch (game.boardClass.getPiece(row, column).getClass().getSimpleName()) {
@@ -425,10 +454,10 @@ public class GameController {
             promoteToBishopButton.setGraphic(new ImageView(whiteBishop));
             promoteToRookButton.setGraphic(new ImageView(whiteRook));
         } else {
-            promoteToQueenButton.setGraphic(new ImageView(blackQueen));
-            promoteToKnightButton.setGraphic(new ImageView(blackKnight));
-            promoteToBishopButton.setGraphic(new ImageView(blackBishop));
-            promoteToRookButton.setGraphic(new ImageView(blackRook));
+            promoteToQueenButton.setGraphic(new ImageView(blackQueenImage));
+            promoteToKnightButton.setGraphic(new ImageView(blackKnightImage));
+            promoteToBishopButton.setGraphic(new ImageView(blackBishopImage));
+            promoteToRookButton.setGraphic(new ImageView(blackRookImage));
         }
 
 
