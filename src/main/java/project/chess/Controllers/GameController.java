@@ -1,7 +1,17 @@
 package project.chess.Controllers;
 
 
+import javafx.event.Event;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
+import javafx.stage.Screen;
+import javafx.stage.Stage;
+import org.junit.FixMethodOrder;
 import project.chess.Exceptions.PlayerColorException;
 import project.chess.Models.Filter;
 import project.chess.Models.Game;
@@ -16,6 +26,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.util.Pair;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.LinkedList;
 import java.util.List;
@@ -37,6 +48,10 @@ public class GameController {
     private Button resignButton;
     @FXML
     private Button drawButton;
+    @FXML
+    private Button backButton;
+    @FXML
+    private TextArea moveHistory;
 
     private Game game;
 
@@ -58,6 +73,8 @@ public class GameController {
     private Image resignImage;
     private Image drawImage;
 
+    private StringBuilder history;
+
     private void showImageResignButton() {
         resignButton.setGraphic(new ImageView(resignImage));
     }
@@ -66,12 +83,34 @@ public class GameController {
         drawButton.setGraphic(new ImageView(drawImage));
     }
 
+    private int n = 0;
+    private int numberOfRounds = 1;
+
+    private void drawHistory(String string) {
+        if (n == 2) {
+            history.append(System.getProperty("line.separator"));
+            numberOfRounds++;
+            n = 0;
+            history.append(numberOfRounds).append(".     ");
+        } else if (n == 1) {
+            history.append("     ");
+        }
+        history.append(string);
+        moveHistory.setText(history.toString());
+        n++;
+    }
+
     void init(Options options) throws PlayerColorException {
         System.out.println(options.getGameMode());
         System.out.println(options.getVersusMode());
         System.out.println(options.getFirstPlayerColor());
         promotionFlagBlockingMove = false;
         hidePromotionButtons();
+        backButton.setVisible(false);
+        moveHistory.setEditable(false);
+        history = new StringBuilder();
+        history.append(numberOfRounds).append(".     ");
+
 
         /*
          * Set image for every piece
@@ -129,9 +168,28 @@ public class GameController {
                             } catch (MalformedURLException e) {
                                 e.printStackTrace();
                             }
+
                             ClearPossibleMoves();
                             PaintBoard();
                             EmulateBoard();
+
+
+
+                            Piece piece = game.boardClass.getPiece(row, column);
+                            if (piece instanceof WhitePawn || piece instanceof BlackPawn) {
+                                String coordinates = replaceToChessNotation(row, column).toString();
+                                drawHistory(coordinates);
+                            }
+                            
+
+                            System.out.println();
+
+                            if (checkGameOver()) {
+                                //TODO
+                                //historia ruchow
+                                hideRestButtons();
+                                backButton.setVisible(true);
+                            }
 
                             break;
                         default:
@@ -214,6 +272,33 @@ public class GameController {
         game.isOver = true;
         EmulateBoard();
         PaintBoard();
+        hideRestButtons();
+        backButton.setVisible(true);
+        //wypisanie w historii ruchow
+    }
+
+
+    private boolean checkGameOver() {
+        return game.isOver;
+    }
+
+    public void changeSceneToSettings(Event event) throws IOException {
+        Parent tableViewParent = FXMLLoader.load(getClass().getResource("/Views/fxml/Settings.fxml"));
+        Scene tableViewScene = new Scene(tableViewParent);
+
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+        //poprawic
+
+        Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
+        window.setX(primaryScreenBounds.getMinX() + primaryScreenBounds.getWidth() - 1100);
+        window.setY(primaryScreenBounds.getMinY() + primaryScreenBounds.getHeight() - 700);
+        window.setWidth(750);
+        window.setHeight(540);
+
+        window.setScene(tableViewScene);
+
+        window.show();
     }
 
 
@@ -341,7 +426,7 @@ public class GameController {
     }
 
 
-    public void promoteToQueen(){
+    public void promoteToQueen() {
         for (int row = 0; row < 8; row++) {
             for (int column = 0; column < 8; column++) {
                 switch (game.boardClass.getPiece(row, column).getClass().getSimpleName()) {
@@ -465,6 +550,23 @@ public class GameController {
         promoteToRookButton.setVisible(true);
         promoteToKnightButton.setVisible(true);
         promoteToQueenButton.setVisible(true);
+    }
+
+    private void hideRestButtons() {
+        drawButton.setVisible(false);
+        resignButton.setVisible(false);
+    }
+
+    private StringBuilder replaceToChessNotation(int row, int column) {
+        char c = '`';
+        c += column;
+        row += 1;
+
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(c);
+        stringBuilder.append(row);
+
+        return stringBuilder;
     }
 
 }
