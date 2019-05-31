@@ -1,9 +1,13 @@
 package project.chess.Models;
 
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.util.Pair;
 import project.chess.Exceptions.PlayerColorException;
 import project.chess.Models.Pieces.*;
 
+import java.io.File;
+import java.net.MalformedURLException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -24,7 +28,6 @@ public class Game {
         isOver = false;
     }
 
-//szachowany tylko white
     private void checkGameOver() {
         int numberOfWhiteMoves = 0;
         int numberOfBlackMoves = 0;
@@ -40,13 +43,14 @@ public class Game {
             }
         }
 
-        System.out.println(numberOfBlackMoves);
-        System.out.println(numberOfWhiteMoves);
-
         if(numberOfBlackMoves == 0 || numberOfWhiteMoves == 0) {
             isOver = true;
         }
     }
+
+    /**
+     * Made for tests
+     */
 
     private int getNumberOfMoves(int numberOfMoves, int row, int column) {
         List<Pair<Integer, Integer>> dummy = new LinkedList<>();
@@ -68,7 +72,7 @@ public class Game {
     }
 
 
-    public void move(int row, int column, int rowDestination, int columnDestination) {
+    public void move(int row, int column, int rowDestination, int columnDestination) throws MalformedURLException {
         deleteEnPassant();
         checkPromotions(row, column, rowDestination);
 
@@ -76,6 +80,64 @@ public class Game {
         Piece piece = boardClass.getPiece(row, column);
 
 
+        removeCastling(row, column, columnDestination, nameOfMovedPiece, piece);
+
+
+        if (boardClass.boardOfPossibleMoves[rowDestination][columnDestination].getClass().getSimpleName().equals("Mark_MovableTile")) {
+            checkPawnsFirstMove(row, column, rowDestination, columnDestination);
+
+            UpdateBoard(row, column, rowDestination, columnDestination);
+            checkGameOver();
+            currentlyPlayer = !currentlyPlayer;
+        }
+
+        //music????
+        Media sound = new Media(new File("src\\main\\resources\\ruch.mp3").toURI().toURL().toString());
+        MediaPlayer mediaPlayer = new MediaPlayer(sound);
+        mediaPlayer.play();
+    }
+
+    private void checkPawnsFirstMove(int row, int column, int rowDestination, int columnDestination) {
+        switch (boardClass.board[row][column].getClass().getSimpleName()) {
+            case "BlackPawn":
+                if (((BlackPawn) boardClass.board[row][column]).getFirstMove()) {
+                    ((BlackPawn) boardClass.board[row][column]).setFirstMove(false);
+                    if (Math.abs(row - rowDestination) == 2) {
+                        ((BlackPawn) boardClass.board[row][column]).setEnPassant(true);
+                    }
+                }
+
+                if (row + 1 == rowDestination && column - 1 == columnDestination
+                        && boardClass.board[row + 1][column - 1].getClass().getSimpleName().equals("EmptyTile")) {
+                    boardClass.board[row][column - 1] = new EmptyTile();
+                } else if (row + 1 == rowDestination && column + 1 == columnDestination
+                        && boardClass.board[row + 1][column + 1].getClass().getSimpleName().equals("EmptyTile")) {
+                    boardClass.board[row][column + 1] = new EmptyTile();
+                }
+
+
+                break;
+            case "WhitePawn":
+                if (((WhitePawn) boardClass.board[row][column]).getFirstMove()) {
+                    ((WhitePawn) boardClass.board[row][column]).setFirstMove(false);
+                    if (Math.abs(row - rowDestination) == 2) {
+                        ((WhitePawn) boardClass.board[row][column]).setEnPassant(true);
+                    }
+                }
+
+                if (row - 1 == rowDestination
+                        && column - 1 == columnDestination
+                        && boardClass.board[row - 1][column - 1].getClass().getSimpleName().equals("EmptyTile")) {
+                    boardClass.board[row][column - 1] = new EmptyTile();
+                } else if (row - 1 == rowDestination && column + 1 == columnDestination
+                        && boardClass.board[row - 1][column + 1].getClass().getSimpleName().equals("EmptyTile")) {
+                    boardClass.board[row][column + 1] = new EmptyTile();
+                }
+                break;
+        }
+    }
+
+    private void removeCastling(int row, int column, int columnDestination, String nameOfMovedPiece, Object piece) {
         switch (nameOfMovedPiece) {
             case "WhiteKing":
                 ((WhiteKing) piece).setCastling(false);
@@ -101,68 +163,19 @@ public class Game {
                 ((Rook) boardClass.getPiece(row, column)).setCastling(false);
                 break;
         }
-
-
-        if (boardClass.boardOfPossibleMoves[rowDestination][columnDestination].getClass().getSimpleName().equals("Mark_MovableTile")) {
-            switch (boardClass.board[row][column].getClass().getSimpleName()) {
-                case "BlackPawn":
-                    if (((BlackPawn) boardClass.board[row][column]).getFirstMove()) {
-                        ((BlackPawn) boardClass.board[row][column]).setFirstMove(false);
-                        if (Math.abs(row - rowDestination) == 2) {
-                            ((BlackPawn) boardClass.board[row][column]).setEnPassant(true);
-                        }
-                    }
-
-                    if (row + 1 == rowDestination && column - 1 == columnDestination
-                            && boardClass.board[row + 1][column - 1].getClass().getSimpleName().equals("EmptyTile")) {
-                        boardClass.board[row][column - 1] = new EmptyTile();
-                    } else if (row + 1 == rowDestination && column + 1 == columnDestination
-                            && boardClass.board[row + 1][column + 1].getClass().getSimpleName().equals("EmptyTile")) {
-                        boardClass.board[row][column + 1] = new EmptyTile();
-                    }
-
-
-                    break;
-                case "WhitePawn":
-                    if (((WhitePawn) boardClass.board[row][column]).getFirstMove()) {
-                        ((WhitePawn) boardClass.board[row][column]).setFirstMove(false);
-                        if (Math.abs(row - rowDestination) == 2) {
-                            ((WhitePawn) boardClass.board[row][column]).setEnPassant(true);
-                        }
-                    }
-
-                    if (row - 1 == rowDestination
-                            && column - 1 == columnDestination
-                            && boardClass.board[row - 1][column - 1].getClass().getSimpleName().equals("EmptyTile")) {
-                        boardClass.board[row][column - 1] = new EmptyTile();
-                    } else if (row - 1 == rowDestination && column + 1 == columnDestination
-                            && boardClass.board[row - 1][column + 1].getClass().getSimpleName().equals("EmptyTile")) {
-                        boardClass.board[row][column + 1] = new EmptyTile();
-                    }
-                    break;
-            }
-
-            UpdateBoard(row, column, rowDestination, columnDestination);
-            checkGameOver();
-            if(isOver) {
-                System.out.println("koniec");
-            }
-            currentlyPlayer = !currentlyPlayer;
-
-        }
     }
 
-    public void UpdateBoard(int row, int column, int rowDestination, int columnDestination) {
+    private void UpdateBoard(int row, int column, int rowDestination, int columnDestination) {
         boardClass.board[rowDestination][columnDestination] = boardClass.board[row][column];
         boardClass.board[row][column] = new EmptyTile();
     }
 
-    public void updateBlackPlayerAttackBoard(int row, int column, int rowDestination, int columnDestination) {
+    void updateBlackPlayerAttackBoard(int row, int column, int rowDestination, int columnDestination) {
         boardClass.blackPlayerAttackBoard[rowDestination][columnDestination] = boardClass.blackPlayerAttackBoard[row][column];
         boardClass.blackPlayerAttackBoard[row][column] = new EmptyTile();
     }
 
-    public void updateWhitePlayerAttackBoard(int row, int column, int rowDestination, int columnDestination) {
+    void updateWhitePlayerAttackBoard(int row, int column, int rowDestination, int columnDestination) {
         boardClass.whitePlayerAttackBoard[rowDestination][columnDestination] = boardClass.whitePlayerAttackBoard[row][column];
         boardClass.whitePlayerAttackBoard[row][column] = new EmptyTile();
     }
