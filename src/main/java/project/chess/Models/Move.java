@@ -307,14 +307,14 @@ public class Move {
                 && pieceChosen.getCastling()) {
             availableMoves.add(new Pair<>(0, 6));
         }
-        if (boardClass.getPiece(0, 0).getClass().getSimpleName().equals("Rook")
-                && boardClass.getPiece(0, 1).getClass().getSimpleName().equals("EmptyTile")
-                && !boardClass.whitePlayerAttackBoard[0][1].getClass().getSimpleName().equals("Mark_MovableTile")
-                && boardClass.getPiece(0, 2).getClass().getSimpleName().equals("EmptyTile")
-                && !boardClass.whitePlayerAttackBoard[0][2].getClass().getSimpleName().equals("Mark_MovableTile")
-                && boardClass.getPiece(0, 3).getClass().getSimpleName().equals("EmptyTile")
-                && !boardClass.whitePlayerAttackBoard[0][3].getClass().getSimpleName().equals("Mark_MovableTile")
-                && !boardClass.whitePlayerAttackBoard[0][4].getClass().getSimpleName().equals("Mark_MovableTile")
+        if (boardClass.board[0][0] instanceof Rook
+                && boardClass.board[0][1] instanceof EmptyTile
+                && !(boardClass.whitePlayerAttackBoard[0][1] instanceof Mark_MovableTile)
+                && boardClass.board[0][2] instanceof EmptyTile
+                && !(boardClass.whitePlayerAttackBoard[0][2]instanceof Mark_MovableTile)
+                && boardClass.board[0][3] instanceof EmptyTile
+                && !(boardClass.whitePlayerAttackBoard[0][3]instanceof Mark_MovableTile)
+                && !(boardClass.whitePlayerAttackBoard[0][4]instanceof Mark_MovableTile)
                 && ((Rook) boardClass.getPiece(0, 0)).getCastling()
                 && pieceChosen.getCastling()) {
             availableMoves.add(new Pair<>(0, 2));
@@ -369,10 +369,8 @@ public class Move {
                     && allowedMovesColumn <= 7) {
 
                 Piece check = boardToCheck[allowedMovesRow][allowedMovesColumn];
-                String nameOfCheck = check.getClass().getSimpleName();
 
-
-                if (nameOfCheck.equals("EmptyTile")) {
+                if (check instanceof EmptyTile) {
                     availableMoves.add(new Pair<>(allowedMovesRow, allowedMovesColumn));
                 } else if (check.getPlayer() != pieceChosen.getPlayer()) {
                     availableMoves.add(new Pair<>(allowedMovesRow, allowedMovesColumn));
@@ -390,8 +388,7 @@ public class Move {
     }
 
     private boolean upDownAndBishopMoves(int PieceColumn, Piece[][] boardToCheck, Piece pieceChosen, List<Pair<Integer, Integer>> availableMoves, int i, boolean attack) {
-        if (boardToCheck[i][PieceColumn].getClass().getSimpleName().equals("EmptyTile")
-                || (boardToCheck[i][PieceColumn] instanceof Mark_MovableTile && attack)) {
+        if (boardToCheck[i][PieceColumn] instanceof EmptyTile || (boardToCheck[i][PieceColumn] instanceof Mark_MovableTile && attack)) {
             availableMoves.add(new Pair<>(i, PieceColumn));
         } else if (boardToCheck[i][PieceColumn].getPlayer() == pieceChosen.getPlayer()) {
             if (attack) {
@@ -408,8 +405,7 @@ public class Move {
     }
 
     private boolean rightLeft(int PieceRow, Piece[] pieces, Piece pieceChosen, List<Pair<Integer, Integer>> availableMoves, int i, boolean attack) {
-        if (pieces[i].getClass().getSimpleName().equals("EmptyTile")
-                || (pieces[i] instanceof Mark_MovableTile && attack)) {
+        if (pieces[i] instanceof EmptyTile || (pieces[i] instanceof Mark_MovableTile && attack)) {
             availableMoves.add(new Pair<>(PieceRow, i));
         } else if (pieces[i].getPlayer() == pieceChosen.getPlayer()) {
             if (attack) {

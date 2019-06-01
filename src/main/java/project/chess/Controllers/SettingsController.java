@@ -69,10 +69,15 @@ public class SettingsController {
 
     private void setWindow(Scene tableViewScene, Stage window) {
         Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
-        window.setX(primaryScreenBounds.getMinX() + primaryScreenBounds.getWidth() - 1450);
-        window.setY(primaryScreenBounds.getMinY() + primaryScreenBounds.getHeight() - 800);
-        window.setWidth(1400);
-        window.setHeight(800);
+        window.setX(primaryScreenBounds.getMinX() + primaryScreenBounds.getWidth() - 1270);
+        window.setY(primaryScreenBounds.getMinY() + primaryScreenBounds.getHeight() - 750);
+//        window.setX(primaryScreenBounds.getMinX() + primaryScreenBounds.getWidth() - 1450);
+//        window.setY(primaryScreenBounds.getMinY() + primaryScreenBounds.getHeight() - 800);
+        window.setWidth(1000);
+        window.setHeight(700);
+
+//        window.setWidth(1400);
+//        window.setHeight(800);
         window.setScene(tableViewScene);
     }
 

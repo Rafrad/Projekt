@@ -324,8 +324,8 @@ public class GameController {
 
 
         Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
-        window.setX(primaryScreenBounds.getMinX() + primaryScreenBounds.getWidth() - 1100);
-        window.setY(primaryScreenBounds.getMinY() + primaryScreenBounds.getHeight() - 700);
+        window.setX(primaryScreenBounds.getMinX() + primaryScreenBounds.getWidth() - 1050);
+        window.setY(primaryScreenBounds.getMinY() + primaryScreenBounds.getHeight() - 650);
         window.setWidth(614.4);
         window.setHeight(437.6);
 

@@ -5,9 +5,9 @@
 <?import javafx.scene.text.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane fx:id="anchor" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="project.chess.Controllers.GameController">
+<AnchorPane fx:id="anchor" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="725.0" prefWidth="1052.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="project.chess.Controllers.GameController">
    <children>
-       <GridPane fx:id="gridPane" alignment="TOP_CENTER" gridLinesVisible="true" layoutX="79.0" layoutY="84.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="562.0" prefWidth="564.0" AnchorPane.bottomAnchor="116.0" AnchorPane.leftAnchor="79.0" AnchorPane.rightAnchor="551.0" AnchorPane.topAnchor="84.0">
+       <GridPane fx:id="gridPane" alignment="TOP_CENTER" gridLinesVisible="true" layoutX="223.0" layoutY="43.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="562.0" prefWidth="564.0" AnchorPane.bottomAnchor="157.0" AnchorPane.leftAnchor="223.0" AnchorPane.rightAnchor="407.0" AnchorPane.topAnchor="43.0">
          <columnConstraints>
              <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="70.0" />
              <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="70.0" />
@@ -29,15 +29,15 @@
              <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="70.0" vgrow="SOMETIMES" />
          </rowConstraints>
        </GridPane>
-       <HBox prefHeight="99.0" prefWidth="667.0">
+       <HBox alignment="CENTER" layoutX="154.0" layoutY="-11.0" prefHeight="50.0" prefWidth="571.0">
           <children>
-              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="WRÓG OPONENT" wrappingWidth="240.5400390625" />
-              <Label fx:id="time" prefHeight="67.0" prefWidth="151.0" />
+              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="WRÓG OPONENT" wrappingWidth="119.5400390625" />
           </children>
        </HBox>
-       <GridPane layoutX="7.0" layoutY="203.0" prefHeight="329.0" prefWidth="93.0">
+       <GridPane layoutX="14.0" layoutY="176.0" prefHeight="329.0" prefWidth="93.0" AnchorPane.bottomAnchor="180.0" AnchorPane.topAnchor="180.0">
            <columnConstraints>
                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
            </columnConstraints>
            <rowConstraints>
                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -52,9 +52,14 @@
               <Button fx:id="promoteToKnightButton" mnemonicParsing="false" onAction="#promoteToKnight" prefHeight="54.0" prefWidth="62.0" GridPane.rowIndex="2" />
           </children>
        </GridPane>
-      <Button fx:id="resignButton" layoutX="739.0" layoutY="226.0" mnemonicParsing="false" onAction="#resign" prefHeight="39.0" prefWidth="56.0" />
-      <Button fx:id="drawButton" layoutX="767.0" layoutY="400.0" mnemonicParsing="false" />
-      <Button fx:id="backButton" layoutX="762.0" layoutY="507.0" mnemonicParsing="false" onAction="#changeSceneToSettings" text="back" />
-      <TextArea fx:id="moveHistory" layoutX="921.0" layoutY="266.0" prefHeight="99.0" prefWidth="159.0" />
+      <Button fx:id="resignButton" layoutX="748.0" layoutY="75.0" mnemonicParsing="false" onAction="#resign" prefHeight="39.0" prefWidth="56.0" AnchorPane.bottomAnchor="600.0" AnchorPane.topAnchor="100.0" />
+      <Button fx:id="drawButton" layoutX="758.0" layoutY="521.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="37.0" />
+      <Button fx:id="backButton" layoutX="872.0" layoutY="474.0" mnemonicParsing="false" onAction="#changeSceneToSettings" text="back" />
+      <TextArea fx:id="moveHistory" layoutX="823.0" layoutY="183.0" prefHeight="246.0" prefWidth="148.0" />
+      <HBox alignment="CENTER" layoutX="149.0" layoutY="592.0" prefHeight="68.0" prefWidth="571.0">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="COSTAM" />
+         </children>
+      </HBox>
    </children>
 </AnchorPane>
