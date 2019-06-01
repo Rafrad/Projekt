@@ -1,6 +1,8 @@
 package project.chess.Controllers;
 
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
@@ -11,7 +13,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import org.junit.FixMethodOrder;
 import project.chess.Exceptions.PlayerColorException;
 import project.chess.Models.Filter;
 import project.chess.Models.Game;
@@ -55,19 +56,15 @@ public class GameController {
 
     private Game game;
 
-    private Image blackPawnImage;
     private Image blackRookImage;
     private Image blackKnightImage;
     private Image blackBishopImage;
     private Image blackQueenImage;
-    private Image blackKingImage;
 
-    private Image whitePawn;
     private Image whiteRook;
     private Image whiteKnight;
     private Image whiteBishop;
     private Image whiteQueen;
-    private Image whiteKing;
 
     private Image dot;
     private Image resignImage;
@@ -86,7 +83,10 @@ public class GameController {
     private int n = 0;
     private int numberOfRounds = 1;
 
-    private void drawHistory(String string) {
+
+    private void drawHistory(String string, boolean attack) {
+
+
         if (n == 2) {
             history.append(System.getProperty("line.separator"));
             numberOfRounds++;
@@ -95,12 +95,22 @@ public class GameController {
         } else if (n == 1) {
             history.append("     ");
         }
+
+        if(attack) {
+            history.append("x");
+        }
+
         history.append(string);
         moveHistory.setText(history.toString());
         n++;
+
+//        listener is probably bugged and set text doesnt trigger it
+        moveHistory.appendText("");
     }
 
     void init(Options options) throws PlayerColorException {
+        addListenerForMatchHistory();
+
         System.out.println(options.getGameMode());
         System.out.println(options.getVersusMode());
         System.out.println(options.getFirstPlayerColor());
@@ -112,29 +122,8 @@ public class GameController {
         history.append(numberOfRounds).append(".     ");
 
 
-        /*
-         * Set image for every piece
-         * dot, draw & resign
-         */
-
-        blackPawnImage = new Image("Images/black_pawn.png");
-        blackRookImage = new Image("Images/black_rook.png");
-        blackKnightImage = new Image("Images/black_knight.png");
-        blackBishopImage = new Image("Images/black_bishop.png");
-        blackQueenImage = new Image("Images/black_queen.png");
-        blackKingImage = new Image("Images/black_king.png");
-
-        whitePawn = new Image("Images/white_pawn.png");
-        whiteRook = new Image("Images/white_rook.png");
-        whiteKnight = new Image("Images/white_knight.png");
-        whiteBishop = new Image("Images/white_bishop.png");
-        whiteQueen = new Image("Images/white_queen.png");
-        whiteKing = new Image("Images/white_king.png");
-
-
-        dot = new Image("Images/dot.png");
-        resignImage = new Image("Images/resign.png");
-        drawImage = new Image("Images/draw.png");
+        setImageForPieces();
+        setImageForSupportComponents();
         showImageDrawButton();
         showImageResignButton();
 
@@ -146,6 +135,15 @@ public class GameController {
         EmulateBoard();
 
 
+        setOnMouseClicked();
+    }
+
+    private void addListenerForMatchHistory() {
+        moveHistory.textProperty().addListener((ChangeListener<Object>) (observable, oldValue, newValue) ->
+                moveHistory.setScrollTop(Double.MAX_VALUE));
+    }
+
+    private void setOnMouseClicked() {
         for (int r = 0; r < 8; r++) {
             for (int c = 0; c < 8; c++) {
                 final int row = r;
@@ -163,6 +161,11 @@ public class GameController {
                             int selectedPieceRow = selectedPiece.getKey();
                             int selectedPieceColumn = selectedPiece.getValue();
 
+                            boolean attack = false;
+                            if (Tile[row][column].getChildren().size() > 1) {
+                                attack = true;
+                            }
+
                             try {
                                 game.move(selectedPieceRow, selectedPieceColumn, row, column);
                             } catch (MalformedURLException e) {
@@ -174,28 +177,17 @@ public class GameController {
                             EmulateBoard();
 
 
-
-                            Piece piece = game.boardClass.getPiece(row, column);
-                            char uni = 't';
-                            StringBuilder stringBuilder = new StringBuilder();
-
-                            if(piece instanceof WhitePawn) {
-//                                uni = 0x2659;
-                                uni  = ((WhitePawn) piece).getUnicode();
-                            } else if(piece instanceof BlackPawn) {
-                                uni = 0x265F;
+                            if (game.boardClass.getPiece(row, column) instanceof WhiteKing
+                                    || game.boardClass.getPiece(row, column) instanceof BlackKing) {
+                                if (column - selectedPieceColumn == 2) {
+                                    drawHistory("O - O", false);
+                                } else if (column - selectedPieceColumn == -2) {
+                                    drawHistory("O - O - O", false);
+                                }
+                            } else {
+                                updateMatchHistory(row, column, attack);
                             }
 
-                            if (piece instanceof WhitePawn || piece instanceof BlackPawn) {
-                                stringBuilder.append(uni);
-                                stringBuilder.append(replaceToChessNotation(row, column));
-                                String coordinates = stringBuilder.toString();
-
-                                drawHistory(coordinates);
-                            }
-
-
-                            System.out.println();
 
                             if (checkGameOver()) {
                                 //TODO
@@ -220,21 +212,7 @@ public class GameController {
                                     List<Pair<Integer, Integer>> moves = game.moveClass.CalculateMoves(row, column, "", dummy);
 
 
-                                    //===========================================
-                                    Filter filter = new Filter(game, moves, row, column);
-                                    moves = filter.filterMoves();
-
-                                    game.boardClass.clearPossibleMoves();
-
-                                    for (Pair<Integer, Integer> move : moves) {
-                                        int rowMove = move.getKey();
-                                        int columnMove = move.getValue();
-
-                                        game.boardClass.boardOfPossibleMoves[rowMove][columnMove] = new Mark_MovableTile();
-                                    }
-
-                                    //===========================================
-
+                                    moves = filterMoves(row, column, moves);
 
                                     ImageView[] dotMoves = new ImageView[moves.size()];
                                     for (int i = 0; i < moves.size(); i++) {
@@ -245,7 +223,7 @@ public class GameController {
                                         Tile[rowMove][columnMove].getChildren().add(dotMoves[i]);
                                     }
                                 }
-                            } // current player
+                            }
 
                             break;
                     }
@@ -253,8 +231,49 @@ public class GameController {
                 });
             }
         }
+    }
 
+    private List<Pair<Integer, Integer>> filterMoves(int row, int column, List<Pair<Integer, Integer>> moves) {
+        Filter filter = new Filter(game, moves, row, column);
+        moves = filter.filterMoves();
 
+        game.boardClass.clearPossibleMoves();
+
+        for (Pair<Integer, Integer> move : moves) {
+            int rowMove = move.getKey();
+            int columnMove = move.getValue();
+
+            game.boardClass.boardOfPossibleMoves[rowMove][columnMove] = new Mark_MovableTile();
+        }
+        return moves;
+    }
+
+    private void updateMatchHistory(int row, int column, boolean attack) {
+        Piece piece = game.boardClass.getPiece(row, column);
+        char unicode = piece.getUnicode();
+
+        String coordinates = String.valueOf(unicode) +
+                replaceToChessNotation(row, column);
+
+        drawHistory(coordinates, attack);
+    }
+
+    private void setImageForSupportComponents() {
+        dot = new Image("Images/dot.png");
+        resignImage = new Image("Images/resign.png");
+        drawImage = new Image("Images/draw.png");
+    }
+
+    private void setImageForPieces() {
+        blackRookImage = new Image("Images/black_rook.png");
+        blackKnightImage = new Image("Images/black_knight.png");
+        blackBishopImage = new Image("Images/black_bishop.png");
+        blackQueenImage = new Image("Images/black_queen.png");
+
+        whiteRook = new Image("Images/white_rook.png");
+        whiteKnight = new Image("Images/white_knight.png");
+        whiteBishop = new Image("Images/white_bishop.png");
+        whiteQueen = new Image("Images/white_queen.png");
     }
 
     private boolean promotionFlagBlockingMove;
@@ -301,13 +320,12 @@ public class GameController {
 
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-        //poprawic
 
         Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
         window.setX(primaryScreenBounds.getMinX() + primaryScreenBounds.getWidth() - 1100);
         window.setY(primaryScreenBounds.getMinY() + primaryScreenBounds.getHeight() - 700);
-        window.setWidth(750);
-        window.setHeight(540);
+        window.setWidth(614.4);
+        window.setHeight(437.6);
 
         window.setScene(tableViewScene);
 
@@ -362,52 +380,8 @@ public class GameController {
             for (int column = 0; column < 8; column++) {
                 ImageView tmp = null;
 
-                while (!Tile[row][column].getChildren().isEmpty()) {
-                    Tile[row][column].getChildren().remove(0);
-                }
-
-                switch (game.boardClass.board[row][column].getClass().getSimpleName()) {
-                    case "BlackPawn":
-                        tmp = new ImageView(blackPawnImage);
-                        break;
-                    case "WhitePawn":
-                        tmp = new ImageView(whitePawn);
-                        break;
-                    case "Rook":
-                        if (((Rook) game.boardClass.board[row][column]).getPlayer()) {
-                            tmp = new ImageView(whiteRook);
-                        } else {
-                            tmp = new ImageView(blackRookImage);
-                        }
-                        break;
-                    case "Knight":
-                        if (((Knight) game.boardClass.board[row][column]).getPlayer()) {
-                            tmp = new ImageView(whiteKnight);
-                        } else {
-                            tmp = new ImageView(blackKnightImage);
-                        }
-                        break;
-                    case "Bishop":
-                        if (((Bishop) game.boardClass.board[row][column]).getPlayer()) {
-                            tmp = new ImageView(whiteBishop);
-                        } else {
-                            tmp = new ImageView(blackBishopImage);
-                        }
-                        break;
-                    case "Queen":
-                        if (((Queen) game.boardClass.board[row][column]).getPlayer()) {
-                            tmp = new ImageView(whiteQueen);
-                        } else {
-                            tmp = new ImageView(blackQueenImage);
-                        }
-                        break;
-                    case "BlackKing":
-                        tmp = new ImageView(blackKingImage);
-                        break;
-                    case "WhiteKing":
-                        tmp = new ImageView(whiteKing);
-                        break;
-                }
+                removeImagesFromTile(Tile[row][column]);
+                tmp = emulateTileImage(row, column, tmp);
 
                 if (tmp != null) {
                     Tile[row][column].getChildren().add(tmp);
@@ -417,6 +391,19 @@ public class GameController {
         }
 
         checkPromotionBox();
+    }
+
+    private ImageView emulateTileImage(int row, int column, ImageView tmp) {
+        if (!(game.boardClass.getPiece(row, column) instanceof EmptyTile)) {
+            tmp = game.boardClass.board[row][column].getImageView();
+        }
+        return tmp;
+    }
+
+    private void removeImagesFromTile(Pane pane) {
+        while (!pane.getChildren().isEmpty()) {
+            pane.getChildren().remove(0);
+        }
     }
 
     private void checkPromotionBox() {
@@ -487,7 +474,7 @@ public class GameController {
     }
 
 
-    public void promoteToBishop() throws PlayerColorException {
+    public void promoteToBishop() {
         for (int row = 0; row < 8; row++) {
             for (int column = 0; column < 8; column++) {
                 switch (game.boardClass.getPiece(row, column).getClass().getSimpleName()) {
@@ -571,7 +558,7 @@ public class GameController {
     }
 
     private StringBuilder replaceToChessNotation(int row, int column) {
-        char c = '`';
+        char c = 'a';
         c += column;
         row += 1;
 
