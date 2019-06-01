@@ -183,6 +183,8 @@ public class GameController {
                                     drawHistory("O - O", false);
                                 } else if (column - selectedPieceColumn == -2) {
                                     drawHistory("O - O - O", false);
+                                } else {
+                                    updateMatchHistory(row, column, attack);
                                 }
                             } else {
                                 updateMatchHistory(row, column, attack);
