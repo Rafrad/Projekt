@@ -9,4 +9,4 @@
 <t/>- + = check<br/>
 <t/>- ++or#= checkmate<br/>
 <t/>- e.p. = captures ‘en passante<br/>
-
+5. Koniec gry <br/>
