@@ -5,7 +5,7 @@
 3. Warunki remisu<br/>
 <t/>- Impossibility of checkmate<br/>
 <t/>- Stalemate<br/>
-4. Historia ruchów
+4. Historia ruchów<br/>
 <t/>- + = check<br/>
 <t/>- ++or#= checkmate<br/>
 <t/>- e.p. = captures ‘en passante<br/>
