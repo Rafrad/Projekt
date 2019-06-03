@@ -140,7 +140,7 @@ public class Move {
                                     addBlackPawnMoves(PieceRow, PieceColumn, playerAttackBoard, availableMoves, allowedMovesRow, allowedMovesColumn);
                                     break;
                                 case "WhitePawn":
-                                    addWhitePawnMoves(PieceRow, PieceColumn, availableMoves, allowedMovesRow, allowedMovesColumn);
+                                    addWhitePawnMoves(PieceRow, PieceColumn, availableMoves, allowedMovesRow, allowedMovesColumn, playerAttackBoard);
                                     break;
                                 default:
                                     break;
@@ -186,14 +186,16 @@ public class Move {
         }
     }
 
-    private void addWhitePawnMoves(int PieceRow, int PieceColumn, List<Pair<Integer, Integer>> availableMoves, int allowedMovesRow, int allowedMovesColumn) {
+    private void addWhitePawnMoves(int PieceRow, int PieceColumn, List<Pair<Integer, Integer>> availableMoves, int allowedMovesRow, int allowedMovesColumn, String playerAttackBoard) {
         if (((WhitePawn) boardClass.board[PieceRow][PieceColumn]).getFirstMove()) {
             if (boardClass.board[PieceRow - 1][PieceColumn] instanceof EmptyTile) {
-                availableMoves.add(new Pair<>(allowedMovesRow, allowedMovesColumn));
+                if (!(playerAttackBoard.equals("w") || playerAttackBoard.equals("b")))
+                    availableMoves.add(new Pair<>(allowedMovesRow, allowedMovesColumn));
             }
         } else {
             if (!(PieceRow == allowedMovesRow + 2)) {
-                availableMoves.add(new Pair<>(allowedMovesRow, allowedMovesColumn));
+                if (!(playerAttackBoard.equals("w") || playerAttackBoard.equals("b")))
+                    availableMoves.add(new Pair<>(allowedMovesRow, allowedMovesColumn));
             }
 
         }
@@ -311,10 +313,10 @@ public class Move {
                 && boardClass.board[0][1] instanceof EmptyTile
                 && !(boardClass.whitePlayerAttackBoard[0][1] instanceof Mark_MovableTile)
                 && boardClass.board[0][2] instanceof EmptyTile
-                && !(boardClass.whitePlayerAttackBoard[0][2]instanceof Mark_MovableTile)
+                && !(boardClass.whitePlayerAttackBoard[0][2] instanceof Mark_MovableTile)
                 && boardClass.board[0][3] instanceof EmptyTile
-                && !(boardClass.whitePlayerAttackBoard[0][3]instanceof Mark_MovableTile)
-                && !(boardClass.whitePlayerAttackBoard[0][4]instanceof Mark_MovableTile)
+                && !(boardClass.whitePlayerAttackBoard[0][3] instanceof Mark_MovableTile)
+                && !(boardClass.whitePlayerAttackBoard[0][4] instanceof Mark_MovableTile)
                 && ((Rook) boardClass.getPiece(0, 0)).getCastling()
                 && pieceChosen.getCastling()) {
             availableMoves.add(new Pair<>(0, 2));
