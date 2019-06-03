@@ -1,11 +1,17 @@
 package project.chess.Models.Pieces;
 
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Pair;
 
 import java.util.List;
 
 public class Mark_MovableTile implements Piece {
+    private Image image;
+
+    public Mark_MovableTile() {
+        image = new Image("Images/dot.png");
+    }
     @Override
     public List<Pair<Integer, Integer>> move() {
         return null;
@@ -28,6 +34,6 @@ public class Mark_MovableTile implements Piece {
 
     @Override
     public ImageView getImageView() {
-        return null;
+        return new ImageView(image);
     }
 }
