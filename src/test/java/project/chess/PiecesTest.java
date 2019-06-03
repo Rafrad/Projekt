@@ -2,6 +2,8 @@ package project.chess;
 
 import javafx.util.Pair;
 import project.chess.Exceptions.PlayerColorException;
+import project.chess.Models.Board;
+import project.chess.Models.Move;
 import project.chess.Models.Pieces.*;
 import org.junit.After;
 import static org.junit.Assert.*;
@@ -18,6 +20,66 @@ public class PiecesTest {
     private final ByteArrayOutputStream outputContent = new ByteArrayOutputStream();
     private final PrintStream originalOut = System.out;
     private static List<Pair<Integer, Integer>> allowedMoves = new LinkedList<>();
+
+    public Piece[][] board;
+    private final String[] rowsOfPieces = {
+            "r k b q x b k r ",
+            "b b b y b b b b ",
+            "x x x x x x x x ",
+            "x x x w x x x x ",
+            "x x x x x x x x ",
+            "x x x x x x x x ",
+            "w w w w x w w w ",
+            "R K B Q Y B K R "
+    };
+
+    public void setUp() {
+        board = new Piece[8][8];
+        for (int i = 0; i < 8; i++) {
+            if (i != 4) {
+                board[6][i] = new WhitePawn();
+            } else {
+                board[3][i] = new WhitePawn();
+            }
+        }
+
+        try {
+            board[7][0] = new Rook(true);
+            board[7][7] = new Rook(true);
+            board[7][1] = new Knight(true);
+            board[7][6] = new Knight(true);
+            board[7][2] = new Bishop(true);
+            board[7][5] = new Bishop(true);
+            board[7][3] = new Queen(true);
+            board[7][4] = new WhiteKing();
+            board[6][4] = new EmptyTile();
+            for (int i = 0; i < 8; i++) {
+                if (i != 3) {
+                    board[1][i] = new BlackPawn();
+                }
+            }
+
+            board[0][0] = new Rook(false);
+            board[0][7] = new Rook(false);
+            board[0][1] = new Knight(false);
+            board[0][6] = new Knight(false);
+            board[0][2] = new Bishop(false);
+            board[0][5] = new Bishop(false);
+            board[0][3] = new Queen(false);
+            board[1][3] = new BlackKing();
+            board[0][4] = new EmptyTile();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        for (int i = 2; i < 6; i++) {
+            for (int j = 0; j  < 8; j++) {
+                if (i != 3 && j != 3) {
+                    board[i][j] = new EmptyTile();
+                }
+            }
+        }
+
+    }
 
     @Before
     public void setCustomOutputStream() {
@@ -40,6 +102,15 @@ public class PiecesTest {
         allowedMoves.add(new Pair<>(1, -1));
         allowedMoves.add(new Pair<>(-1, 1));
         assertEquals(allowedMoves, testBlackKing.move());
+
+        allowedMoves.clear();//kuba filip test
+        setUp();
+        Board b = new Board();
+        b.board = board;
+        Move move = new Move(b);
+        allowedMoves.add(new Pair<>(0, -1));
+        allowedMoves.add(new Pair<>(1, 1));
+        assertEquals(allowedMoves, move.CalculateMoves(1,3,""));
 
         WhiteKing testWhiteKing = new WhiteKing();
         assertTrue(testWhiteKing.getPlayer());

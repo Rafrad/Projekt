@@ -12,7 +12,7 @@ public class Move {
     Move() throws WrongBoardException {
     }
 
-    Move(Board boardTmp) {
+    public Move(Board boardTmp) {
         this.boardClass = boardTmp;
     }
 
