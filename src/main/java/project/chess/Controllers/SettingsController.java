@@ -54,30 +54,29 @@ public class SettingsController {
     public void startGame(ActionEvent event) throws IOException, PlayerColorException {
         Options options = setOptions();
 
+        Parent root = loader(options);
+
+        Scene tableViewScene = new Scene(root);
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        setWindow(tableViewScene, window);
+        window.show();
+    }
+
+    private Parent loader(Options options) throws IOException, PlayerColorException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/fxml/Game.fxml"));
         Parent root = loader.load();
         GameController gameController = loader.getController();
         gameController.init(options);
 
-        Scene tableViewScene = new Scene(root);
-
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-        setWindow(tableViewScene, window);
-        window.show();
+        return root;
     }
 
     private void setWindow(Scene tableViewScene, Stage window) {
         Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
         window.setX(primaryScreenBounds.getMinX() + primaryScreenBounds.getWidth() - 1270);
         window.setY(primaryScreenBounds.getMinY() + primaryScreenBounds.getHeight() - 750);
-//        window.setX(primaryScreenBounds.getMinX() + primaryScreenBounds.getWidth() - 1450);
-//        window.setY(primaryScreenBounds.getMinY() + primaryScreenBounds.getHeight() - 800);
         window.setWidth(1000);
         window.setHeight(700);
-
-//        window.setWidth(1400);
-//        window.setHeight(800);
         window.setScene(tableViewScene);
     }
 

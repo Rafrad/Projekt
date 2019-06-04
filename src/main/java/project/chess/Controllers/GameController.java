@@ -2,7 +2,6 @@ package project.chess.Controllers;
 
 
 import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
@@ -11,13 +10,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
+import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import project.chess.Exceptions.PlayerColorException;
-import project.chess.Models.Filter;
-import project.chess.Models.Game;
+import project.chess.Models.*;
 
-import project.chess.Models.Options;
 import project.chess.Models.Pieces.*;
 
 import javafx.fxml.FXML;
@@ -27,10 +25,15 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.util.Pair;
 
+import javax.swing.plaf.UIResource;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.sql.Time;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class GameController {
     @FXML
@@ -54,6 +57,10 @@ public class GameController {
     @FXML
     private TextArea moveHistory;
 
+    @FXML
+    public Text whiteClockGUI;
+    public Text blackClockGUI;
+
     private Game game;
 
     private Image blackRookImage;
@@ -71,6 +78,9 @@ public class GameController {
     private Image drawImage;
 
     private StringBuilder history;
+
+    private int playerTimeFromOptions;
+    private int timePerRound;
 
     private void showImageResignButton() {
         resignButton.setGraphic(new ImageView(resignImage));
@@ -111,9 +121,40 @@ public class GameController {
     void init(Options options) throws PlayerColorException {
         addListenerForMatchHistory();
 
+
         System.out.println(options.getGameMode());
         System.out.println(options.getVersusMode());
         System.out.println(options.getFirstPlayerColor());
+
+//        System.out.println(options.getGameMode().charAt(3));
+
+        switch (options.getGameMode().charAt(2)) {
+            case 'i':
+                playerTimeFromOptions = 3 * 60;
+                timePerRound = 2;
+                break;
+            case 'l':
+                playerTimeFromOptions = 60;
+                timePerRound = 0;
+                break;
+            case 'p':
+                playerTimeFromOptions = 10 * 60;
+                timePerRound = 0;
+                break;
+            case 'a':
+                playerTimeFromOptions = 15 * 60;
+                timePerRound = 15;
+                break;
+        }
+
+        int minutes = playerTimeFromOptions/60;
+        int seconds = playerTimeFromOptions - ((playerTimeFromOptions / 60)  * 60);
+        whiteClockGUI.setText((minutes + " : " + seconds + "0"));
+        blackClockGUI.setText((minutes + " : " + seconds + "0"));
+
+
+
+
         promotionFlagBlockingMove = false;
         hidePromotionButtons();
         backButton.setVisible(false);
@@ -128,8 +169,61 @@ public class GameController {
         showImageResignButton();
 
 
+
+
+
         Tile = new Pane[8][8];
-        game = new Game();
+        game = new Game(new CustomClockAbstract() {
+            @Override
+            public void setTime() {
+                time = playerTimeFromOptions;
+            }
+
+            @Override
+            protected void onTimeStep() {
+//                System.out.println("white player time: " + time);
+                int minutes = time/60;
+                int seconds = time - ((time / 60)  * 60);
+                whiteClockGUI.setText((minutes + " : " + seconds));
+            }
+
+            @Override
+            protected void onTimeEnd() {
+                //over
+            }
+
+            @Override
+            public void updateTime() {
+                int minutes = time/60;
+                int seconds = time - ((time / 60)  * 60);
+                whiteClockGUI.setText((minutes + " : " + seconds));
+            }
+        }, new CustomClockAbstract() {
+            @Override
+            public void setTime() {
+                time = playerTimeFromOptions;
+            }
+
+            @Override
+            protected void onTimeStep() {
+//                System.out.println("black player time: " + time);
+                int minutes = time/60;
+                int seconds = time - ((time / 60)  * 60);
+                blackClockGUI.setText((minutes + " : " + seconds));
+            }
+
+            @Override
+            protected void onTimeEnd() {
+
+            }
+
+            @Override
+            public void updateTime() {
+                int minutes = time/60;
+                int seconds = time - ((time / 60)  * 60);
+                blackClockGUI.setText((minutes + " : " + seconds));
+            }
+        });
         InitializeTiles();
         PaintBoard();
         EmulateBoard();
@@ -144,6 +238,7 @@ public class GameController {
     }
 
     private void setOnMouseClicked() {
+//        Computer computer = new Computer(game, false);
         for (int r = 0; r < 8; r++) {
             for (int c = 0; c < 8; c++) {
                 final int row = r;
@@ -155,6 +250,17 @@ public class GameController {
                             System.out.println("empty tile");
                             break;
                         case "Mark_MovableTile":
+
+                            if(game.getCurrentPlayer()) {
+                                game.whiteClock.setTimePerRound(timePerRound);
+                                game.whiteClock.updateTime();
+                            } else {
+                                game.blackClock.setTimePerRound(timePerRound);
+                                game.blackClock.updateTime();
+                            }
+
+
+
                             Pair<Integer, Integer> selectedPiece = getSelectedPiece();
 
                             assert selectedPiece != null;
@@ -198,6 +304,15 @@ public class GameController {
                                 backButton.setVisible(true);
                             }
 
+
+//                            try {
+//                                computer.makeAMove();
+//                            } catch (MalformedURLException e) {
+//                                e.printStackTrace();
+//                            }
+//                            EmulateBoard();
+
+
                             break;
                         default:
                             if (game.getCurrentPlayer() == game.boardClass.board[row][column].getPlayer()
@@ -236,6 +351,10 @@ public class GameController {
     }
 
     private List<Pair<Integer, Integer>> filterMoves(int row, int column, List<Pair<Integer, Integer>> moves) {
+        return mainFiler(row, column, moves, game);
+    }
+
+    public static List<Pair<Integer, Integer>> mainFiler(int row, int column, List<Pair<Integer, Integer>> moves, Game game) {
         Filter filter = new Filter(game, moves, row, column);
         moves = filter.filterMoves();
 
@@ -426,6 +545,8 @@ public class GameController {
             }
         }
     }
+
+
 
 
     public void promoteToQueen() {

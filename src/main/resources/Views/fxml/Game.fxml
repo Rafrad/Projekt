@@ -61,5 +61,7 @@
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="COSTAM" />
          </children>
       </HBox>
+      <Text fx:id="blackClockGUI" layoutX="740.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="66.0" AnchorPane.bottomAnchor="691.2353515625" AnchorPane.leftAnchor="740.0" AnchorPane.rightAnchor="246.0" AnchorPane.topAnchor="13.8134765625" />
+      <Text fx:id="whiteClockGUI" layoutX="740.0" layoutY="642.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="66.0" AnchorPane.bottomAnchor="79.2353515625" AnchorPane.leftAnchor="740.0" AnchorPane.rightAnchor="246.0" AnchorPane.topAnchor="625.8134765625" />
    </children>
 </AnchorPane>

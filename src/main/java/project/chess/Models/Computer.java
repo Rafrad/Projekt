@@ -8,6 +8,8 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import static project.chess.Controllers.GameController.mainFiler;
+
 public class Computer {
     private Game session;
     private boolean is_white;
@@ -19,6 +21,10 @@ public class Computer {
         this.is_white = isWhite;
         piece_list = new LinkedList<>();
         initPieceList();
+    }
+
+    private List<Pair<Integer, Integer>> filterMoves(int row, int column, List<Pair<Integer, Integer>> moves) {
+        return mainFiler(row, column, moves, session);
     }
 
     public void makeAMove() throws MalformedURLException {
@@ -38,6 +44,7 @@ public class Computer {
             position = element.getKey();
             List<Pair<Integer, Integer>> dummy = new LinkedList<>();
             available_moves = session.moveClass.CalculateMoves(position.getKey(), position.getValue(),"", dummy);
+//            available_moves = filterMoves(position.getKey(), position.getValue(), available_moves); // filtrowanie
             if(!available_moves.isEmpty()) {
                 currMove = selectBest(available_moves, element.getValue());
                 if(currMove[2] > bestMove[4]) {
