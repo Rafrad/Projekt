@@ -6,6 +6,7 @@ import javafx.util.Pair;
 import project.chess.Exceptions.PlayerColorException;
 import project.chess.Models.Pieces.*;
 
+
 import java.io.File;
 import java.net.MalformedURLException;
 import java.util.LinkedList;
@@ -22,7 +23,9 @@ public class Game {
     public CustomClock whiteClock;
     public CustomClock blackClock;
 
-    public Game(CustomClock whiteClock, CustomClock blackClock) throws PlayerColorException {
+    MediaPlayer mediaPlayer;
+
+    public Game(CustomClock whiteClock, CustomClock blackClock) throws PlayerColorException, MalformedURLException {
         boardClass = new Board();
         moveClass = new Move(boardClass);
         boardClass.printChosenBoard(boardClass.board);
@@ -34,30 +37,34 @@ public class Game {
         whiteClock.setTime();
         blackClock.setTime();
         whiteClock.start();
+
+        Media sound = new Media(new File("src\\main\\resources\\ruch.mp3").toURI().toURL().toString());
+        MediaPlayer mediaPlayer = new MediaPlayer(sound);
     }
 
 
-
     private void checkGameOver() {
-        int numberOfWhiteMoves = 0;
-        int numberOfBlackMoves = 0;
+        new Thread(() -> {
+            int numberOfWhiteMoves = 0;
+            int numberOfBlackMoves = 0;
 
-        for(int row = 0; row < 8; row++) {
-            for(int column = 0; column < 8; column++) {
-                if(boardClass.board[row][column].getPlayer()) {
-                    numberOfWhiteMoves = getNumberOfMoves(numberOfWhiteMoves, row, column);
-                } else if(!boardClass.board[row][column].getPlayer()) {
-                    numberOfBlackMoves = getNumberOfMoves(numberOfBlackMoves, row, column);
+            for (int row = 0; row < 8; row++) {
+                for (int column = 0; column < 8; column++) {
+                    if (boardClass.board[row][column].getPlayer()) {
+                        numberOfWhiteMoves = getNumberOfMoves(numberOfWhiteMoves, row, column);
+                    } else if (!boardClass.board[row][column].getPlayer()) {
+                        numberOfBlackMoves = getNumberOfMoves(numberOfBlackMoves, row, column);
+                    }
+
                 }
-
             }
-        }
 
-        if(numberOfBlackMoves == 0 || numberOfWhiteMoves == 0) {
-            isOver = true;
-            whiteClock.stop();
-            blackClock.stop();
-        }
+            if (numberOfBlackMoves == 0 || numberOfWhiteMoves == 0) {
+                isOver = true;
+                whiteClock.stop();
+                blackClock.stop();
+            }
+        }).start();
     }
 
     private int getNumberOfMoves(int numberOfMoves, int row, int column) {
@@ -96,43 +103,24 @@ public class Game {
             checkPawnsFirstMove(row, column, rowDestination, columnDestination);
 
             UpdateBoard(row, column, rowDestination, columnDestination);
-//            checkGameOver();
-
-            new Thread(() -> {
-                int numberOfWhiteMoves = 0;
-                int numberOfBlackMoves = 0;
-
-                for(int r = 0; r < 8; r++) {
-                    for(int c = 0; c < 8; c++) {
-                        if(boardClass.board[r][c].getPlayer()) {
-                            numberOfWhiteMoves = getNumberOfMoves(numberOfWhiteMoves, r, c);
-                        } else if(!boardClass.board[r][c].getPlayer()) {
-                            numberOfBlackMoves = getNumberOfMoves(numberOfBlackMoves, r, c);
-                        }
-
-                    }
-                }
-
-                if(numberOfBlackMoves == 0 || numberOfWhiteMoves == 0) {
-                    isOver = true;
-                    whiteClock.stop();
-                    blackClock.stop();
-                }
-            }).start();
-
+            checkGameOver();
 
 
             currentlyPlayer = !currentlyPlayer;
         }
 
-        //music????
-//        Media sound = new Media(new File("src\\main\\resources\\ruch.mp3").toURI().toURL().toString());
-//        MediaPlayer mediaPlayer = new MediaPlayer(sound);
-//        mediaPlayer.play();
+
+        playSound();
+    }
+
+    private void playSound() {
+        new Thread(() -> {
+            mediaPlayer.play();
+        }).start();
     }
 
     private void swapClocks(Piece piece) {
-        if(piece.getPlayer()) {
+        if (piece.getPlayer()) {
             whiteClock.stop();
             blackClock.start();
         } else {
@@ -225,7 +213,6 @@ public class Game {
     }
 
 
-
     public boolean getCurrentPlayer() {
         return currentlyPlayer;
     }
@@ -276,7 +263,7 @@ public class Game {
         for (int row = 0; row < 8; row++) {
             for (int column = 0; column < 8; column++) {
                 if (!boardClass.blackPlayerAttackBoard[row][column].getPlayer()
-                 && !boardClass.blackPlayerAttackBoard[row][column].getClass().getSimpleName().equals("EmptyTile")) {
+                        && !boardClass.blackPlayerAttackBoard[row][column].getClass().getSimpleName().equals("EmptyTile")) {
                     moveClass.CalculateMoves(row, column, "b", stack);
                 }
             }

@@ -94,31 +94,40 @@ public class GameController {
     private int numberOfRounds = 1;
 
 
-    private void drawHistory(String string, boolean attack) {
+    private void drawHistory(String string, boolean attack, boolean end) {
 
+        if(end) {
+            history.append('\n');
+            history.append('\n');
+            //inna czcionka??
 
-        if (n == 2) {
-            history.append(System.getProperty("line.separator"));
-            numberOfRounds++;
-            n = 0;
-            history.append(numberOfRounds).append(".     ");
-        } else if (n == 1) {
-            history.append("     ");
-        }
+            history.append(string);
+            moveHistory.setText(history.toString());
+        } else {
+            if (n == 2) {
+                history.append(System.getProperty("line.separator"));
+                numberOfRounds++;
+                n = 0;
+                history.append(numberOfRounds).append(".     ");
+            } else if (n == 1) {
+                history.append("     ");
+            }
 
-        if(attack) {
-            history.append("x");
-        }
+            if(attack) {
+                history.append("x");
+            }
 
-        history.append(string);
-        moveHistory.setText(history.toString());
-        n++;
+            history.append(string);
+            moveHistory.setText(history.toString());
+            n++;
 
 //        listener is probably bugged and set text doesnt trigger it
-        moveHistory.appendText("");
+            moveHistory.appendText("");
+        }
+
     }
 
-    void init(Options options) throws PlayerColorException {
+    void init(Options options) throws PlayerColorException, MalformedURLException {
         addListenerForMatchHistory();
 
 
@@ -142,13 +151,15 @@ public class GameController {
                 timePerRound = 0;
                 break;
             case 'a':
-                playerTimeFromOptions = 15 * 60;
+//                playerTimeFromOptions = 15 * 60;
+                playerTimeFromOptions = 11;
                 timePerRound = 15;
                 break;
         }
 
         int minutes = playerTimeFromOptions/60;
         int seconds = playerTimeFromOptions - ((playerTimeFromOptions / 60)  * 60);
+//        int seconds = 10;
         whiteClockGUI.setText((minutes + " : " + seconds + "0"));
         blackClockGUI.setText((minutes + " : " + seconds + "0"));
 
@@ -181,22 +192,32 @@ public class GameController {
 
             @Override
             protected void onTimeStep() {
-//                System.out.println("white player time: " + time);
                 int minutes = time/60;
                 int seconds = time - ((time / 60)  * 60);
-                whiteClockGUI.setText((minutes + " : " + seconds));
+                if(seconds < 10) {
+                    whiteClockGUI.setText((minutes + " : 0" + seconds));
+                } else {
+                    whiteClockGUI.setText((minutes + " : " + seconds));
+                }
             }
 
             @Override
             protected void onTimeEnd() {
-                //over
+                whiteClockGUI.setText("0 : 00");
+                game.isOver = true;
+                drawHistory("BLACK WON NO TIME ", false, true);
             }
 
             @Override
             public void updateTime() {
                 int minutes = time/60;
                 int seconds = time - ((time / 60)  * 60);
-                whiteClockGUI.setText((minutes + " : " + seconds));
+                if(seconds < 10) {
+                    whiteClockGUI.setText((minutes + " : 0" + seconds));
+                } else {
+                    whiteClockGUI.setText((minutes + " : " + seconds));
+                }
+
             }
         }, new CustomClockAbstract() {
             @Override
@@ -209,7 +230,11 @@ public class GameController {
 //                System.out.println("black player time: " + time);
                 int minutes = time/60;
                 int seconds = time - ((time / 60)  * 60);
-                blackClockGUI.setText((minutes + " : " + seconds));
+                if(seconds < 10) {
+                    blackClockGUI.setText((minutes + " : 0" + seconds));
+                } else {
+                    blackClockGUI.setText((minutes + " : " + seconds));
+                }
             }
 
             @Override
@@ -221,7 +246,12 @@ public class GameController {
             public void updateTime() {
                 int minutes = time/60;
                 int seconds = time - ((time / 60)  * 60);
-                blackClockGUI.setText((minutes + " : " + seconds));
+                if(seconds < 10) {
+                    blackClockGUI.setText((minutes + " : 0" + seconds));
+                } else {
+                    blackClockGUI.setText((minutes + " : " + seconds));
+                }
+
             }
         });
         InitializeTiles();
@@ -231,6 +261,7 @@ public class GameController {
 
         setOnMouseClicked();
     }
+
 
     private void addListenerForMatchHistory() {
         moveHistory.textProperty().addListener((ChangeListener<Object>) (observable, oldValue, newValue) ->
@@ -286,9 +317,9 @@ public class GameController {
                             if (game.boardClass.getPiece(row, column) instanceof WhiteKing
                                     || game.boardClass.getPiece(row, column) instanceof BlackKing) {
                                 if (column - selectedPieceColumn == 2) {
-                                    drawHistory("O - O", false);
+                                    drawHistory("O - O", false, false);
                                 } else if (column - selectedPieceColumn == -2) {
-                                    drawHistory("O - O - O", false);
+                                    drawHistory("O - O - O", false, false);
                                 } else {
                                     updateMatchHistory(row, column, attack);
                                 }
@@ -376,7 +407,7 @@ public class GameController {
         String coordinates = String.valueOf(unicode) +
                 replaceToChessNotation(row, column);
 
-        drawHistory(coordinates, attack);
+        drawHistory(coordinates, attack, false);
     }
 
     private void setImageForSupportComponents() {
