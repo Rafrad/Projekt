@@ -1,4 +1,4 @@
-package project.chess;
+//package project.chess;
 //
 //import project.chess.Exceptions.PlayerColorException;
 //import project.chess.Models.Board;
@@ -12,9 +12,8 @@ package project.chess;
 //import java.io.ByteArrayOutputStream;
 //import java.io.PrintStream;
 //
-public class GeneralModelsTest {
-
-}
+//public class GeneralModelsTest {
+//
 //
 //    private final ByteArrayOutputStream outputContent = new ByteArrayOutputStream();
 //    private final PrintStream originalOut = System.out;
