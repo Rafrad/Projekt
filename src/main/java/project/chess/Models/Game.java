@@ -39,7 +39,7 @@ public class Game {
         whiteClock.start();
 
         Media sound = new Media(new File("src\\main\\resources\\ruch.mp3").toURI().toURL().toString());
-        MediaPlayer mediaPlayer = new MediaPlayer(sound);
+        mediaPlayer = new MediaPlayer(sound);
     }
 
 

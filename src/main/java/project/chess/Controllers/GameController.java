@@ -286,6 +286,13 @@ public class GameController {
                             break;
                         case "Mark_MovableTile":
 
+
+
+
+
+                            Pair<Integer, Integer> selectedPiece = getSelectedPiece();
+                            if(selectedPiece == null) break;
+                            assert selectedPiece != null;
                             if(game.getCurrentPlayer()) {
                                 game.whiteClock.setTimePerRound(timePerRound);
                                 game.whiteClock.updateTime();
@@ -293,12 +300,6 @@ public class GameController {
                                 game.blackClock.setTimePerRound(timePerRound);
                                 game.blackClock.updateTime();
                             }
-
-
-
-                            Pair<Integer, Integer> selectedPiece = getSelectedPiece();
-
-                            assert selectedPiece != null;
 //                            int selectedPieceRow = -1;
 //                            int selectedPieceColumn = -1;
 //                            if(selectedPiece != null) {
@@ -352,11 +353,6 @@ public class GameController {
 //                                e.printStackTrace();
 //                            }
 //                            EmulateBoard();
-                            PaintBoard();
-                            ClearPossibleMoves();
-
-                            EmulateBoard();
-                            game.boardClass.clearPossibleMoves();
                             break;
                         default:
                             if (game.getCurrentPlayer() == game.boardClass.board[row][column].getPlayer()
