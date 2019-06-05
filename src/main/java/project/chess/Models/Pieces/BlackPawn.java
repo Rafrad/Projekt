@@ -2,7 +2,6 @@ package project.chess.Models.Pieces;
 
 
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.util.Pair;
 
 import java.util.LinkedList;
@@ -15,7 +14,6 @@ public class BlackPawn implements Piece {
     private boolean promotion;
 
     private char unicode;
-    private Image image;
 
     public BlackPawn() {
         player = false;
@@ -24,7 +22,7 @@ public class BlackPawn implements Piece {
         promotion = false;
 
         unicode = 0x265F;
-        image = new Image("Images/black_pawn.png");
+
     }
 
     @Override
@@ -52,11 +50,6 @@ public class BlackPawn implements Piece {
     @Override
     public char getUnicode() {
         return unicode;
-    }
-
-    @Override
-    public ImageView getImageView() {
-        return new ImageView(image);
     }
 
     public boolean getFirstMove() {

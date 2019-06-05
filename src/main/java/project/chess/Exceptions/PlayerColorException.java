@@ -1,7 +1,7 @@
 package project.chess.Exceptions;
 
 /**
- * Made for development & tests
+ * Made for development and tests
  * Some pieces cannot be initialized without given color
  */
 

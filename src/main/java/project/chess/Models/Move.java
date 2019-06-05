@@ -20,9 +20,9 @@ public class Move {
      *
      * @param PieceRow first coordinate of piece
      * @param PieceColumn second coordinate of piece
-     * @param playerAttackBoard w - white attack board will be filled, b - otherwise; default - it calculates moves for one piece & fills movable board
+     * @param playerAttackBoard w - white attack board will be filled, b - otherwise; default - it calculates moves for one piece and fills movable board
      * @param stack stack is used
-     * @return
+     * @return returns kappa
      */
 
 

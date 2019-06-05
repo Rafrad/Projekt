@@ -67,11 +67,15 @@ public class GameController {
     private Image blackKnightImage;
     private Image blackBishopImage;
     private Image blackQueenImage;
+    private Image blackPawnImage;
+    private Image blackKingImage;
 
     private Image whiteRook;
     private Image whiteKnight;
     private Image whiteBishop;
     private Image whiteQueen;
+    private Image whitePawn;
+    private Image whiteKing;
 
     private Image dot;
     private Image resignImage;
@@ -151,8 +155,8 @@ public class GameController {
                 timePerRound = 0;
                 break;
             case 'a':
-//                playerTimeFromOptions = 15 * 60;
-                playerTimeFromOptions = 11;
+                playerTimeFromOptions = 15 * 60;
+//                playerTimeFromOptions = 11;
                 timePerRound = 15;
                 break;
         }
@@ -295,8 +299,14 @@ public class GameController {
                             Pair<Integer, Integer> selectedPiece = getSelectedPiece();
 
                             assert selectedPiece != null;
-                            int selectedPieceRow = selectedPiece.getKey();
-                            int selectedPieceColumn = selectedPiece.getValue();
+//                            int selectedPieceRow = -1;
+//                            int selectedPieceColumn = -1;
+//                            if(selectedPiece != null) {
+                            System.out.println(game.boardClass.boardOfPossibleMoves[row][column].getClass().getSimpleName());
+                               int selectedPieceRow = selectedPiece.getKey();
+                               int  selectedPieceColumn = selectedPiece.getValue();
+//                            }
+
 
                             boolean attack = false;
                             if (Tile[row][column].getChildren().size() > 1) {
@@ -328,12 +338,12 @@ public class GameController {
                             }
 
 
-                            if (checkGameOver()) {
-                                //TODO
-                                //historia ruchow
-                                hideRestButtons();
-                                backButton.setVisible(true);
-                            }
+//                            if (checkGameOver()) {
+//                                //TODO
+//                                //historia ruchow
+//                                hideRestButtons();
+//                                backButton.setVisible(true);
+//                            }
 
 
 //                            try {
@@ -342,8 +352,11 @@ public class GameController {
 //                                e.printStackTrace();
 //                            }
 //                            EmulateBoard();
+                            PaintBoard();
+                            ClearPossibleMoves();
 
-
+                            EmulateBoard();
+                            game.boardClass.clearPossibleMoves();
                             break;
                         default:
                             if (game.getCurrentPlayer() == game.boardClass.board[row][column].getPlayer()
@@ -421,11 +434,15 @@ public class GameController {
         blackKnightImage = new Image("Images/black_knight.png");
         blackBishopImage = new Image("Images/black_bishop.png");
         blackQueenImage = new Image("Images/black_queen.png");
+        blackKingImage = new Image("Images/black_king.png");
+        blackPawnImage = new Image("Images/black_pawn.png");
 
         whiteRook = new Image("Images/white_rook.png");
         whiteKnight = new Image("Images/white_knight.png");
         whiteBishop = new Image("Images/white_bishop.png");
         whiteQueen = new Image("Images/white_queen.png");
+        whiteKing = new Image("Images/white_king.png");
+        whitePawn = new Image("Images/white_pawn.png");
     }
 
     private boolean promotionFlagBlockingMove;
@@ -531,9 +548,52 @@ public class GameController {
         for (int row = 0; row < 8; row++) {
             for (int column = 0; column < 8; column++) {
                 ImageView tmp = null;
-
                 removeImagesFromTile(Tile[row][column]);
-                tmp = emulateTileImage(row, column, tmp);
+                switch (game.boardClass.board[row][column].getClass().getSimpleName()) {
+                    case "BlackPawn":
+                        tmp = new ImageView(blackPawnImage);
+                        break;
+                    case "WhitePawn":
+                        tmp = new ImageView(whitePawn);
+                        break;
+                    case "Rook":
+                        if (((Rook) game.boardClass.board[row][column]).getPlayer()) {
+                            tmp = new ImageView(whiteRook);
+                        } else {
+                            tmp = new ImageView(blackRookImage);
+                        }
+                        break;
+                    case "Knight":
+                        if (((Knight) game.boardClass.board[row][column]).getPlayer()) {
+                            tmp = new ImageView(whiteKnight);
+                        } else {
+                            tmp = new ImageView(blackKnightImage);
+                        }
+                        break;
+                    case "Bishop":
+                        if (((Bishop) game.boardClass.board[row][column]).getPlayer()) {
+                            tmp = new ImageView(whiteBishop);
+                        } else {
+                            tmp = new ImageView(blackBishopImage);
+                        }
+                        break;
+                    case "Queen":
+                        if (((Queen) game.boardClass.board[row][column]).getPlayer()) {
+                            tmp = new ImageView(whiteQueen);
+                        } else {
+                            tmp = new ImageView(blackQueenImage);
+                        }
+                        break;
+                    case "BlackKing":
+                        tmp = new ImageView(blackKingImage);
+                        break;
+                    case "WhiteKing":
+                        tmp = new ImageView(whiteKing);
+                        break;
+                }
+
+
+//                tmp = emulateTileImage(row, column, tmp);
 
                 if (tmp != null) {
                     Tile[row][column].getChildren().add(tmp);
@@ -547,7 +607,8 @@ public class GameController {
 
     private ImageView emulateTileImage(int row, int column, ImageView tmp) {
         if (!(game.boardClass.getPiece(row, column) instanceof EmptyTile)) {
-            tmp = game.boardClass.board[row][column].getImageView();
+
+//            tmp = game.boardClass.board[row][column].getImageView();
         }
         return tmp;
     }

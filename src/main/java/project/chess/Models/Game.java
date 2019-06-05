@@ -23,7 +23,7 @@ public class Game {
     public CustomClock whiteClock;
     public CustomClock blackClock;
 
-    MediaPlayer mediaPlayer;
+    private MediaPlayer mediaPlayer;
 
     public Game(CustomClock whiteClock, CustomClock blackClock) throws PlayerColorException, MalformedURLException {
         boardClass = new Board();
@@ -110,14 +110,16 @@ public class Game {
         }
 
 
-        playSound();
+//        playSound();
+        mediaPlayer.play();
+//        new Thread(() -> mediaPlayer.play()).start();
+//        boardClass.printChosenBoard();
+        boardClass.clearPossibleMoves();
     }
 
-    private void playSound() {
-        new Thread(() -> {
-            mediaPlayer.play();
-        }).start();
-    }
+//    private void playSound() {
+//        new Thread(() -> mediaPlayer.play()).start();
+//    }
 
     private void swapClocks(Piece piece) {
         if (piece.getPlayer()) {

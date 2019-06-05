@@ -1,7 +1,6 @@
 package project.chess.Models.Pieces;
 
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.util.Pair;
 
 import java.util.LinkedList;
@@ -11,14 +10,12 @@ public class BlackKing implements Piece {
     private boolean castling;
     private boolean check;
     private char unicode;
-    private Image image;
 
     public BlackKing() {
         castling = true;
         check = false;
 
         unicode = 0x265A;
-        image = new Image("Images/black_king.png");
     }
 
     @Override
@@ -55,10 +52,6 @@ public class BlackKing implements Piece {
         return unicode;
     }
 
-    @Override
-    public ImageView getImageView() {
-        return new ImageView(image);
-    }
 
     public boolean getCastling() {
         return castling;

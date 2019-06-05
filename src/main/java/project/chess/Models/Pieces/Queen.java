@@ -1,7 +1,6 @@
 package project.chess.Models.Pieces;
 
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import project.chess.Exceptions.PlayerColorException;
 import javafx.util.Pair;
 
@@ -14,7 +13,7 @@ public class Queen implements Piece {
     private boolean player;
 
     private char unicode;
-    private Image image;
+
 
     public Queen() throws PlayerColorException {
         throw new PlayerColorException("Queen must be white or black!");
@@ -25,10 +24,10 @@ public class Queen implements Piece {
 
         if(player) {
             unicode = 0x2655;
-            image = new Image("Images/white_queen.png");
+
         } else {
             unicode = 0x265B;
-            image = new Image("Images/black_queen.png");
+
         }
     }
 
@@ -64,8 +63,4 @@ public class Queen implements Piece {
         return unicode;
     }
 
-    @Override
-    public ImageView getImageView() {
-        return new ImageView(image);
-    }
 }

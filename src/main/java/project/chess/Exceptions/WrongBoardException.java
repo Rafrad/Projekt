@@ -1,7 +1,7 @@
 package project.chess.Exceptions;
 
 /**
- * Made for development & tests
+ * Made for development and tests
  * Board must be given by Game class
  */
 

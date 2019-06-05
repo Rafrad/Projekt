@@ -139,7 +139,8 @@ public class Board {
 
 
     /**
-     * Made for development & tests
+     * Made for development and tests
+     * @param boardToPrint board print kdas
      */
 
     void printChosenBoard(Piece[][] boardToPrint) {
