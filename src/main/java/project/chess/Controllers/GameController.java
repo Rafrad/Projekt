@@ -273,13 +273,15 @@ public class GameController {
     }
 
     private void setOnMouseClicked() {
-//        Computer computer = new Computer(game, false);
         for (int r = 0; r < 8; r++) {
             for (int c = 0; c < 8; c++) {
                 final int row = r;
                 final int column = c;
 
                 Tile[row][column].setOnMouseClicked(mouseEvent -> {
+                    System.out.println("tera=================");
+//                    ClearPossibleMoves();
+                    game.boardClass.printChosenBoard(game.boardClass.boardOfPossibleMoves);
                     switch (game.boardClass.boardOfPossibleMoves[row][column].getClass().getSimpleName()) {
                         case "EmptyTile":
                             System.out.println("empty tile");
@@ -303,7 +305,6 @@ public class GameController {
 //                            int selectedPieceRow = -1;
 //                            int selectedPieceColumn = -1;
 //                            if(selectedPiece != null) {
-                            System.out.println(game.boardClass.boardOfPossibleMoves[row][column].getClass().getSimpleName());
                                int selectedPieceRow = selectedPiece.getKey();
                                int  selectedPieceColumn = selectedPiece.getValue();
 //                            }
@@ -345,19 +346,14 @@ public class GameController {
 //                                hideRestButtons();
 //                                backButton.setVisible(true);
 //                            }
-
-
-//                            try {
-//                                computer.makeAMove();
-//                            } catch (MalformedURLException e) {
-//                                e.printStackTrace();
-//                            }
-//                            EmulateBoard();
+                            game.boardClass.clearPossibleMoves();
                             break;
                         default:
                             if (game.getCurrentPlayer() == game.boardClass.board[row][column].getPlayer()
                                     && !game.isOver) {
                                 if (!promotionFlagBlockingMove) {
+
+//                                    game.boardClass.printChosenBoard(game.boardClass.boardOfPossibleMoves);
                                     PaintBoard();
                                     ClearPossibleMoves();
 
@@ -366,7 +362,7 @@ public class GameController {
 
                                     Tile[row][column].setStyle("-fx-background-color: #fbfb5b");
                                     List<Pair<Integer, Integer>> dummy = new LinkedList<>();
-                                    List<Pair<Integer, Integer>> moves = game.moveClass.CalculateMoves(row, column, "", dummy);
+                                    List<Pair<Integer, Integer>> moves = game.moveClass.CalculateMoves(row, column, "movable board", dummy);
 
 
                                     moves = filterMoves(row, column, moves);
@@ -406,6 +402,7 @@ public class GameController {
 
             game.boardClass.boardOfPossibleMoves[rowMove][columnMove] = new Mark_MovableTile();
         }
+//        System.out.println(moves.size());
         return moves;
     }
 

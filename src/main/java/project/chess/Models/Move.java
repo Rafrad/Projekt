@@ -18,10 +18,10 @@ public class Move {
      * Main function of Move Class.
      * Calculate moves available for given piece
      *
-     * @param PieceRow first coordinate of piece
-     * @param PieceColumn second coordinate of piece
+     * @param PieceRow          first coordinate of piece
+     * @param PieceColumn       second coordinate of piece
      * @param playerAttackBoard w - white attack board will be filled, b - otherwise; default - it calculates moves for one piece and fills movable board
-     * @param stack stack is used
+     * @param stack             stack is used
      * @return returns kappa
      */
 
@@ -134,35 +134,35 @@ public class Move {
 
 //        if (nameOfChosenPiece.equals("BlackPawn") || nameOfChosenPiece.equals("WhitePawn")) {
 
-            removeWhiteEnPassant(PieceRow, PieceColumn, playerAttackBoard, nameOfChosenPiece, availableMoves);
-            removeBlackEnPassant(PieceRow, PieceColumn, playerAttackBoard, nameOfChosenPiece, availableMoves);
+        removeWhiteEnPassant(PieceRow, PieceColumn, playerAttackBoard, nameOfChosenPiece, availableMoves);
+        removeBlackEnPassant(PieceRow, PieceColumn, playerAttackBoard, nameOfChosenPiece, availableMoves);
 
 
-            if (nameOfCheck.equals("EmptyTile") && PieceColumn == allowedMovesColumn) {
-                switch (nameOfChosenPiece) {
-                    case "BlackPawn":
-                        addBlackPawnMoves(PieceRow, PieceColumn, playerAttackBoard, availableMoves, allowedMovesRow, allowedMovesColumn);
-                        break;
-                    case "WhitePawn":
-                        addWhitePawnMoves(PieceRow, PieceColumn, availableMoves, allowedMovesRow, allowedMovesColumn, playerAttackBoard);
-                        break;
-                    default:
-                        break;
-                }
-
-
-            } else if (PieceColumn != allowedMovesColumn && !nameOfCheck.equals("EmptyTile")) {
-                boolean basicPlayer = pieceChosen.getPlayer();
-                boolean player = check.getPlayer();
-
-                if (basicPlayer != player) {
-                    availableMoves.add(new Pair<>(allowedMovesRow, allowedMovesColumn));
-                }
-
+        if (nameOfCheck.equals("EmptyTile") && PieceColumn == allowedMovesColumn) {
+            switch (nameOfChosenPiece) {
+                case "BlackPawn":
+                    addBlackPawnMoves(PieceRow, PieceColumn, playerAttackBoard, availableMoves, allowedMovesRow, allowedMovesColumn);
+                    break;
+                case "WhitePawn":
+                    addWhitePawnMoves(PieceRow, PieceColumn, availableMoves, allowedMovesRow, allowedMovesColumn, playerAttackBoard);
+                    break;
+                default:
+                    break;
             }
-            if (PieceColumn != allowedMovesColumn && (playerAttackBoard.equals("w") || playerAttackBoard.equals("b"))) {
+
+
+        } else if (PieceColumn != allowedMovesColumn && !nameOfCheck.equals("EmptyTile")) {
+            boolean basicPlayer = pieceChosen.getPlayer();
+            boolean player = check.getPlayer();
+
+            if (basicPlayer != player) {
                 availableMoves.add(new Pair<>(allowedMovesRow, allowedMovesColumn));
             }
+
+        }
+        if (PieceColumn != allowedMovesColumn && (playerAttackBoard.equals("w") || playerAttackBoard.equals("b"))) {
+            availableMoves.add(new Pair<>(allowedMovesRow, allowedMovesColumn));
+        }
 
 //        }
     }
@@ -186,7 +186,6 @@ public class Move {
 
         return boardToCheck;
     }
-
 
 
     private void fillPlayerAttackBoard(String playerAttackBoard, List<Pair<Integer, Integer>> stack, List<Pair<Integer, Integer>> availableMoves) {

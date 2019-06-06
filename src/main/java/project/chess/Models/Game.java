@@ -75,6 +75,7 @@ public class Game {
         moves = filter.filterMoves();
 
         numberOfMoves += moves.size();
+        boardClass.clearPossibleMoves();
         return numberOfMoves;
     }
 
@@ -111,15 +112,15 @@ public class Game {
 
 
 //        playSound();
-        mediaPlayer.play();
+//        mediaPlayer.play();
 //        new Thread(() -> mediaPlayer.play()).start();
 //        boardClass.printChosenBoard();
         boardClass.clearPossibleMoves();
     }
 
-//    private void playSound() {
-//        new Thread(() -> mediaPlayer.play()).start();
-//    }
+    private void playSound() {
+        new Thread(() -> mediaPlayer.play()).start();
+    }
 
     private void swapClocks(Piece piece) {
         if (piece.getPlayer()) {

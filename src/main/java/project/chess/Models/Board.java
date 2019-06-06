@@ -143,7 +143,7 @@ public class Board {
      * @param boardToPrint board print kdas
      */
 
-    void printChosenBoard(Piece[][] boardToPrint) {
+    public void printChosenBoard(Piece[][] boardToPrint) {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 boardToPrint[i][j].print();
