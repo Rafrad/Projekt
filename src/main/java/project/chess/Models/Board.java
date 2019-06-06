@@ -12,7 +12,7 @@ public class Board {
     Piece[][] whitePlayerAttackBoard;
     Piece[][] blackPlayerAttackBoard;
 
-    Board() throws PlayerColorException {
+    public Board() throws PlayerColorException {
         board = new Piece[8][8];
         boardOfPossibleMoves = new Piece[8][8];
         whitePlayerAttackBoard = new Piece[8][8];

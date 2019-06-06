@@ -10,7 +10,7 @@ public class Move {
     private boolean attack;
 
 
-    Move(Board boardTmp) {
+    public Move(Board boardTmp) {
         this.boardClass = boardTmp;
     }
 
