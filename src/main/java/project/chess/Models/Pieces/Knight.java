@@ -1,7 +1,5 @@
 package project.chess.Models.Pieces;
 
-
-import javafx.scene.image.Image;
 import project.chess.Exceptions.PlayerColorException;
 import javafx.util.Pair;
 
@@ -20,7 +18,7 @@ public class Knight implements Piece {
     public Knight(boolean player) throws PlayerColorException {
         this.player = player;
 
-        if(player) {
+        if (player) {
             unicode = 0x2658;
 
         } else {

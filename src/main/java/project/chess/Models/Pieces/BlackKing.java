@@ -1,6 +1,5 @@
 package project.chess.Models.Pieces;
 
-import javafx.scene.image.Image;
 import javafx.util.Pair;
 
 import java.util.LinkedList;
@@ -8,13 +7,10 @@ import java.util.List;
 
 public class BlackKing implements Piece {
     private boolean castling;
-    private boolean check;
     private char unicode;
 
     public BlackKing() {
         castling = true;
-        check = false;
-
         unicode = 0x265A;
     }
 
@@ -22,6 +18,13 @@ public class BlackKing implements Piece {
     public List<Pair<Integer, Integer>> move() {
         return getPairs();
     }
+
+    /**
+     * Black and White king moves are the same.
+     *
+     * @return king's movement
+     * @see WhiteKing
+     */
 
     static List<Pair<Integer, Integer>> getPairs() {
         List<Pair<Integer, Integer>> allowedMoves = new LinkedList<>();
@@ -44,7 +47,7 @@ public class BlackKing implements Piece {
 
     @Override
     public void print() {
-        System.out.print("y ");
+        System.out.print("k ");
     }
 
     @Override
@@ -63,19 +66,22 @@ public class BlackKing implements Piece {
         return true;
     }
 
+    /**
+     * @return true if castling was done, false otherwise
+     */
+
     public boolean getCastling() {
         return castling;
     }
 
-    public boolean getCheck() {
-        return check;
-    }
+    /**
+     * Controls castling, set only to false.
+     *
+     * @param castling if castling was done, set to false
+     */
 
     public void setCastling(boolean castling) {
         this.castling = castling;
     }
 
-    public void setCheck(boolean check) {
-        this.check = check;
-    }
 }

@@ -1,6 +1,5 @@
 package project.chess.Models.Pieces;
 
-import javafx.scene.image.Image;
 import project.chess.Exceptions.PlayerColorException;
 import javafx.util.Pair;
 
@@ -22,7 +21,7 @@ public class Queen implements Piece {
     public Queen(boolean player) {
         this.player = player;
 
-        if(player) {
+        if (player) {
             unicode = 0x2655;
 
         } else {
@@ -31,6 +30,14 @@ public class Queen implements Piece {
         }
     }
 
+
+    /**
+     * Queen is sum of the Bishop and Rook's movement.
+     *
+     * @return Queen's movement
+     * @see Bishop
+     * @see Rook
+     */
 
     @Override
     public List<Pair<Integer, Integer>> move() {

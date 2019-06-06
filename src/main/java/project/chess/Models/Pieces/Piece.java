@@ -1,22 +1,12 @@
 package project.chess.Models.Pieces;
-import javafx.scene.image.ImageView;
+
 import javafx.util.Pair;
+
 import java.util.List;
-//*** getFirstMove() ***
-//checks if a piece made its first move
-
-//*** setFirstMove() ***
-//sets first move to true
-
-//*** getCheck() ***
-//returns true if king is checked, false otherwise
-
-//*** enPassant() ***
-//return true if pawn is vulnerable to enPassant, false otherwise
 
 public interface Piece {
     /**
-     * we  start in (0, 0) and then moves are calculated;
+     * We  start in (0, 0) and then moves are calculated;
      * treating moves like vectors
      * eg. black pawn can move to
      * [1, 0]
@@ -24,30 +14,52 @@ public interface Piece {
      * [1, -1]
      * [1, 1]
      *
-     * @return list of allowed moves, starting from (0, 0) point
+     * @return movement of the piece, starting from (0, 0) point
      */
 
     List<Pair<Integer, Integer>> move();
 
     /**
-     * variable player defines where piece belongs to
+     * Variable player defines where piece belongs to
+     *
      * @return true when player is white, false otherwise (empty tile and movable tile are false)
      */
 
     boolean getPlayer();
 
     /**
-     * prints in console unique letter for piece
-     * made for development and tests
+     * Prints in console unique letter for piece.
+     * Made for development and tests.
+     * Black player has lowercase letters, white player has uppercase letters
+     * <p>
+     * Bishop - b or B
+     * King - k or K
+     * Knight - n or N
+     * Queen - q or Q
+     * Rook - r or R
+     * White Pawn - W
+     * Black Pawn - P
+     * <p>
+     * Empty Tile - x
+     * Mark Movable Tile - m
      */
 
     void print();
 
     /**
-     * to simplify program
+     * Get unicode which is shown in match history.
+     *
      * @return unique unicode for every piece, shown in match history
      */
 
     char getUnicode();
 
+    /**
+     * Made for tests
+     *
+     * @param obj object to check if is equal
+     * @return returns true if equal, false otherwise
+     */
+
+    boolean equals(Object obj);
 }

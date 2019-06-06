@@ -1,7 +1,5 @@
 package project.chess.Models.Pieces;
 
-
-import javafx.scene.image.Image;
 import javafx.util.Pair;
 
 import java.util.LinkedList;
@@ -44,7 +42,7 @@ public class BlackPawn implements Piece {
 
     @Override
     public void print() {
-        System.out.print("b ");
+        System.out.print("P ");
     }
 
     @Override
@@ -58,30 +56,58 @@ public class BlackPawn implements Piece {
             return true;
         if (obj == null)
             return false;
-        if (getClass() != obj.getClass())
-            return false;
-        return true;
+        return getClass() == obj.getClass();
     }
+
+    /**
+     * @return true if pawn made its first move, important for en passant and starting rank
+     */
 
     public boolean getFirstMove() {
         return firstMove;
     }
 
+    /**
+     * @return true if pawn is vulnerable to enPassant, false otherwise
+     */
+
     public boolean getEnPassant() {
         return enPassant;
     }
+
+    /**
+     * @return true if pawn can promote
+     */
 
     public boolean getPromotion() {
         return promotion;
     }
 
+    /**
+     * If first move was made, set to false
+     *
+     * @param firstMove set only to false
+     */
+
     public void setFirstMove(boolean firstMove) {
         this.firstMove = firstMove;
     }
 
+    /**
+     * If pawn pass two squares from staring rank set to true, set to false in next turn
+     *
+     * @param enPassant is vulnerable to en passant
+     */
+
     public void setEnPassant(boolean enPassant) {
         this.enPassant = enPassant;
     }
+
+    /**
+     * Control pawn's promote.
+     *
+     * @param promotion if pawn can promote, set to true
+     */
 
     public void setPromotion(boolean promotion) {
         this.promotion = promotion;

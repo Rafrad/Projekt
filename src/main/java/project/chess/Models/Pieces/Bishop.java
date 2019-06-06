@@ -1,4 +1,5 @@
 package project.chess.Models.Pieces;
+
 import project.chess.Exceptions.PlayerColorException;
 import javafx.util.Pair;
 
@@ -9,14 +10,14 @@ public class Bishop implements Piece {
     private boolean player;
     private char unicode;
 
-    public Bishop() throws PlayerColorException{
+    public Bishop() throws PlayerColorException {
         throw new PlayerColorException("Bishop must be white or black!");
     }
 
     public Bishop(boolean player) {
         this.player = player;
 
-        if(player) {
+        if (player) {
             unicode = 0x2657;
         } else {
             unicode = 0x265D;
@@ -25,8 +26,9 @@ public class Bishop implements Piece {
 
     /**
      * Bishop's moves are subset of Queen's
-     * @see Queen HAHAHAHA
-     * @return kappa
+     *
+     * @return bishop's movement
+     * @see Queen
      */
 
     @Override
@@ -43,9 +45,9 @@ public class Bishop implements Piece {
     @Override
     public void print() {
         if (player) {
-            System.out.print("I ");
+            System.out.print("B ");
         } else {
-            System.out.print("i ");
+            System.out.print("b ");
         }
     }
 
@@ -53,6 +55,7 @@ public class Bishop implements Piece {
     public char getUnicode() {
         return unicode;
     }
+
 
     @Override
     public boolean equals(Object obj) {
@@ -75,12 +78,13 @@ public class Bishop implements Piece {
 
     /**
      * Bishop's moves are subset of Queen's
-     * @see Queen HAHAHAHA
+     *
+     * @see Queen
      */
 
     static List<Pair<Integer, Integer>> getBishopPairs(List<Pair<Integer, Integer>> allowedMoves) {
         for (int i = -7; i <= 7; i++) {
-            if(i != 0) {
+            if (i != 0) {
                 allowedMoves.add(new Pair<>(i, i));
                 allowedMoves.add(new Pair<>(-i, i));
             }

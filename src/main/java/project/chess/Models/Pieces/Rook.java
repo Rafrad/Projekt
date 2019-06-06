@@ -1,7 +1,5 @@
 package project.chess.Models.Pieces;
 
-
-import javafx.scene.image.Image;
 import project.chess.Exceptions.PlayerColorException;
 import javafx.util.Pair;
 
@@ -22,7 +20,7 @@ public class Rook implements Piece {
         player = color;
         castling = true;
 
-        if(player) {
+        if (player) {
             unicode = 0x2656;
 
         } else {
@@ -83,9 +81,18 @@ public class Rook implements Piece {
         return true;
     }
 
+    /**
+     * @return true if castling was done, false otherwise
+     */
     public boolean getCastling() {
         return castling;
     }
+
+    /**
+     * Controls castling, set only to false.
+     *
+     * @param castling if castling was done, set to false
+     */
 
     public void setCastling(boolean castling) {
         this.castling = castling;
