@@ -72,7 +72,7 @@ public class SettingsController {
      *
      * @param options needed to start game (time, players, first move of player)
      * @return loader
-     * @throws IOException thrown when loader cannot find Game.fxml view
+     * @throws IOException          thrown when loader cannot find Game.fxml view
      * @throws PlayerColorException thrown when pieces don't know where they belong to in init method
      * @see GameController#init(project.chess.Models.Options)
      */
@@ -88,8 +88,9 @@ public class SettingsController {
 
     /**
      * Sets window, and its options (what does it look like)
+     *
      * @param tableViewScene new scene given to method
-     * @param window window given by event
+     * @param window         window given by event
      */
 
     private void setWindow(Scene tableViewScene, Stage window) {
