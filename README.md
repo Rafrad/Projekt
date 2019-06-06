@@ -10,3 +10,4 @@
 <t/>- ++or#= checkmate<br/>
 <t/>- e.p. = captures ‘en passante<br/>
 5. Koniec gry <br/>
+6. Zmienić dzwiek <br/>
