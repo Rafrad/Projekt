@@ -13,3 +13,5 @@
 6. Zmienić dzwięk <br/>
 7. Zapisywanie historii do pliku <br/>
 8. Poprawienie scenariuszy <br/>
+9. Dokumentacja <br/>
+10. Testy <br/>
