@@ -10,4 +10,6 @@
 <t/>- ++or#= checkmate<br/>
 <t/>- e.p. = captures ‘en passante<br/>
 5. Koniec gry <br/>
-6. Zmienić dzwiek <br/>
+6. Zmienić dzwięk <br/>
+7. Zapisywanie historii do pliku <br/>
+8. Poprawienie scenariuszy <br/>
