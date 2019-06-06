@@ -19,6 +19,11 @@ import project.chess.Models.Options;
 
 import java.io.IOException;
 
+/**
+ * This class defines how settings scene behaves.
+ * It starts game and creates new Game class.
+ * When game starts, options are given by Option class to Game Controller class.
+ */
 
 public class SettingsController {
     @FXML
@@ -62,6 +67,16 @@ public class SettingsController {
         window.show();
     }
 
+    /**
+     * loads Game view and init options
+     *
+     * @param options needed to start game (time, players, first move of player)
+     * @return loader
+     * @throws IOException thrown when loader cannot find Game.fxml view
+     * @throws PlayerColorException thrown when pieces don't know where they belong to in init method
+     * @see GameController#init(project.chess.Models.Options)
+     */
+
     private Parent loader(Options options) throws IOException, PlayerColorException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/fxml/Game.fxml"));
         Parent root = loader.load();
@@ -70,6 +85,12 @@ public class SettingsController {
 
         return root;
     }
+
+    /**
+     * Sets window, and its options (what does it look like)
+     * @param tableViewScene new scene given to method
+     * @param window window given by event
+     */
 
     private void setWindow(Scene tableViewScene, Stage window) {
         Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
@@ -80,6 +101,15 @@ public class SettingsController {
         window.setScene(tableViewScene);
     }
 
+    /**
+     * Sets options needed for a game like;
+     * time (blitz, classic, etc.)
+     * VS (player, computer)
+     * player 1 starts as white or black
+     *
+     * @return options ready to use
+     */
+
     private Options setOptions() {
         Options options = new Options();
         options.setGameMode(gameModeChoice.getValue());
@@ -88,6 +118,11 @@ public class SettingsController {
         return options;
     }
 
+
+    /**
+     * inits Settings controller
+     */
+
     @FXML
     public void initialize() {
         setChoices();
@@ -95,6 +130,10 @@ public class SettingsController {
         setDefaultsChoices();
 
     }
+
+    /**
+     * Sets choices for user in GUI for Option class
+     */
 
     private void setChoices() {
         gameModeChoice.setItems(FXCollections.observableArrayList(
@@ -110,14 +149,22 @@ public class SettingsController {
         );
     }
 
+    /**
+     * When User doesn't choose anything, will start with these options.
+     */
+
     private void setDefaultsChoices() {
         gameModeChoice.setValue("Classic 15|15");
         versusModeChoice.setValue("Player VS Player");
         firstPlayerColorChoice.setValue("white");
     }
 
+    /**
+     * Method sets tooltips for user, if he does not understand what he has to choose.
+     */
+
     private void setTooltips() {
-        gameModeChoice.setTooltip(new Tooltip("choose game mode"));
+        gameModeChoice.setTooltip(new Tooltip("choose game mode, it tells you how much time you have"));
         firstPlayerColorChoice.setTooltip(new Tooltip("white starts"));
         versusModeChoice.setTooltip(new Tooltip("play vs computer or player"));
     }
