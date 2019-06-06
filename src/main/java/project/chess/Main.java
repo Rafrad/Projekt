@@ -40,7 +40,8 @@ public class Main extends Application {
     }
 
     /**
-     * This method doesn't allow to close application by accident
+     * This method doesn't allow to close application by accident.
+     * When closed, terminates every process.
      *
      * @param event window event
      */
@@ -65,7 +66,7 @@ public class Main extends Application {
         }
     }
 
-    
+
     public static void main(String[] args) {
         launch(args);
     }
