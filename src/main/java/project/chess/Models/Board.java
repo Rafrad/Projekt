@@ -6,11 +6,19 @@ import javafx.util.Pair;
 
 import java.util.List;
 
+/**
+ * Board class defines;
+ * main board - it is visible for user,
+ * board of possible moves - tells where single piece can move to,
+ * white player attack board - filled with attack of white player pieces
+ * black player attack board - filler with attack of black player pieces
+ */
+
 public class Board {
     public Piece[][] board;
     public Piece[][] boardOfPossibleMoves;
-    public Piece[][] whitePlayerAttackBoard;
-    public Piece[][] blackPlayerAttackBoard;
+    Piece[][] whitePlayerAttackBoard;
+    Piece[][] blackPlayerAttackBoard;
 
     public Board() throws PlayerColorException {
         board = new Piece[8][8];
@@ -22,6 +30,11 @@ public class Board {
         initEveryBoard();
     }
 
+
+    /**
+     * Init main board.
+     * @throws PlayerColorException thrown when piece has no player (white or black)
+     */
 
     private void initBoard() throws PlayerColorException {
         for (int i = 0; i < 8; i++) {
@@ -80,6 +93,10 @@ public class Board {
         }
     }
 
+    /**
+     * Inits boardOfPossibleMoves, whitePlayerAttackBoard, blackPlayerAttackBoard.
+     */
+
     private void initEveryBoard() {
         for (int row = 0; row < 8; row++) {
             System.arraycopy(board[row], 0, boardOfPossibleMoves[row], 0, 8);
@@ -99,6 +116,13 @@ public class Board {
     public Piece getPiece(int row, int column) {
         return board[row][column];
     }
+
+    /**
+     * Fills given board with mark movable tiles.
+     * @param list movement list
+     * @param boardChosen board given
+     * @param stack helps with filtering moves
+     */
 
     void addPossibleMoves(List<Pair<Integer, Integer>> list, String boardChosen, List<Pair<Integer, Integer>> stack) {
         Piece[][] boardToFill = getBoard(boardChosen);
@@ -139,11 +163,11 @@ public class Board {
 
 
     /**
-     * Made for development and tests
-     * @param boardToPrint board print kdas
+     * Made for development and tests.
+     * @param boardToPrint written in console
      */
 
-    public void printChosenBoard(Piece[][] boardToPrint) {
+    void printChosenBoard(Piece[][] boardToPrint) {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 boardToPrint[i][j].print();
