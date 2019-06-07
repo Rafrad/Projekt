@@ -50,6 +50,7 @@ public abstract class CustomClockAbstract implements CustomClock {
     /**
      * In some game modes, we have to add time in every move.
      * This method adds time to current time.
+     *
      * @param timeToAdd how much time is add to clock
      */
 

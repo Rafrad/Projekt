@@ -16,13 +16,15 @@ public class Move {
 
     /**
      * Main function of Move Class.
-     * Calculate moves available for given piece
+     * Calculate moves available for given piece.
+     * It contains moves which can trigger check, it is needed to filter them by Filter class.
      *
      * @param PieceRow          first coordinate of piece
      * @param PieceColumn       second coordinate of piece
      * @param playerAttackBoard w - white attack board will be filled, b - otherwise; default - it calculates moves for one piece and fills movable board
      * @param stack             stack is used
      * @return returns kappa
+     * @see Filter#filterMoves()
      */
 
 

@@ -33,6 +33,7 @@ public class Board {
 
     /**
      * Init main board.
+     *
      * @throws PlayerColorException thrown when piece has no player (white or black)
      */
 
@@ -119,9 +120,10 @@ public class Board {
 
     /**
      * Fills given board with mark movable tiles.
-     * @param list movement list
+     *
+     * @param list        movement list
      * @param boardChosen board given
-     * @param stack helps with filtering moves
+     * @param stack       helps with filtering moves
      */
 
     void addPossibleMoves(List<Pair<Integer, Integer>> list, String boardChosen, List<Pair<Integer, Integer>> stack) {
@@ -134,9 +136,9 @@ public class Board {
             column = pair.getValue();
 
 
-            if(boardToFill[row][column] instanceof EmptyTile) {
+            if (boardToFill[row][column] instanceof EmptyTile) {
                 boardToFill[row][column] = new Mark_MovableTile();
-            } else if(boardChosen.equals("w") || boardChosen.equals("b")){
+            } else if (boardChosen.equals("w") || boardChosen.equals("b")) {
                 stack.add(new Pair<>(row, column));
             } else {
                 boardToFill[row][column] = new Mark_MovableTile();
@@ -164,6 +166,7 @@ public class Board {
 
     /**
      * Made for development and tests.
+     *
      * @param boardToPrint written in console
      */
 

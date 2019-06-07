@@ -1,5 +1,9 @@
 package project.chess.Models;
 
+/**
+ * This is container class, which contains options needed game to be started.
+ */
+
 public class Options {
     private String gameMode;
     private String versusMode;

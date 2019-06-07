@@ -6,6 +6,11 @@ import project.chess.Models.Pieces.*;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * This class filter moves of single piece.
+ * Moves which can trigger check are deleted.
+ */
+
 public class Filter {
     private List<Pair<Integer, Integer>> listOfMoves;
     private int pieceRow;
@@ -23,6 +28,10 @@ public class Filter {
         this.pieceColumn = pieceColumn;
     }
 
+    /**
+     * Updates white king coordinates, but takes them from blackPlayerAttackBoard.
+     */
+
     private void updateWhiteKingCoordinates() {
         for (int row = 0; row < 8; row++) {
             for (int column = 0; column < 8; column++) {
@@ -36,6 +45,10 @@ public class Filter {
             }
         }
     }
+
+    /**
+     * Updates black king coordinates, but takes them from whitePlayerAttackBoard.
+     */
 
     private void updateBlackKingCoordinates() {
         for (int row = 0; row < 8; row++) {
@@ -52,6 +65,14 @@ public class Filter {
     }
 
 
+    /**
+     * It is main method in Filter class.
+     * First, moves are calculated in Move class, with calculateMoves method.
+     * It filters moves which triggers check.
+     *
+     * @return final movement of piece
+     * @see Move#CalculateMoves(int, int, java.lang.String, java.util.List)
+     */
 
     public List<Pair<Integer, Integer>> filterMoves() {
         List<Pair<Integer, Integer>> result = new LinkedList<>();
