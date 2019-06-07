@@ -5,6 +5,10 @@ import javafx.util.Pair;
 
 import java.util.List;
 
+/**
+ * Defines empty tile.
+ */
+
 public class EmptyTile implements Piece {
 
     /**

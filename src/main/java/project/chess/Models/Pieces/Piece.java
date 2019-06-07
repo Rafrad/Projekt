@@ -4,6 +4,10 @@ import javafx.util.Pair;
 
 import java.util.List;
 
+/**
+ * Defines single piece.
+ */
+
 public interface Piece {
     /**
      * We  start in (0, 0) and then moves are calculated;

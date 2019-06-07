@@ -4,6 +4,10 @@ import javafx.util.Pair;
 
 import java.util.List;
 
+/**
+ * Defines piece's movement.
+ */
+
 public class Mark_MovableTile implements Piece {
 
 
