@@ -44,6 +44,7 @@ public class Game {
 
 
     private void checkGameOver() {
+
         new Thread(() -> {
             int numberOfWhiteMoves = 0;
             int numberOfBlackMoves = 0;
@@ -65,9 +66,10 @@ public class Game {
                 blackClock.stop();
             }
         }).start();
+
     }
 
-    private int getNumberOfMoves(int numberOfMoves, int row, int column) {
+    public int getNumberOfMoves(int numberOfMoves, int row, int column) {
         List<Pair<Integer, Integer>> dummy = new LinkedList<>();
         List<Pair<Integer, Integer>> moves = moveClass.CalculateMoves(row, column, "", dummy);
 
@@ -107,14 +109,12 @@ public class Game {
             checkGameOver();
 
 
+
             currentlyPlayer = !currentlyPlayer;
         }
 
 
-//        playSound();
-//        mediaPlayer.play();
-//        new Thread(() -> mediaPlayer.play()).start();
-//        boardClass.printChosenBoard();
+        playSound();
         boardClass.clearPossibleMoves();
     }
 
@@ -260,7 +260,7 @@ public class Game {
     }
 
 
-    void fillBlackPlayerAttackBoard() {
+    public void fillBlackPlayerAttackBoard() {
         List<Pair<Integer, Integer>> stack = new LinkedList<>();
 
         for (int row = 0; row < 8; row++) {

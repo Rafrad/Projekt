@@ -25,15 +25,11 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.util.Pair;
 
-import javax.swing.plaf.UIResource;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.sql.Time;
+
 import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 public class GameController {
     @FXML
@@ -70,77 +66,181 @@ public class GameController {
     private Image blackPawnImage;
     private Image blackKingImage;
 
-    private Image whiteRook;
-    private Image whiteKnight;
-    private Image whiteBishop;
-    private Image whiteQueen;
-    private Image whitePawn;
-    private Image whiteKing;
+    private Image whiteRookImage;
+    private Image whiteKnightImage;
+    private Image whiteBishopImage;
+    private Image whiteQueenImage;
+    private Image whitePawnImage;
+    private Image whiteKingImage;
 
     private Image dot;
     private Image resignImage;
     private Image drawImage;
 
-    private StringBuilder history;
+    private StringBuilder historyString;
 
     private int playerTimeFromOptions;
     private int timePerRound;
 
-    private void showImageResignButton() {
-        resignButton.setGraphic(new ImageView(resignImage));
-    }
 
-    private void showImageDrawButton() {
-        drawButton.setGraphic(new ImageView(drawImage));
-    }
-
-    private int n = 0;
-    private int numberOfRounds = 1;
-
-
-    private void drawHistory(String string, boolean attack, boolean end) {
-
-        if(end) {
-            history.append('\n');
-            history.append('\n');
-            //inna czcionka??
-
-            history.append(string);
-            moveHistory.setText(history.toString());
-        } else {
-            if (n == 2) {
-                history.append(System.getProperty("line.separator"));
-                numberOfRounds++;
-                n = 0;
-                history.append(numberOfRounds).append(".     ");
-            } else if (n == 1) {
-                history.append("     ");
-            }
-
-            if(attack) {
-                history.append("x");
-            }
-
-            history.append(string);
-            moveHistory.setText(history.toString());
-            n++;
-
-//        listener is probably bugged and set text doesnt trigger it
-            moveHistory.appendText("");
-        }
-
-    }
+    /**
+     * This method inits GameController class.
+     *
+     * @param options they are set in SettingsController calss
+     * @throws PlayerColorException  thrown when piece does not know where belongs to (white or black)
+     * @throws MalformedURLException thrown to indicate that a malformed URL has occurred. Either no legal protocol could be found in a specification string or the string could not be parsed.
+     */
 
     void init(Options options) throws PlayerColorException, MalformedURLException {
         addListenerForMatchHistory();
-
 
         System.out.println(options.getGameMode());
         System.out.println(options.getVersusMode());
         System.out.println(options.getFirstPlayerColor());
 
-//        System.out.println(options.getGameMode().charAt(3));
+        setTime(options);
 
+        int minutes = playerTimeFromOptions / 60;
+        int seconds = playerTimeFromOptions - ((playerTimeFromOptions / 60) * 60);
+
+        whiteClockGUI.setText((minutes + " : " + seconds + "0"));
+        blackClockGUI.setText((minutes + " : " + seconds + "0"));
+
+
+        promotionFlagBlockingMove = false;
+        hidePromotionButtons();
+        backButton.setVisible(false);
+        moveHistory.setEditable(false);
+        historyString = new StringBuilder();
+        historyString.append(numberOfRounds).append(".     ");
+
+
+        setImageForPieces();
+        setImageForSupportComponents();
+        showImageDrawButton();
+        showImageResignButton();
+
+        Tile = new Pane[8][8];
+
+        setCustomClock();
+        InitializeTiles();
+        PaintBoard();
+        EmulateBoard();
+
+
+        setOnMouseClicked();
+    }
+
+    /**
+     * This method sets clocks how they behave.
+     * What clock does when time ends and what does every second.
+     * It also has helpful updateTime() method and works the same like onTimeStep() method
+     * but onTimeStep() cannot be used outside.
+     * updateTime() method should be deleted in future
+     *
+     * @throws PlayerColorException  thrown when piece does not know where belongs to (white or black)
+     * @throws MalformedURLException thrown to indicate that a malformed URL has occurred. Either no legal protocol could be found in a specification string or the string could not be parsed.
+     */
+
+    private void setCustomClock() throws PlayerColorException, MalformedURLException {
+        game = new Game(new CustomClockAbstract() {
+            @Override
+            public void setTime() {
+                time = playerTimeFromOptions;
+            }
+
+            @Override
+            protected void onTimeStep() {
+                int minutes = time / 60;
+                int tmp = time / 60;
+                int seconds = time - (tmp * 60);
+                if (seconds < 10) {
+                    whiteClockGUI.setText((minutes + " : 0" + seconds));
+                } else {
+                    whiteClockGUI.setText((minutes + " : " + seconds));
+                }
+            }
+
+            @Override
+            protected void onTimeEnd() {
+                whiteClockGUI.setText("0 : 00");
+                endGame();
+                drawHistory("BLACK WON. TIMEOUT!!", true);
+            }
+
+            @Override
+            public void updateTime() {
+                int tmp = time;
+                tmp /= 60;
+                int minutes = time / 60;
+                int seconds = time - (tmp * 60);
+                if (seconds < 10) {
+                    whiteClockGUI.setText((minutes + " : 0" + seconds));
+                } else {
+                    whiteClockGUI.setText((minutes + " : " + seconds));
+                }
+
+            }
+        }, new CustomClockAbstract() {
+            @Override
+            public void setTime() {
+                time = playerTimeFromOptions;
+            }
+
+            @Override
+            protected void onTimeStep() {
+                int minutes = time / 60;
+                int seconds = time - ((time / 60) * 60);
+                if (seconds < 10) {
+                    blackClockGUI.setText((minutes + " : 0" + seconds));
+                } else {
+                    blackClockGUI.setText((minutes + " : " + seconds));
+                }
+            }
+
+            @Override
+            protected void onTimeEnd() {
+                blackClockGUI.setText("0 : 00");
+                endGame();
+                drawHistory("WHITE WON. TIMEOUT!!", true);
+            }
+
+            @Override
+            public void updateTime() {
+                int minutes = time / 60;
+                int seconds = time - ((time / 60) * 60);
+                if (seconds < 10) {
+                    blackClockGUI.setText((minutes + " : 0" + seconds));
+                } else {
+                    blackClockGUI.setText((minutes + " : " + seconds));
+                }
+
+            }
+        });
+    }
+
+    /**
+     * Ends game (only in GUI) and stops clock.
+     * Sets isOver variable in game to true.
+     * @see Game#isOver
+     */
+
+    private void endGame() {
+        game.isOver = true;
+        game.whiteClock.stop();
+        game.blackClock.stop();
+//        EmulateBoard();
+//        PaintBoard();
+        hideRestButtons();
+        backButton.setVisible(true);
+    }
+
+    /**
+     * Sets time given by options.
+     * @param options should be set in SettingsController
+     */
+
+    private void setTime(Options options) {
         switch (options.getGameMode().charAt(2)) {
             case 'i':
                 playerTimeFromOptions = 3 * 60;
@@ -156,121 +256,69 @@ public class GameController {
                 break;
             case 'a':
                 playerTimeFromOptions = 15 * 60;
-//                playerTimeFromOptions = 11;
                 timePerRound = 15;
                 break;
         }
-
-        int minutes = playerTimeFromOptions/60;
-        int seconds = playerTimeFromOptions - ((playerTimeFromOptions / 60)  * 60);
-//        int seconds = 10;
-        whiteClockGUI.setText((minutes + " : " + seconds + "0"));
-        blackClockGUI.setText((minutes + " : " + seconds + "0"));
-
-
-
-
-        promotionFlagBlockingMove = false;
-        hidePromotionButtons();
-        backButton.setVisible(false);
-        moveHistory.setEditable(false);
-        history = new StringBuilder();
-        history.append(numberOfRounds).append(".     ");
-
-
-        setImageForPieces();
-        setImageForSupportComponents();
-        showImageDrawButton();
-        showImageResignButton();
-
-
-
-
-
-        Tile = new Pane[8][8];
-        game = new Game(new CustomClockAbstract() {
-            @Override
-            public void setTime() {
-                time = playerTimeFromOptions;
-            }
-
-            @Override
-            protected void onTimeStep() {
-                int minutes = time/60;
-                int seconds = time - ((time / 60)  * 60);
-                if(seconds < 10) {
-                    whiteClockGUI.setText((minutes + " : 0" + seconds));
-                } else {
-                    whiteClockGUI.setText((minutes + " : " + seconds));
-                }
-            }
-
-            @Override
-            protected void onTimeEnd() {
-                whiteClockGUI.setText("0 : 00");
-                game.isOver = true;
-                drawHistory("BLACK WON NO TIME ", false, true);
-            }
-
-            @Override
-            public void updateTime() {
-                int minutes = time/60;
-                int seconds = time - ((time / 60)  * 60);
-                if(seconds < 10) {
-                    whiteClockGUI.setText((minutes + " : 0" + seconds));
-                } else {
-                    whiteClockGUI.setText((minutes + " : " + seconds));
-                }
-
-            }
-        }, new CustomClockAbstract() {
-            @Override
-            public void setTime() {
-                time = playerTimeFromOptions;
-            }
-
-            @Override
-            protected void onTimeStep() {
-//                System.out.println("black player time: " + time);
-                int minutes = time/60;
-                int seconds = time - ((time / 60)  * 60);
-                if(seconds < 10) {
-                    blackClockGUI.setText((minutes + " : 0" + seconds));
-                } else {
-                    blackClockGUI.setText((minutes + " : " + seconds));
-                }
-            }
-
-            @Override
-            protected void onTimeEnd() {
-
-            }
-
-            @Override
-            public void updateTime() {
-                int minutes = time/60;
-                int seconds = time - ((time / 60)  * 60);
-                if(seconds < 10) {
-                    blackClockGUI.setText((minutes + " : 0" + seconds));
-                } else {
-                    blackClockGUI.setText((minutes + " : " + seconds));
-                }
-
-            }
-        });
-        InitializeTiles();
-        PaintBoard();
-        EmulateBoard();
-
-
-        setOnMouseClicked();
     }
 
+
+    //these variables are used ONLY in drawHistory() method,
+    private int whiteOrBlackRound = 0;
+    private int numberOfRounds = 1;
+
+
+    /**
+     * This method draws history to the right of the screen.
+     *
+     * @param string text to add
+     * @param end    checks if it is game over
+     */
+
+    private void drawHistory(String string, boolean end) {
+        if (end) {
+            historyString.append('\n');
+            historyString.append('\n');
+
+            historyString.append(string);
+            moveHistory.setText(historyString.toString());
+        } else {
+            if (whiteOrBlackRound == 2) {
+                historyString.append(System.getProperty("line.separator"));
+                numberOfRounds++;
+                whiteOrBlackRound = 0;
+                historyString.append(numberOfRounds).append(".     ");
+            } else if (whiteOrBlackRound == 1) {
+                historyString.append("     ");
+            }
+
+            historyString.append(string);
+            moveHistory.setText(historyString.toString());
+            whiteOrBlackRound++;
+
+//        listener is probably bugged and set text doesnt trigger it
+            moveHistory.appendText("");
+        }
+
+    }
+
+
+    /**
+     * This method checks if it need to scroll down automatically in match history text area.
+     */
 
     private void addListenerForMatchHistory() {
         moveHistory.textProperty().addListener((ChangeListener<Object>) (observable, oldValue, newValue) ->
                 moveHistory.setScrollTop(Double.MAX_VALUE));
     }
+
+    /**
+     * One of the main methods in controller.
+     * Defines what happens when we click on the empty tile, movable tile or piece.
+     *
+     * If we click on the empty tile, nothing happens. Only "empty tile" string is written in console.
+     *
+     *
+     */
 
     private void setOnMouseClicked() {
         for (int r = 0; r < 8; r++) {
@@ -279,35 +327,25 @@ public class GameController {
                 final int column = c;
 
                 Tile[row][column].setOnMouseClicked(mouseEvent -> {
-                    System.out.println("tera=================");
-//                    ClearPossibleMoves();
-                    game.boardClass.printChosenBoard(game.boardClass.boardOfPossibleMoves);
                     switch (game.boardClass.boardOfPossibleMoves[row][column].getClass().getSimpleName()) {
                         case "EmptyTile":
+
                             System.out.println("empty tile");
                             break;
                         case "Mark_MovableTile":
 
-
-
-
-
                             Pair<Integer, Integer> selectedPiece = getSelectedPiece();
-                            if(selectedPiece == null) break;
-                            assert selectedPiece != null;
-                            if(game.getCurrentPlayer()) {
+                            if (selectedPiece == null) break;
+                            if (game.getCurrentPlayer()) {
                                 game.whiteClock.setTimePerRound(timePerRound);
                                 game.whiteClock.updateTime();
                             } else {
                                 game.blackClock.setTimePerRound(timePerRound);
                                 game.blackClock.updateTime();
                             }
-//                            int selectedPieceRow = -1;
-//                            int selectedPieceColumn = -1;
-//                            if(selectedPiece != null) {
-                               int selectedPieceRow = selectedPiece.getKey();
-                               int  selectedPieceColumn = selectedPiece.getValue();
-//                            }
+
+                            int selectedPieceRow = selectedPiece.getKey();
+                            int selectedPieceColumn = selectedPiece.getValue();
 
 
                             boolean attack = false;
@@ -325,28 +363,35 @@ public class GameController {
                             PaintBoard();
                             EmulateBoard();
 
+                            checkGameOverv1();
+
+
 
                             if (game.boardClass.getPiece(row, column) instanceof WhiteKing
                                     || game.boardClass.getPiece(row, column) instanceof BlackKing) {
                                 if (column - selectedPieceColumn == 2) {
-                                    drawHistory("O - O", false, false);
+                                    drawHistory("O - O",  false);
                                 } else if (column - selectedPieceColumn == -2) {
-                                    drawHistory("O - O - O", false, false);
+                                    drawHistory("O - O - O", false);
                                 } else {
-                                    updateMatchHistory(row, column, attack);
+                                    updateMatchHistory(row, column,"");
                                 }
+                            } else if (checkGameOver()){
+                                endGame();
+                                updateMatchHistory(row, column,"++");
                             } else {
-                                updateMatchHistory(row, column, attack);
+                                if(attack) {
+                                    updateMatchHistory(row, column, "");
+                                }
+                                else {
+                                    updateMatchHistory(row, column,"");
+                                }
                             }
 
 
-//                            if (checkGameOver()) {
-//                                //TODO
-//                                //historia ruchow
-//                                hideRestButtons();
-//                                backButton.setVisible(true);
-//                            }
-                            game.boardClass.clearPossibleMoves();
+
+
+
                             break;
                         default:
                             if (game.getCurrentPlayer() == game.boardClass.board[row][column].getPlayer()
@@ -406,14 +451,15 @@ public class GameController {
         return moves;
     }
 
-    private void updateMatchHistory(int row, int column, boolean attack) {
+    private void updateMatchHistory(int row, int column,String somethingMore) {
         Piece piece = game.boardClass.getPiece(row, column);
         char unicode = piece.getUnicode();
 
-        String coordinates = String.valueOf(unicode) +
+        String coordinates = somethingMore +
+                String.valueOf(unicode) +
                 replaceToChessNotation(row, column);
 
-        drawHistory(coordinates, attack, false);
+        drawHistory(coordinates, false);
     }
 
     private void setImageForSupportComponents() {
@@ -430,12 +476,12 @@ public class GameController {
         blackKingImage = new Image("Images/black_king.png");
         blackPawnImage = new Image("Images/black_pawn.png");
 
-        whiteRook = new Image("Images/white_rook.png");
-        whiteKnight = new Image("Images/white_knight.png");
-        whiteBishop = new Image("Images/white_bishop.png");
-        whiteQueen = new Image("Images/white_queen.png");
-        whiteKing = new Image("Images/white_king.png");
-        whitePawn = new Image("Images/white_pawn.png");
+        whiteRookImage = new Image("Images/white_rook.png");
+        whiteKnightImage = new Image("Images/white_knight.png");
+        whiteBishopImage = new Image("Images/white_bishop.png");
+        whiteQueenImage = new Image("Images/white_queen.png");
+        whiteKingImage = new Image("Images/white_king.png");
+        whitePawnImage = new Image("Images/white_pawn.png");
     }
 
     private boolean promotionFlagBlockingMove;
@@ -463,11 +509,7 @@ public class GameController {
 
     @FXML
     private void resign() {
-        game.isOver = true;
-        EmulateBoard();
-        PaintBoard();
-        hideRestButtons();
-        backButton.setVisible(true);
+        endGame();
         //wypisanie w historii ruchow
     }
 
@@ -547,32 +589,32 @@ public class GameController {
                         tmp = new ImageView(blackPawnImage);
                         break;
                     case "WhitePawn":
-                        tmp = new ImageView(whitePawn);
+                        tmp = new ImageView(whitePawnImage);
                         break;
                     case "Rook":
                         if (((Rook) game.boardClass.board[row][column]).getPlayer()) {
-                            tmp = new ImageView(whiteRook);
+                            tmp = new ImageView(whiteRookImage);
                         } else {
                             tmp = new ImageView(blackRookImage);
                         }
                         break;
                     case "Knight":
                         if (((Knight) game.boardClass.board[row][column]).getPlayer()) {
-                            tmp = new ImageView(whiteKnight);
+                            tmp = new ImageView(whiteKnightImage);
                         } else {
                             tmp = new ImageView(blackKnightImage);
                         }
                         break;
                     case "Bishop":
                         if (((Bishop) game.boardClass.board[row][column]).getPlayer()) {
-                            tmp = new ImageView(whiteBishop);
+                            tmp = new ImageView(whiteBishopImage);
                         } else {
                             tmp = new ImageView(blackBishopImage);
                         }
                         break;
                     case "Queen":
                         if (((Queen) game.boardClass.board[row][column]).getPlayer()) {
-                            tmp = new ImageView(whiteQueen);
+                            tmp = new ImageView(whiteQueenImage);
                         } else {
                             tmp = new ImageView(blackQueenImage);
                         }
@@ -581,7 +623,7 @@ public class GameController {
                         tmp = new ImageView(blackKingImage);
                         break;
                     case "WhiteKing":
-                        tmp = new ImageView(whiteKing);
+                        tmp = new ImageView(whiteKingImage);
                         break;
                 }
 
@@ -630,8 +672,6 @@ public class GameController {
             }
         }
     }
-
-
 
 
     public void promoteToQueen() {
@@ -742,10 +782,10 @@ public class GameController {
     private void showPromotionButtons(boolean player) {
         promotionFlagBlockingMove = true;
         if (player) {
-            promoteToQueenButton.setGraphic(new ImageView(whiteQueen));
-            promoteToKnightButton.setGraphic(new ImageView(whiteKnight));
-            promoteToBishopButton.setGraphic(new ImageView(whiteBishop));
-            promoteToRookButton.setGraphic(new ImageView(whiteRook));
+            promoteToQueenButton.setGraphic(new ImageView(whiteQueenImage));
+            promoteToKnightButton.setGraphic(new ImageView(whiteKnightImage));
+            promoteToBishopButton.setGraphic(new ImageView(whiteBishopImage));
+            promoteToRookButton.setGraphic(new ImageView(whiteRookImage));
         } else {
             promoteToQueenButton.setGraphic(new ImageView(blackQueenImage));
             promoteToKnightButton.setGraphic(new ImageView(blackKnightImage));
@@ -776,5 +816,56 @@ public class GameController {
 
         return stringBuilder;
     }
+
+    private void showImageResignButton() {
+        resignButton.setGraphic(new ImageView(resignImage));
+    }
+
+    private void showImageDrawButton() {
+        drawButton.setGraphic(new ImageView(drawImage));
+    }
+
+
+
+    private void checkGameOverv1() {
+
+        new Thread(() -> {
+            int numberOfWhiteMoves = 0;
+            int numberOfBlackMoves = 0;
+
+            for (int row = 0; row < 8; row++) {
+                for (int column = 0; column < 8; column++) {
+                    if (game.boardClass.board[row][column].getPlayer()) {
+                        numberOfWhiteMoves = game.getNumberOfMoves(numberOfWhiteMoves, row, column);
+                    } else if (!game.boardClass.board[row][column].getPlayer()) {
+                        numberOfBlackMoves = game.getNumberOfMoves(numberOfBlackMoves, row, column);
+                    }
+
+                }
+            }
+
+            if (numberOfBlackMoves == 0 || numberOfWhiteMoves == 0) {
+                //stalemate
+//                for(int row = 0; row < 8; row ++) {
+//                    for(int column = 0; column < 8; column++) {
+//                        if(game.boardClass.board[row][column] instanceof WhiteKing) {
+//                            if(game.boardClass.[row][column])
+//                        }
+//                    }
+//                }
+                endGame();
+                game.whiteClock.stop();
+                game.blackClock.stop();
+                String player = "white";
+                if(game.getCurrentPlayer()) {
+                    player = "black";
+                }
+                drawHistory("         GAME OVER" + '\n'
+                        + player + " wins. CHECKMATE!", true);
+            }
+        }).start();
+
+    }
+
 
 }

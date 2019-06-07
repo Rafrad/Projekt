@@ -9,8 +9,8 @@ import java.util.List;
 public class Board {
     public Piece[][] board;
     public Piece[][] boardOfPossibleMoves;
-    Piece[][] whitePlayerAttackBoard;
-    Piece[][] blackPlayerAttackBoard;
+    public Piece[][] whitePlayerAttackBoard;
+    public Piece[][] blackPlayerAttackBoard;
 
     public Board() throws PlayerColorException {
         board = new Piece[8][8];
