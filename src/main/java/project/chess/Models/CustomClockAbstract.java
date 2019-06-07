@@ -4,15 +4,25 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Defines how player clock behaves.
+ */
+
 public abstract class CustomClockAbstract implements CustomClock {
     private ScheduledExecutorService executorService;
-    public int time = 0;
+    protected int time;
+
+    /**
+     * This method is called every second passed in clock/
+     */
 
     protected abstract void onTimeStep();
 
-    protected abstract void onTimeEnd();
+    /**
+     * This method is called when time in clock ends.
+     */
 
-//    protected abstract void updateTime();
+    protected abstract void onTimeEnd();
 
     @Override
     public void stop() {
@@ -35,8 +45,13 @@ public abstract class CustomClockAbstract implements CustomClock {
 
     @Override
     public void setTime() {
-        this.time = time;
     }
+
+    /**
+     * In some game modes, we have to add time in every move.
+     * This method adds time to current time.
+     * @param timeToAdd how much time is add to clock
+     */
 
     @Override
     public void setTimePerRound(int timeToAdd) {

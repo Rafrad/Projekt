@@ -1,5 +1,9 @@
 package project.chess.Models;
 
+/**
+ * Defines simple clock.
+ */
+
 public interface CustomClock {
     void stop();
     void start();
