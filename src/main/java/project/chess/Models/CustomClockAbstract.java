@@ -63,4 +63,5 @@ public abstract class CustomClockAbstract implements CustomClock {
     public void updateTime() {
 
     }
+
 }

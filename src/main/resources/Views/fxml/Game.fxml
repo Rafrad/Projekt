@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
+<?import javafx.scene.image.*?>
+
 <?import javafx.scene.control.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane fx:id="anchor" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="725.0" prefWidth="1052.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="project.chess.Controllers.GameController">
+<AnchorPane fx:id="anchor" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="725.0" prefWidth="1052.0" style="-fx-background-color: #5A5A5A;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="project.chess.Controllers.GameController">
    <children>
        <GridPane fx:id="gridPane" alignment="TOP_CENTER" gridLinesVisible="true" layoutX="223.0" layoutY="43.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="562.0" prefWidth="564.0" AnchorPane.bottomAnchor="157.0" AnchorPane.leftAnchor="223.0" AnchorPane.rightAnchor="407.0" AnchorPane.topAnchor="43.0">
          <columnConstraints>
@@ -29,9 +30,12 @@
              <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="70.0" vgrow="SOMETIMES" />
          </rowConstraints>
        </GridPane>
-       <HBox alignment="CENTER" layoutX="154.0" layoutY="-11.0" prefHeight="50.0" prefWidth="571.0">
+       <HBox alignment="CENTER" layoutX="117.0" layoutY="-1.0" prefHeight="50.0" prefWidth="571.0">
           <children>
-              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="WRÓG OPONENT" wrappingWidth="119.5400390625" />
+              <Text fx:id="secondPlayer" fill="#15ccb1" strokeType="OUTSIDE" strokeWidth="0.0" text="sample text" textAlignment="CENTER" wrappingWidth="331.5400390625">
+               <font>
+                  <Font name="DejaVu Sans Condensed Bold" size="24.0" />
+               </font></Text>
           </children>
        </HBox>
        <GridPane layoutX="14.0" layoutY="176.0" prefHeight="329.0" prefWidth="93.0" AnchorPane.bottomAnchor="180.0" AnchorPane.topAnchor="180.0">
@@ -52,16 +56,27 @@
               <Button fx:id="promoteToKnightButton" mnemonicParsing="false" onAction="#promoteToKnight" prefHeight="54.0" prefWidth="62.0" GridPane.rowIndex="2" />
           </children>
        </GridPane>
-      <Button fx:id="resignButton" layoutX="748.0" layoutY="75.0" mnemonicParsing="false" onAction="#resign" prefHeight="39.0" prefWidth="56.0" AnchorPane.bottomAnchor="600.0" AnchorPane.topAnchor="100.0" />
-      <Button fx:id="drawButton" layoutX="758.0" layoutY="521.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="37.0" />
-      <Button fx:id="backButton" layoutX="872.0" layoutY="474.0" mnemonicParsing="false" onAction="#changeSceneToSettings" text="back" />
+      <Button fx:id="backButton" layoutX="842.0" layoutY="469.0" mnemonicParsing="false" onAction="#changeSceneToSettings" text="back to menu" />
       <TextArea fx:id="moveHistory" layoutX="823.0" layoutY="183.0" prefHeight="246.0" prefWidth="148.0" />
-      <HBox alignment="CENTER" layoutX="149.0" layoutY="592.0" prefHeight="68.0" prefWidth="571.0">
+      <HBox alignment="CENTER" layoutX="117.0" layoutY="592.0" prefHeight="68.0" prefWidth="571.0">
          <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="COSTAM" />
+            <Text fx:id="firstPlayer" fill="#15ccb1" strokeType="OUTSIDE" strokeWidth="0.0" text="sample text">
+               <font>
+                  <Font name="DejaVu Sans Condensed Bold" size="24.0" />
+               </font></Text>
          </children>
       </HBox>
-      <Text fx:id="blackClockGUI" layoutX="740.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="66.0" AnchorPane.bottomAnchor="691.2353515625" AnchorPane.leftAnchor="740.0" AnchorPane.rightAnchor="246.0" AnchorPane.topAnchor="13.8134765625" />
-      <Text fx:id="whiteClockGUI" layoutX="740.0" layoutY="642.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="66.0" AnchorPane.bottomAnchor="79.2353515625" AnchorPane.leftAnchor="740.0" AnchorPane.rightAnchor="246.0" AnchorPane.topAnchor="625.8134765625" />
+      <Text fx:id="blackClockGUI" fill="WHITE" layoutX="740.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TIME" wrappingWidth="66.0" AnchorPane.bottomAnchor="691.2353515625" AnchorPane.leftAnchor="740.0" AnchorPane.rightAnchor="246.0" AnchorPane.topAnchor="13.8134765625" />
+      <Text fx:id="whiteClockGUI" fill="WHITE" layoutX="740.0" layoutY="642.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TIME" wrappingWidth="66.0" AnchorPane.bottomAnchor="79.2353515625" AnchorPane.leftAnchor="740.0" AnchorPane.rightAnchor="246.0" AnchorPane.topAnchor="625.8134765625" />
+      <ImageView fx:id="resignButton" fitHeight="50.0" fitWidth="100.0" layoutX="753.0" layoutY="67.0" onMouseClicked="#resign" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="750.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="100.0">
+         <image>
+            <Image url="@../../Images/resign.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="drawButton" fitHeight="50.0" fitWidth="100.0" layoutX="703.0" layoutY="470.0" onMouseClicked="#draw" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="750.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="525.0">
+         <image>
+            <Image url="@../../Images/draw.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

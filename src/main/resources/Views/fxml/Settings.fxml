@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+
 <?import javafx.geometry.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
@@ -9,13 +10,13 @@
    <children>
       <StackPane layoutX="6.0" layoutY="7.0" prefHeight="392.0" prefWidth="585.0">
          <children>
-            <Text strokeType="INSIDE" strokeWidth="0.0" text="versus" textAlignment="CENTER" wrappingWidth="239.6708984375" StackPane.alignment="CENTER" />
+            <Text strokeType="INSIDE" strokeWidth="0.0" text="player 1" textAlignment="CENTER" wrappingWidth="239.6708984375" StackPane.alignment="CENTER" />
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="game mode" StackPane.alignment="CENTER">
                <StackPane.margin>
                   <Insets top="-310.0" />
                </StackPane.margin>
             </Text>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="player 1" StackPane.alignment="CENTER">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="versus" StackPane.alignment="CENTER">
                <StackPane.margin>
                   <Insets top="200.0" />
                </StackPane.margin>

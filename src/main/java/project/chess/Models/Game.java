@@ -23,9 +23,9 @@ public class Game {
     public CustomClock whiteClock;
     public CustomClock blackClock;
 
-    private MediaPlayer mediaPlayer;
 
-    public Game(CustomClock whiteClock, CustomClock blackClock) throws PlayerColorException, MalformedURLException {
+
+    public Game(CustomClock whiteClock, CustomClock blackClock) throws PlayerColorException {
         boardClass = new Board();
         moveClass = new Move(boardClass);
         boardClass.printChosenBoard(boardClass.board);
@@ -38,8 +38,6 @@ public class Game {
         blackClock.setTime();
         whiteClock.start();
 
-        Media sound = new Media(new File("src\\main\\resources\\ruch.mp3").toURI().toURL().toString());
-        mediaPlayer = new MediaPlayer(sound);
     }
 
 
@@ -90,7 +88,7 @@ public class Game {
     }
 
 
-    public void move(int row, int column, int rowDestination, int columnDestination) throws MalformedURLException {
+    public void move(int row, int column, int rowDestination, int columnDestination) {
         deleteEnPassant();
         checkPromotions(row, column, rowDestination);
 
@@ -114,13 +112,10 @@ public class Game {
         }
 
 
-        playSound();
         boardClass.clearPossibleMoves();
     }
 
-    private void playSound() {
-        new Thread(() -> mediaPlayer.play()).start();
-    }
+
 
     private void swapClocks(Piece piece) {
         if (piece.getPlayer()) {
@@ -260,7 +255,7 @@ public class Game {
     }
 
 
-    public void fillBlackPlayerAttackBoard() {
+    void fillBlackPlayerAttackBoard() {
         List<Pair<Integer, Integer>> stack = new LinkedList<>();
 
         for (int row = 0; row < 8; row++) {

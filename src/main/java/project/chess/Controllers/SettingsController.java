@@ -41,6 +41,9 @@ public class SettingsController {
 
     /**
      * When this method is called, it will change the Scene to main menu
+     *
+     * @param event action event
+     * @throws IOException thrown when MainMenu.fxml view is not found
      */
 
     public void changeSceneToMainMenu(ActionEvent event) throws IOException {
@@ -54,6 +57,10 @@ public class SettingsController {
 
     /**
      * When this method is called, it will change the Scene to a Game
+     *
+     * @param event action event
+     * @throws IOException          thrown when loader cannot find Game.fxml view
+     * @throws PlayerColorException thrown when pieces don't know where they belong to in init method
      */
 
     public void startGame(ActionEvent event) throws IOException, PlayerColorException {

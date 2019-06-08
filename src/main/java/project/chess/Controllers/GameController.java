@@ -10,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -25,6 +26,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.util.Pair;
 
+
+import javafx.scene.paint.Color;
 import java.io.IOException;
 import java.net.MalformedURLException;
 
@@ -45,9 +48,9 @@ public class GameController {
     @FXML
     private Button promoteToQueenButton;
     @FXML
-    private Button resignButton;
+    private ImageView resignButton;
     @FXML
-    private Button drawButton;
+    private ImageView drawButton;
     @FXML
     private Button backButton;
     @FXML
@@ -55,7 +58,12 @@ public class GameController {
 
     @FXML
     public Text whiteClockGUI;
+    @FXML
     public Text blackClockGUI;
+    @FXML
+    private Text firstPlayer;
+    @FXML
+    private Text secondPlayer;
 
     private Game game;
 
@@ -74,8 +82,6 @@ public class GameController {
     private Image whiteKingImage;
 
     private Image dot;
-    private Image resignImage;
-    private Image drawImage;
 
     private StringBuilder historyString;
 
@@ -98,6 +104,8 @@ public class GameController {
         System.out.println(options.getVersusMode());
         System.out.println(options.getFirstPlayerColor());
 
+        setPlayerText(options);
+
         setTime(options);
 
         int minutes = playerTimeFromOptions / 60;
@@ -117,8 +125,6 @@ public class GameController {
 
         setImageForPieces();
         setImageForSupportComponents();
-        showImageDrawButton();
-        showImageResignButton();
 
         Tile = new Pane[8][8];
 
@@ -130,6 +136,25 @@ public class GameController {
 
         setOnMouseClicked();
     }
+
+    private void setPlayerText(Options options) {
+        if(options.getFirstPlayerColor().equals("white")) {
+            firstPlayer.setText("Player 1");
+            if(options.getVersusMode().equals("Player VS Player")) {
+                secondPlayer.setText("Player 2");
+            } else {
+                secondPlayer.setText("Computer");
+            }
+        } else {
+            secondPlayer.setText("Player 1");
+            if(options.getVersusMode().equals("Player VS Player")) {
+                firstPlayer.setText("Player 2");
+            } else {
+                firstPlayer.setText("Computer");
+            }
+        }
+    }
+
 
     /**
      * This method sets clocks how they behave.
@@ -226,11 +251,14 @@ public class GameController {
      */
 
     private void endGame() {
+        if(game.getCurrentPlayer()) {
+            game.whiteClock.stop();
+        } else {
+            game.blackClock.stop();
+        }
+
         game.isOver = true;
-        game.whiteClock.stop();
-        game.blackClock.stop();
-//        EmulateBoard();
-//        PaintBoard();
+
         hideRestButtons();
         backButton.setVisible(true);
     }
@@ -353,11 +381,7 @@ public class GameController {
                                 attack = true;
                             }
 
-                            try {
-                                game.move(selectedPieceRow, selectedPieceColumn, row, column);
-                            } catch (MalformedURLException e) {
-                                e.printStackTrace();
-                            }
+                            game.move(selectedPieceRow, selectedPieceColumn, row, column);
 
                             ClearPossibleMoves();
                             PaintBoard();
@@ -456,7 +480,7 @@ public class GameController {
         char unicode = piece.getUnicode();
 
         String coordinates = somethingMore +
-                String.valueOf(unicode) +
+                unicode +
                 replaceToChessNotation(row, column);
 
         drawHistory(coordinates, false);
@@ -464,8 +488,6 @@ public class GameController {
 
     private void setImageForSupportComponents() {
         dot = new Image("Images/dot.png");
-        resignImage = new Image("Images/resign.png");
-        drawImage = new Image("Images/draw.png");
     }
 
     private void setImageForPieces() {
@@ -509,8 +531,24 @@ public class GameController {
 
     @FXML
     private void resign() {
+        String player;
+        if(game.getCurrentPlayer()) {
+            player = "black";
+        } else {
+            player = "white";
+        }
+
+        drawHistory("         GAME OVER" + '\n'
+                + player + " wins by RESIGN!", true);
         endGame();
-        //wypisanie w historii ruchow
+    }
+
+
+    @FXML
+    private void draw() {
+        drawHistory("         GAME OVER" + '\n'
+                 + "             DRAW!", true);
+        endGame();
     }
 
 
@@ -592,28 +630,28 @@ public class GameController {
                         tmp = new ImageView(whitePawnImage);
                         break;
                     case "Rook":
-                        if (((Rook) game.boardClass.board[row][column]).getPlayer()) {
+                        if (game.boardClass.board[row][column].getPlayer()) {
                             tmp = new ImageView(whiteRookImage);
                         } else {
                             tmp = new ImageView(blackRookImage);
                         }
                         break;
                     case "Knight":
-                        if (((Knight) game.boardClass.board[row][column]).getPlayer()) {
+                        if (game.boardClass.board[row][column].getPlayer()) {
                             tmp = new ImageView(whiteKnightImage);
                         } else {
                             tmp = new ImageView(blackKnightImage);
                         }
                         break;
                     case "Bishop":
-                        if (((Bishop) game.boardClass.board[row][column]).getPlayer()) {
+                        if (game.boardClass.board[row][column].getPlayer()) {
                             tmp = new ImageView(whiteBishopImage);
                         } else {
                             tmp = new ImageView(blackBishopImage);
                         }
                         break;
                     case "Queen":
-                        if (((Queen) game.boardClass.board[row][column]).getPlayer()) {
+                        if (game.boardClass.board[row][column].getPlayer()) {
                             tmp = new ImageView(whiteQueenImage);
                         } else {
                             tmp = new ImageView(blackQueenImage);
@@ -640,13 +678,7 @@ public class GameController {
         checkPromotionBox();
     }
 
-    private ImageView emulateTileImage(int row, int column, ImageView tmp) {
-        if (!(game.boardClass.getPiece(row, column) instanceof EmptyTile)) {
 
-//            tmp = game.boardClass.board[row][column].getImageView();
-        }
-        return tmp;
-    }
 
     private void removeImagesFromTile(Pane pane) {
         while (!pane.getChildren().isEmpty()) {
@@ -817,13 +849,13 @@ public class GameController {
         return stringBuilder;
     }
 
-    private void showImageResignButton() {
-        resignButton.setGraphic(new ImageView(resignImage));
-    }
+//    private void showImageResignButton() {
+//        resignButton.setGraphic(new ImageView(resignImage));
+//    }
 
-    private void showImageDrawButton() {
-        drawButton.setGraphic(new ImageView(drawImage));
-    }
+//    private void showImageDrawButton() {
+//        drawButton.setGraphic(new ImageView(drawImage));
+//    }
 
 
 
