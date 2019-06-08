@@ -26,7 +26,6 @@ import javafx.scene.layout.Pane;
 import javafx.util.Pair;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -91,7 +90,6 @@ public class GameController {
      *
      * @param options they are set in SettingsController calss
      * @throws PlayerColorException  thrown when piece does not know where belongs to (white or black)
-     * @throws MalformedURLException thrown to indicate that a malformed URL has occurred. Either no legal protocol could be found in a specification string or the string could not be parsed.
      */
 
     void init(Options options) throws PlayerColorException {
