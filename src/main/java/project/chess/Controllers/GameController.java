@@ -10,7 +10,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -26,8 +25,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.util.Pair;
 
-
-import javafx.scene.paint.Color;
 import java.io.IOException;
 import java.net.MalformedURLException;
 
@@ -97,7 +94,7 @@ public class GameController {
      * @throws MalformedURLException thrown to indicate that a malformed URL has occurred. Either no legal protocol could be found in a specification string or the string could not be parsed.
      */
 
-    void init(Options options) throws PlayerColorException, MalformedURLException {
+    void init(Options options) throws PlayerColorException {
         addListenerForMatchHistory();
 
         System.out.println(options.getGameMode());
@@ -138,16 +135,16 @@ public class GameController {
     }
 
     private void setPlayerText(Options options) {
-        if(options.getFirstPlayerColor().equals("white")) {
+        if (options.getFirstPlayerColor().equals("white")) {
             firstPlayer.setText("Player 1");
-            if(options.getVersusMode().equals("Player VS Player")) {
+            if (options.getVersusMode().equals("Player VS Player")) {
                 secondPlayer.setText("Player 2");
             } else {
                 secondPlayer.setText("Computer");
             }
         } else {
             secondPlayer.setText("Player 1");
-            if(options.getVersusMode().equals("Player VS Player")) {
+            if (options.getVersusMode().equals("Player VS Player")) {
                 firstPlayer.setText("Player 2");
             } else {
                 firstPlayer.setText("Computer");
@@ -163,11 +160,10 @@ public class GameController {
      * but onTimeStep() cannot be used outside.
      * updateTime() method should be deleted in future
      *
-     * @throws PlayerColorException  thrown when piece does not know where belongs to (white or black)
-     * @throws MalformedURLException thrown to indicate that a malformed URL has occurred. Either no legal protocol could be found in a specification string or the string could not be parsed.
+     * @throws PlayerColorException thrown when piece does not know where belongs to (white or black)
      */
 
-    private void setCustomClock() throws PlayerColorException, MalformedURLException {
+    private void setCustomClock() throws PlayerColorException {
         game = new Game(new CustomClockAbstract() {
             @Override
             public void setTime() {
@@ -247,11 +243,12 @@ public class GameController {
     /**
      * Ends game (only in GUI) and stops clock.
      * Sets isOver variable in game to true.
+     *
      * @see Game#isOver
      */
 
     private void endGame() {
-        if(game.getCurrentPlayer()) {
+        if (game.getCurrentPlayer()) {
             game.whiteClock.stop();
         } else {
             game.blackClock.stop();
@@ -265,6 +262,7 @@ public class GameController {
 
     /**
      * Sets time given by options.
+     *
      * @param options should be set in SettingsController
      */
 
@@ -342,10 +340,8 @@ public class GameController {
     /**
      * One of the main methods in controller.
      * Defines what happens when we click on the empty tile, movable tile or piece.
-     *
+     * <p>
      * If we click on the empty tile, nothing happens. Only "empty tile" string is written in console.
-     *
-     *
      */
 
     private void setOnMouseClicked() {
@@ -387,33 +383,28 @@ public class GameController {
                             PaintBoard();
                             EmulateBoard();
 
-                            checkGameOverv1();
-
+                            isGameOver();
 
 
                             if (game.boardClass.getPiece(row, column) instanceof WhiteKing
                                     || game.boardClass.getPiece(row, column) instanceof BlackKing) {
                                 if (column - selectedPieceColumn == 2) {
-                                    drawHistory("O - O",  false);
+                                    drawHistory("O - O", false);
                                 } else if (column - selectedPieceColumn == -2) {
                                     drawHistory("O - O - O", false);
                                 } else {
-                                    updateMatchHistory(row, column,"");
-                                }
-                            } else if (checkGameOver()){
-                                endGame();
-                                updateMatchHistory(row, column,"++");
-                            } else {
-                                if(attack) {
                                     updateMatchHistory(row, column, "");
                                 }
-                                else {
-                                    updateMatchHistory(row, column,"");
+                            } else if (checkGameOver()) {
+                                endGame();
+                                updateMatchHistory(row, column, "++");
+                            } else {
+                                if (attack) {
+                                    updateMatchHistory(row, column, "");
+                                } else {
+                                    updateMatchHistory(row, column, "");
                                 }
                             }
-
-
-
 
 
                             break;
@@ -421,8 +412,6 @@ public class GameController {
                             if (game.getCurrentPlayer() == game.boardClass.board[row][column].getPlayer()
                                     && !game.isOver) {
                                 if (!promotionFlagBlockingMove) {
-
-//                                    game.boardClass.printChosenBoard(game.boardClass.boardOfPossibleMoves);
                                     PaintBoard();
                                     ClearPossibleMoves();
 
@@ -455,6 +444,16 @@ public class GameController {
         }
     }
 
+    /**
+     * This method filters moves which trigger check
+     *
+     * @param row    piece row
+     * @param column piece column
+     * @param moves  piece movement, calculated with calculateMoves method in Move class
+     * @return final movement
+     * @see Move#CalculateMoves(int, int, java.lang.String, java.util.List)
+     */
+
     private List<Pair<Integer, Integer>> filterMoves(int row, int column, List<Pair<Integer, Integer>> moves) {
         return mainFiler(row, column, moves, game);
     }
@@ -471,11 +470,10 @@ public class GameController {
 
             game.boardClass.boardOfPossibleMoves[rowMove][columnMove] = new Mark_MovableTile();
         }
-//        System.out.println(moves.size());
         return moves;
     }
 
-    private void updateMatchHistory(int row, int column,String somethingMore) {
+    private void updateMatchHistory(int row, int column, String somethingMore) {
         Piece piece = game.boardClass.getPiece(row, column);
         char unicode = piece.getUnicode();
 
@@ -532,7 +530,7 @@ public class GameController {
     @FXML
     private void resign() {
         String player;
-        if(game.getCurrentPlayer()) {
+        if (game.getCurrentPlayer()) {
             player = "black";
         } else {
             player = "white";
@@ -544,10 +542,14 @@ public class GameController {
     }
 
 
+    /**
+     * draws game
+     */
+
     @FXML
     private void draw() {
         drawHistory("         GAME OVER" + '\n'
-                 + "             DRAW!", true);
+                + "             DRAW!", true);
         endGame();
     }
 
@@ -555,6 +557,14 @@ public class GameController {
     private boolean checkGameOver() {
         return game.isOver;
     }
+
+    /**
+     * This method changes game scene to settings scene, by clicking back button.
+     * It includes changing width, height and set scene to center of the screen.
+     *
+     * @param event action
+     * @throws IOException thrown when Settings.fxml view cannot be find by loader
+     */
 
     public void changeSceneToSettings(Event event) throws IOException {
         Parent tableViewParent = FXMLLoader.load(getClass().getResource("/Views/fxml/Settings.fxml"));
@@ -617,6 +627,12 @@ public class GameController {
     }
 
 
+    /**
+     * Emulates board with board in Board class.
+     *
+     * @see project.chess.Models.Board
+     */
+
     private void EmulateBoard() {
         for (int row = 0; row < 8; row++) {
             for (int column = 0; column < 8; column++) {
@@ -666,8 +682,6 @@ public class GameController {
                 }
 
 
-//                tmp = emulateTileImage(row, column, tmp);
-
                 if (tmp != null) {
                     Tile[row][column].getChildren().add(tmp);
                 }
@@ -677,7 +691,6 @@ public class GameController {
 
         checkPromotionBox();
     }
-
 
 
     private void removeImagesFromTile(Pane pane) {
@@ -849,17 +862,8 @@ public class GameController {
         return stringBuilder;
     }
 
-//    private void showImageResignButton() {
-//        resignButton.setGraphic(new ImageView(resignImage));
-//    }
 
-//    private void showImageDrawButton() {
-//        drawButton.setGraphic(new ImageView(drawImage));
-//    }
-
-
-
-    private void checkGameOverv1() {
+    private void isGameOver() {
 
         new Thread(() -> {
             int numberOfWhiteMoves = 0;
@@ -878,18 +882,13 @@ public class GameController {
 
             if (numberOfBlackMoves == 0 || numberOfWhiteMoves == 0) {
                 //stalemate
-//                for(int row = 0; row < 8; row ++) {
-//                    for(int column = 0; column < 8; column++) {
-//                        if(game.boardClass.board[row][column] instanceof WhiteKing) {
-//                            if(game.boardClass.[row][column])
-//                        }
-//                    }
-//                }
+                //...
+                //game over
                 endGame();
                 game.whiteClock.stop();
                 game.blackClock.stop();
                 String player = "white";
-                if(game.getCurrentPlayer()) {
+                if (game.getCurrentPlayer()) {
                     player = "black";
                 }
                 drawHistory("         GAME OVER" + '\n'
