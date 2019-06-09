@@ -268,7 +268,7 @@ public class GameController {
         switch (options.getGameMode().charAt(2)) {
             case 'i':
                 playerTimeFromOptions = 3 * 60;
-                timePerRound = 2;
+                timePerRound = 2 + 1;
                 break;
             case 'l':
                 playerTimeFromOptions = 60;
@@ -280,7 +280,7 @@ public class GameController {
                 break;
             case 'a':
                 playerTimeFromOptions = 15 * 60;
-                timePerRound = 15;
+                timePerRound = 15 + 1;
                 break;
         }
     }
