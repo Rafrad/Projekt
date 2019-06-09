@@ -878,6 +878,8 @@ public class GameController {
                 }
             }
 
+
+
             if (numberOfBlackMoves == 0 || numberOfWhiteMoves == 0) {
                 //stalemate
                 //...
@@ -889,8 +891,42 @@ public class GameController {
                 if (game.getCurrentPlayer()) {
                     player = "black";
                 }
-                drawHistory("         GAME OVER" + '\n'
-                        + player + " wins. CHECKMATE!", true);
+
+                System.out.println("white attack: ");
+                game.boardClass.printChosenBoard(game.boardClass.whitePlayerAttackBoard);
+                System.out.println();
+                System.out.println("black attack: ");
+                game.boardClass.printChosenBoard(game.boardClass.blackPlayerAttackBoard);
+                System.out.println();
+
+                int whiteRow = 0;
+                int whiteColumn = 0;
+                int blackRow = 0;
+                int blackColumn = 0;
+
+                for(int row = 0; row < 8; row++) {
+                    for(int column = 0; column < 8; column++) {
+                        if(game.boardClass.board[row][column] instanceof WhiteKing) {
+                            whiteRow = row;
+                            whiteColumn = column;
+                        } else if(game.boardClass.board[row][column] instanceof BlackKing) {
+                            blackRow = row;
+                            blackColumn = column;
+                        }
+                    }
+                }
+
+                if(!(game.boardClass.whitePlayerAttackBoard[blackRow][blackColumn] instanceof Mark_MovableTile)) {
+                    drawHistory("pat i chuj", true);
+                } else if(!(game.boardClass.blackPlayerAttackBoard[whiteRow][whiteColumn] instanceof  Mark_MovableTile)) {
+                    drawHistory("pat i chuj blak", true);
+                } else {
+                    drawHistory("         GAME OVER" + '\n'
+                            + player + " wins. CHECKMATE!", true);
+                }
+
+            } else {
+                game.isOver = false;
             }
         }).start();
 

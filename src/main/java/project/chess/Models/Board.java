@@ -17,8 +17,8 @@ import java.util.List;
 public class Board {
     public Piece[][] board;
     public Piece[][] boardOfPossibleMoves;
-    Piece[][] whitePlayerAttackBoard;
-    Piece[][] blackPlayerAttackBoard;
+    public Piece[][] whitePlayerAttackBoard;
+    public Piece[][] blackPlayerAttackBoard;
 
     public Board() throws PlayerColorException {
         board = new Piece[8][8];
@@ -170,7 +170,7 @@ public class Board {
      * @param boardToPrint written in console
      */
 
-    void printChosenBoard(Piece[][] boardToPrint) {
+    public void printChosenBoard(Piece[][] boardToPrint) {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 boardToPrint[i][j].print();
