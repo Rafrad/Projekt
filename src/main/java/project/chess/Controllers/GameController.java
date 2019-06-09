@@ -917,9 +917,9 @@ public class GameController {
                 }
 
                 if(!(game.boardClass.whitePlayerAttackBoard[blackRow][blackColumn] instanceof Mark_MovableTile)) {
-                    drawHistory("pat i chuj", true);
+                    drawHistory("         STALEMATE", true);
                 } else if(!(game.boardClass.blackPlayerAttackBoard[whiteRow][whiteColumn] instanceof  Mark_MovableTile)) {
-                    drawHistory("pat i chuj blak", true);
+                    drawHistory("         STALEMATE", true);
                 } else {
                     drawHistory("         GAME OVER" + '\n'
                             + player + " wins. CHECKMATE!", true);
