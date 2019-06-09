@@ -1,17 +1,18 @@
 package project.chess.Models;
 
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.util.Pair;
+import project.chess.Controllers.GameController;
 import project.chess.Exceptions.PlayerColorException;
 import project.chess.Models.Pieces.*;
 
-
-import java.io.File;
-import java.net.MalformedURLException;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * This class defines almost every behaviour of the game.
+ * Changes have direct effect on GameController class
+ * @see GameController
+ */
 
 public class Game {
     private boolean currentlyPlayer;
@@ -41,6 +42,10 @@ public class Game {
     }
 
 
+    /**
+     * Creates new thread. May be bugged.
+     */
+
     private void checkGameOver() {
 
         new Thread(() -> {
@@ -67,6 +72,7 @@ public class Game {
 
     }
 
+
     public int getNumberOfMoves(int numberOfMoves, int row, int column) {
         List<Pair<Integer, Integer>> dummy = new LinkedList<>();
         List<Pair<Integer, Integer>> moves = moveClass.CalculateMoves(row, column, "", dummy);
@@ -78,6 +84,7 @@ public class Game {
         boardClass.clearPossibleMoves();
         return numberOfMoves;
     }
+
 
     private void checkPromotions(int row, int column, int rowDestination) {
         if (rowDestination == 0 && boardClass.getPiece(row, column).getClass().getSimpleName().equals("WhitePawn")) {

@@ -5,6 +5,7 @@ import javafx.util.Pair;
 
 import java.util.*;
 
+
 public class Move {
     private Board boardClass;
     private boolean attack;
@@ -134,8 +135,6 @@ public class Move {
         String nameOfCheck = check.getClass().getSimpleName();
 
 
-//        if (nameOfChosenPiece.equals("BlackPawn") || nameOfChosenPiece.equals("WhitePawn")) {
-
         removeWhiteEnPassant(PieceRow, PieceColumn, playerAttackBoard, nameOfChosenPiece, availableMoves);
         removeBlackEnPassant(PieceRow, PieceColumn, playerAttackBoard, nameOfChosenPiece, availableMoves);
 
@@ -166,7 +165,6 @@ public class Move {
             availableMoves.add(new Pair<>(allowedMovesRow, allowedMovesColumn));
         }
 
-//        }
     }
 
 
