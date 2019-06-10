@@ -24,7 +24,9 @@ public class Game {
     public CustomClock whiteClock;
     public CustomClock blackClock;
 
-
+    public Game() throws PlayerColorException {
+        boardClass = new Board();
+    }
 
     public Game(CustomClock whiteClock, CustomClock blackClock) throws PlayerColorException {
         boardClass = new Board();

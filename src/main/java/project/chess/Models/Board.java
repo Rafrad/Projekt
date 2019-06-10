@@ -186,13 +186,13 @@ public class Board {
         }
     }
 
-    public void clearWhitePlayerAttackBoard() {
+    void clearWhitePlayerAttackBoard() {
         for (int row = 0; row < 8; row++) {
             System.arraycopy(board[row], 0, whitePlayerAttackBoard[row], 0, 8);
         }
     }
 
-    public void clearBlackPlayerAttackBoard() {
+   void clearBlackPlayerAttackBoard() {
         for (int row = 0; row < 8; row++) {
             System.arraycopy(board[row], 0, blackPlayerAttackBoard[row], 0, 8);
         }

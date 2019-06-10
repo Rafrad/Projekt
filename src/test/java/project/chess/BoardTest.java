@@ -16,6 +16,9 @@ import project.chess.Models.Pieces.Rook;
 import project.chess.Models.Pieces.WhiteKing;
 import project.chess.Models.Pieces.WhitePawn;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
 import static org.junit.Assert.*;
 
 public class BoardTest {
@@ -207,9 +210,18 @@ public class BoardTest {
         try {
             Board b = new Board();
             b.board = this.board;
-            b.clearWhitePlayerAttackBoard();
+            Method m = Board.class.getDeclaredMethod("clearWhitePlayerAttackBoard");
+            m.setAccessible(true);
+            m.invoke(b);
+            //b.clearWhitePlayerAttackBoard();
             Assert.assertArrayEquals(b.whitePlayerAttackBoard, this.board);
         } catch (PlayerColorException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
             e.printStackTrace();
         }
     }
@@ -220,9 +232,19 @@ public class BoardTest {
         try {
             Board b = new Board();
             b.board = this.board;
-            b.clearBlackPlayerAttackBoard();
+            Method m = Board.class.getDeclaredMethod("clearBlackPlayerAttackBoard");
+            m.setAccessible(true);
+            m.invoke(b);
+            //b.clearBlackPlayerAttackBoard();
+
             Assert.assertArrayEquals(b.blackPlayerAttackBoard, this.board);
         } catch (PlayerColorException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
             e.printStackTrace();
         }
     }

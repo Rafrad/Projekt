@@ -61,7 +61,7 @@ public class GameController {
     @FXML
     private Text secondPlayer;
 
-    private Game game;
+    public Game game;//zmienione z private przez Jakuba Filipa, potrzebne do napisania testu
 
     private Image blackRookImage;
     private Image blackKnightImage;
