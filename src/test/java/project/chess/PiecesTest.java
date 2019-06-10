@@ -103,17 +103,19 @@ public class PiecesTest {
         allowedMoves.add(new Pair<>(-1, 1));
         assertEquals(allowedMoves, testBlackKing.move());
 
-        allowedMoves.clear();//kuba filip test
+        allowedMoves.clear();
         setUp();
         Board b = new Board();
         b.board = board;
         Move move = new Move(b);
         allowedMoves.add(new Pair<>(2, 3));
+        allowedMoves.add(new Pair<>(2, 4));
+        allowedMoves.add(new Pair<>(2, 2));
         allowedMoves.add(new Pair<>(0, 4));
+
         List<Pair<Integer, Integer>> stack = new LinkedList<>();
         assertEquals(allowedMoves, move.CalculateMoves(1,3,"", stack));
-        //Expected :[2=3, 0=4]
-        //Actual   :[2=3, 2=4, 2=2, 0=4]
+
 
         WhiteKing testWhiteKing = new WhiteKing();
         assertTrue(testWhiteKing.getPlayer());
