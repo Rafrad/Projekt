@@ -62,6 +62,15 @@ public class GameController {
     @FXML
     private Text secondPlayer;
 
+
+    @FXML
+    private Button yesButton;
+    @FXML
+    private Button noButton;
+    @FXML
+    private Text drawMessage;
+
+
     private Game game;
     private Computer computer;
 
@@ -97,6 +106,9 @@ public class GameController {
      */
 
     void init(Options options) throws PlayerColorException, MalformedURLException {
+        drawMessage.setVisible(false);
+        yesButton.setVisible(false);
+        noButton.setVisible(false);
         addListenerForMatchHistory();
 
         System.out.println(options.getGameMode());
@@ -568,9 +580,30 @@ public class GameController {
 
     @FXML
     private void draw() {
+//        drawHistory("         GAME OVER" + '\n'
+//                + "             DRAW!", true);
+//        endGame();
+        noButton.setVisible(true);
+        yesButton.setVisible(true);
+        drawMessage.setVisible(true);
+    }
+
+    @FXML
+    private void clickYes() {
+        noButton.setVisible(false);
+        yesButton.setVisible(false);
+        drawMessage.setVisible(false);
+
         drawHistory("         GAME OVER" + '\n'
                 + "             DRAW!", true);
         endGame();
+    }
+
+    @FXML
+    private void clickNo() {
+        noButton.setVisible(false);
+        drawMessage.setVisible(false);
+        yesButton.setVisible(false);
     }
 
 
