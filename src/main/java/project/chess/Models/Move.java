@@ -7,7 +7,7 @@ import java.util.*;
 
 
 public class Move {
-    private Board boardClass;
+    public Board boardClass;
     private boolean attack;
 
 

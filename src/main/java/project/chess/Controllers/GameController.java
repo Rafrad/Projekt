@@ -27,6 +27,7 @@ import javafx.util.Pair;
 
 import java.io.IOException;
 
+import java.net.MalformedURLException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -61,7 +62,21 @@ public class GameController {
     @FXML
     private Text secondPlayer;
 
+
     public Game game;//zmienione z private przez Jakuba Filipa, potrzebne do napisania testu
+
+
+    @FXML
+    private Button yesButton;
+    @FXML
+    private Button noButton;
+    @FXML
+    private Text drawMessage;
+
+
+
+    private Computer computer;
+
 
     private Image blackRookImage;
     private Image blackKnightImage;
@@ -82,7 +97,9 @@ public class GameController {
     private StringBuilder historyString;
 
     private int playerTimeFromOptions;
-    private int timePerRound;
+    public int timePerRound;
+
+    private boolean CP;
 
 
     /**
@@ -92,13 +109,17 @@ public class GameController {
      * @throws PlayerColorException  thrown when piece does not know where belongs to (white or black)
      */
 
-    void init(Options options) throws PlayerColorException {
+    void init(Options options) throws PlayerColorException, MalformedURLException {
+        drawMessage.setVisible(false);
+        yesButton.setVisible(false);
+        noButton.setVisible(false);
         addListenerForMatchHistory();
 
         System.out.println(options.getGameMode());
         System.out.println(options.getVersusMode());
         System.out.println(options.getFirstPlayerColor());
 
+        CP = options.getVersusMode().equals("Player VS Computer");
         setPlayerText(options);
 
         setTime(options);
@@ -128,6 +149,12 @@ public class GameController {
         PaintBoard();
         EmulateBoard();
 
+        computer = new Computer(game, !options.getFirstPlayerColor().equals("white"), this);
+
+        if(options.getFirstPlayerColor().equals("black") && CP) {
+            computer.move();
+            EmulateBoard();
+        }
 
         setOnMouseClicked();
     }
@@ -298,7 +325,7 @@ public class GameController {
      * @param end    checks if it is game over
      */
 
-    private void drawHistory(String string, boolean end) {
+    public void drawHistory(String string, boolean end) {
         if (end) {
             historyString.append('\n');
             historyString.append('\n');
@@ -405,6 +432,17 @@ public class GameController {
                             }
 
 
+                            if(CP) {
+                                try {
+                                    computer.move();
+                                } catch (MalformedURLException e) {
+                                    e.printStackTrace();
+                                }
+
+                            }
+
+                            EmulateBoard();
+
                             break;
                         default:
                             if (game.getCurrentPlayer() == game.boardClass.board[row][column].getPlayer()
@@ -471,7 +509,7 @@ public class GameController {
         return moves;
     }
 
-    private void updateMatchHistory(int row, int column, String somethingMore) {
+    public void updateMatchHistory(int row, int column, String somethingMore) {
         Piece piece = game.boardClass.getPiece(row, column);
         char unicode = piece.getUnicode();
 
@@ -546,9 +584,30 @@ public class GameController {
 
     @FXML
     private void draw() {
+//        drawHistory("         GAME OVER" + '\n'
+//                + "             DRAW!", true);
+//        endGame();
+        noButton.setVisible(true);
+        yesButton.setVisible(true);
+        drawMessage.setVisible(true);
+    }
+
+    @FXML
+    private void clickYes() {
+        noButton.setVisible(false);
+        yesButton.setVisible(false);
+        drawMessage.setVisible(false);
+
         drawHistory("         GAME OVER" + '\n'
                 + "             DRAW!", true);
         endGame();
+    }
+
+    @FXML
+    private void clickNo() {
+        noButton.setVisible(false);
+        drawMessage.setVisible(false);
+        yesButton.setVisible(false);
     }
 
 

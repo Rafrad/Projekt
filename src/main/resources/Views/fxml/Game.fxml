@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.scene.image.*?>
-
 <?import javafx.scene.control.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.layout.*?>
@@ -56,8 +56,8 @@
               <Button fx:id="promoteToKnightButton" mnemonicParsing="false" onAction="#promoteToKnight" prefHeight="54.0" prefWidth="62.0" GridPane.rowIndex="2" />
           </children>
        </GridPane>
-      <Button fx:id="backButton" layoutX="842.0" layoutY="469.0" mnemonicParsing="false" onAction="#changeSceneToSettings" text="back to menu" />
-      <TextArea fx:id="moveHistory" layoutX="823.0" layoutY="183.0" prefHeight="246.0" prefWidth="148.0" />
+      <Button fx:id="backButton" layoutX="795.0" layoutY="469.0" mnemonicParsing="false" onAction="#changeSceneToSettings" text="back to menu" />
+      <TextArea fx:id="moveHistory" layoutX="757.0" layoutY="183.0" prefHeight="246.0" prefWidth="187.0" />
       <HBox alignment="CENTER" layoutX="117.0" layoutY="592.0" prefHeight="68.0" prefWidth="571.0">
          <children>
             <Text fx:id="firstPlayer" fill="#15ccb1" strokeType="OUTSIDE" strokeWidth="0.0" text="sample text">
@@ -78,5 +78,8 @@
             <Image url="@../../Images/draw.png" />
          </image>
       </ImageView>
+      <Text fx:id="drawMessage" fill="WHITE" layoutX="781.0" layoutY="457.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Do you accept draw?" textAlignment="CENTER" />
+      <Button fx:id="yesButton" layoutX="757.0" layoutY="469.0" mnemonicParsing="false" onAction="#clickYes" text="yes" />
+      <Button fx:id="noButton" layoutX="904.0" layoutY="469.0" mnemonicParsing="false" onAction="#clickNo" text="no " textAlignment="CENTER" />
    </children>
 </AnchorPane>

@@ -43,6 +43,16 @@ public class Game {
 
     }
 
+    public Game(Board board) throws PlayerColorException {
+        boardClass = new Board(board);
+        moveClass = new Move(boardClass);
+        boardClass.printChosenBoard(boardClass.board);
+        currentlyPlayer = true;
+        isOver = false;
+
+        this.whiteClock = null;
+        this.blackClock = null;
+    }
 
     /**
      * Creates new thread. May be bugged.
@@ -104,12 +114,12 @@ public class Game {
         String nameOfMovedPiece = boardClass.board[row][column].getClass().getSimpleName();
         Piece piece = boardClass.getPiece(row, column);
 
-        swapClocks(piece);
+        if(whiteClock != null) swapClocks(piece);
 
         removeCastling(row, column, columnDestination, nameOfMovedPiece, piece);
 
 
-        if (boardClass.boardOfPossibleMoves[rowDestination][columnDestination].getClass().getSimpleName().equals("Mark_MovableTile")) {
+        if (true) {
             checkPawnsFirstMove(row, column, rowDestination, columnDestination);
 
             UpdateBoard(row, column, rowDestination, columnDestination);
@@ -204,7 +214,7 @@ public class Game {
         }
     }
 
-    private void UpdateBoard(int row, int column, int rowDestination, int columnDestination) {
+    public void UpdateBoard(int row, int column, int rowDestination, int columnDestination) {
         boardClass.board[rowDestination][columnDestination] = boardClass.board[row][column];
         boardClass.board[row][column] = new EmptyTile();
     }
