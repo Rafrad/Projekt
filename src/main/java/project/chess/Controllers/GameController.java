@@ -135,7 +135,7 @@ public class GameController {
 
         computer = new Computer(game, !options.getFirstPlayerColor().equals("white"), this);
 
-        if(options.getFirstPlayerColor().equals("black")) {
+        if(options.getFirstPlayerColor().equals("black") && CP) {
             computer.move();
             EmulateBoard();
         }
