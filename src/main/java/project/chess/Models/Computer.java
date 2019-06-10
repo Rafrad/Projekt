@@ -21,7 +21,7 @@ public class Computer {
 
     private int[] bestMove;
 
-    GameController gameControllerClass;
+    private GameController gameControllerClass;
 
     public Computer (Game session, boolean isWhite, GameController gameControllerClass) throws PlayerColorException{
         this.session = session;
@@ -31,42 +31,6 @@ public class Computer {
         this.gameControllerClass = gameControllerClass;
     }
 
-   /* public void makeAMove() throws MalformedURLException {
-        bodyDisposal(session.boardClass.board, piece_list);
-        Pair<Pair<Integer, Integer>, Piece> element;
-        Pair<Integer, Integer> position;
-        List<Pair<Integer, Integer>> available_moves;
-        Iterator<Pair<Pair<Integer, Integer>, Piece>> iter = piece_list.iterator();
-        boolean draw = true;
-
-        Piece bestMovePiece = null;  // defaultowy piece zeby pozbyc sie bestMovePiece not inizialized
-        int currMove[];
-        int bestMove[] = new int[5];
-
-        while(iter.hasNext()) {
-            element = iter.next();
-            position = element.getKey();
-            List<Pair<Integer, Integer>> dummy = new LinkedList<>();
-            available_moves = session.moveClass.CalculateMoves(position.getKey(), position.getValue(),"", dummy);
-            if(!available_moves.isEmpty()) {
-                currMove = selectBest(available_moves, element.getValue());
-                if(currMove[2] > bestMove[4]) {
-                    bestMove[0] = position.getKey();
-                    bestMove[1] = position.getValue();
-                    bestMove[2] = currMove[0];
-                    bestMove[3] = currMove[1];
-                    bestMove[4] = currMove[2];
-                    bestMovePiece = element.getValue();
-                }
-            } else draw = false;
-        }
-
-        if(draw) return;  // Brak ruchów
-        session.move(bestMove[0], bestMove[1], bestMove[2], bestMove[3]);
-        piece_list.add(new Pair<> (new Pair<>(bestMove[2], bestMove[3]), bestMovePiece));
-        System.out.println(bestMove[0] +" "+ bestMove[1]+" "+ bestMove[2]+ " " + bestMove[3] + " " + bestMove[4]);
-    }
-*/
 
     public void move() throws MalformedURLException {
         //simulation.boardClass = ;
@@ -83,7 +47,7 @@ public class Computer {
         }
     }
 
-    int minmax (int depth, Board currConfig, int alpha, int beta, boolean isComputer) throws MalformedURLException{
+    private int minmax(int depth, Board currConfig, int alpha, int beta, boolean isComputer) throws MalformedURLException{
         List<Pair<Integer, Integer>> moves;
         Piece piece;
         boolean currentColor;

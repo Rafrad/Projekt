@@ -580,9 +580,6 @@ public class GameController {
 
     @FXML
     private void draw() {
-//        drawHistory("         GAME OVER" + '\n'
-//                + "             DRAW!", true);
-//        endGame();
         noButton.setVisible(true);
         yesButton.setVisible(true);
         drawMessage.setVisible(true);
