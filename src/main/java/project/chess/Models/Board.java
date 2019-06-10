@@ -30,6 +30,22 @@ public class Board {
         initEveryBoard();
     }
 
+    public Board(Board old) {
+        board = new Piece[8][8];
+        boardOfPossibleMoves = new Piece[8][8];
+        whitePlayerAttackBoard = new Piece[8][8];
+        blackPlayerAttackBoard = new Piece[8][8];
+
+        for(int i = 0; i < 8; i++) {
+            for(int j = 0; j < 8; j++) {
+                board[i][j] = old.board[i][j];
+                boardOfPossibleMoves[i][j] = old.boardOfPossibleMoves[i][j];
+                whitePlayerAttackBoard[i][j] = old.whitePlayerAttackBoard[i][j];
+                blackPlayerAttackBoard[i][j] = old.blackPlayerAttackBoard[i][j];
+            }
+        }
+
+    }
 
     /**
      * Init main board.

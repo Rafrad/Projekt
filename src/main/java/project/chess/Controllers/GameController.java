@@ -27,6 +27,7 @@ import javafx.util.Pair;
 
 import java.io.IOException;
 
+import java.net.MalformedURLException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -62,6 +63,7 @@ public class GameController {
     private Text secondPlayer;
 
     private Game game;
+    private Computer computer;
 
     private Image blackRookImage;
     private Image blackKnightImage;
@@ -82,7 +84,9 @@ public class GameController {
     private StringBuilder historyString;
 
     private int playerTimeFromOptions;
-    private int timePerRound;
+    public int timePerRound;
+
+    private boolean CP;
 
 
     /**
@@ -92,13 +96,14 @@ public class GameController {
      * @throws PlayerColorException  thrown when piece does not know where belongs to (white or black)
      */
 
-    void init(Options options) throws PlayerColorException {
+    void init(Options options) throws PlayerColorException, MalformedURLException {
         addListenerForMatchHistory();
 
         System.out.println(options.getGameMode());
         System.out.println(options.getVersusMode());
         System.out.println(options.getFirstPlayerColor());
 
+        CP = options.getVersusMode().equals("Player VS Computer");
         setPlayerText(options);
 
         setTime(options);
@@ -128,6 +133,12 @@ public class GameController {
         PaintBoard();
         EmulateBoard();
 
+        computer = new Computer(game, !options.getFirstPlayerColor().equals("white"), this);
+
+        if(options.getFirstPlayerColor().equals("black")) {
+            computer.move();
+            EmulateBoard();
+        }
 
         setOnMouseClicked();
     }
@@ -298,7 +309,7 @@ public class GameController {
      * @param end    checks if it is game over
      */
 
-    private void drawHistory(String string, boolean end) {
+    public void drawHistory(String string, boolean end) {
         if (end) {
             historyString.append('\n');
             historyString.append('\n');
@@ -405,6 +416,17 @@ public class GameController {
                             }
 
 
+                            if(CP) {
+                                try {
+                                    computer.move();
+                                } catch (MalformedURLException e) {
+                                    e.printStackTrace();
+                                }
+
+                            }
+
+                            EmulateBoard();
+
                             break;
                         default:
                             if (game.getCurrentPlayer() == game.boardClass.board[row][column].getPlayer()
@@ -471,7 +493,7 @@ public class GameController {
         return moves;
     }
 
-    private void updateMatchHistory(int row, int column, String somethingMore) {
+    public void updateMatchHistory(int row, int column, String somethingMore) {
         Piece piece = game.boardClass.getPiece(row, column);
         char unicode = piece.getUnicode();
 
