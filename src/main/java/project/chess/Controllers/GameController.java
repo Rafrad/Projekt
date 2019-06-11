@@ -63,6 +63,9 @@ public class GameController {
     private Text secondPlayer;
 
 
+    public Game game;//zmienione z private przez Jakuba Filipa, potrzebne do napisania testu
+
+
     @FXML
     private Button yesButton;
     @FXML
@@ -71,8 +74,9 @@ public class GameController {
     private Text drawMessage;
 
 
-    private Game game;
+
     private Computer computer;
+
 
     private Image blackRookImage;
     private Image blackKnightImage;

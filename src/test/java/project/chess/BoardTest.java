@@ -1,5 +1,6 @@
 package project.chess;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import project.chess.Exceptions.PlayerColorException;
@@ -14,6 +15,9 @@ import project.chess.Models.Pieces.Queen;
 import project.chess.Models.Pieces.Rook;
 import project.chess.Models.Pieces.WhiteKing;
 import project.chess.Models.Pieces.WhitePawn;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 import static org.junit.Assert.*;
 
@@ -30,6 +34,55 @@ public class BoardTest {
             "w w w w w w w w ",
             "R K B Q Y B K R "
     };
+
+
+    public void setUp2() {
+        board = new Piece[8][8];
+        for (int i = 0; i < 8; i++) {
+            if (i != 4) {
+                board[6][i] = new WhitePawn();
+            } else {
+                board[3][3] = new WhitePawn();
+            }
+        }
+
+        try {
+            board[7][0] = new Rook(true);
+            board[7][7] = new Rook(true);
+            board[7][1] = new Knight(true);
+            board[7][6] = new Knight(true);
+            board[7][2] = new Bishop(true);
+            board[7][5] = new Bishop(true);
+            board[7][3] = new Queen(true);
+            board[7][4] = new WhiteKing();
+            board[6][4] = new EmptyTile();
+            for (int i = 0; i < 8; i++) {
+                if (i != 3) {
+                    board[1][i] = new BlackPawn();
+                }
+            }
+
+            board[0][0] = new Rook(false);
+            board[0][7] = new Rook(false);
+            board[0][1] = new Knight(false);
+            board[0][6] = new Knight(false);
+            board[0][2] = new Bishop(false);
+            board[0][5] = new Bishop(false);
+            board[0][3] = new Queen(false);
+            board[1][3] = new BlackKing();
+            board[0][4] = new EmptyTile();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        for (int i = 2; i < 6; i++) {
+            for (int j = 0; j  < 8; j++) {
+                if (i != 3 || j != 3) {
+                    board[i][j] = new EmptyTile();
+                }
+            }
+        }
+
+    }
 
     @Before
     public void setUp() {
@@ -139,13 +192,60 @@ public class BoardTest {
 
     @Test
     public void clearPossibleMoves() {
+        setUp2();
+        try {
+            Board b = new Board();
+            b.board = this.board;
+            b.clearPossibleMoves();
+            Assert.assertArrayEquals(b.boardOfPossibleMoves, this.board);
+        } catch (PlayerColorException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Test
     public void clearWhitePlayerAttackBoard() {
+        setUp2();
+        try {
+            Board b = new Board();
+            b.board = this.board;
+            Method m = Board.class.getDeclaredMethod("clearWhitePlayerAttackBoard");
+            m.setAccessible(true);
+            m.invoke(b);
+            //b.clearWhitePlayerAttackBoard();
+            Assert.assertArrayEquals(b.whitePlayerAttackBoard, this.board);
+        } catch (PlayerColorException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
     public void clearBlackPlayerAttackBoard() {
+        setUp2();
+        try {
+            Board b = new Board();
+            b.board = this.board;
+            Method m = Board.class.getDeclaredMethod("clearBlackPlayerAttackBoard");
+            m.setAccessible(true);
+            m.invoke(b);
+            //b.clearBlackPlayerAttackBoard();
+
+            Assert.assertArrayEquals(b.blackPlayerAttackBoard, this.board);
+        } catch (PlayerColorException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -208,7 +208,7 @@ public class Board {
         }
     }
 
-    void clearBlackPlayerAttackBoard() {
+   void clearBlackPlayerAttackBoard() {
         for (int row = 0; row < 8; row++) {
             System.arraycopy(board[row], 0, blackPlayerAttackBoard[row], 0, 8);
         }
